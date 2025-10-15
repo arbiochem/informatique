@@ -10,6 +10,6 @@ namespace arbioApp.Modules.Principal.DI.Models
     {
         public int Id { get; set; }
         public string devise { get; set; } = string.Empty;
-        public string valeur{ get; set; }   
+        public decimal valeur{ get; set; }
     }
 }

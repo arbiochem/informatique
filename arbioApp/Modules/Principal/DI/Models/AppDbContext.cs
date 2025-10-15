@@ -8,11 +8,9 @@ namespace arbioApp.Models
     public partial class AppDbContext : DbContext
     {
         private static string connectionString = "";
-        public AppDbContext()
-            : base(Db.GetConnectionString())
-        {
+        public AppDbContext(): base(Db.GetConnectionString()) { 
         }
-
+        
         //    FANAOVANA UPDATE DATABASE
        /* public AppDbContext()
     :   base("Data Source=SRV-ARB;Initial Catalog=ARBIOCHEM_ACHAT;Persist Security Info=True;User ID=DEV;Password=1234;TrustServerCertificate=True")
@@ -20,7 +18,8 @@ namespace arbioApp.Models
         }*/
 
 
-
+        public DbSet<F_FRET> F_FRETS { get; set; }
+        public DbSet<F_DEVISE> F_DEVISES { get; set; }
         public virtual DbSet<P_PREFERENCES> P_PREFERENCES { get; set; }
         public virtual DbSet<F_DOCREGL> F_DOCREGL { get; set; }
         public virtual DbSet<F_CATALOGUE> F_CATALOGUE { get; set; }

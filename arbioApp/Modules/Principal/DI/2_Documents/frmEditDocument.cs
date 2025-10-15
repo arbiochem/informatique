@@ -2744,9 +2744,39 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 // appliquer 20% de TVA
                 totalTVA = totalHT * 0.20m;
 
+                bool toutesLesLignesValides = true;
+                for (int i = 0; i < gvLigneEdit.RowCount; i++)
+                {
+                    int rowHandle = gvLigneEdit.GetVisibleRowHandle(i);
+                    if (gvLigneEdit.IsDataRow(rowHandle))
+                    {
+                        var laligneamettreajour = gvLigneEdit.GetRow(rowHandle);
 
-                frmEditInfos frm = new frmEditInfos(dopiece, totalTVA, this);
-                frm.ShowDialog();
+                        // Accès à la cellule "DL_PrixUnitaire"
+                        object cellValue = gvLigneEdit.GetRowCellValue(rowHandle, "DL_PrixUnitaire");
+
+                        // Vérifie que la cellule contient une valeur convertible en décimal
+                        if (cellValue != null && decimal.TryParse(cellValue.ToString(), out decimal puBrut))
+                        {
+                            if (puBrut == 0)
+                            {
+                                DevExpress.XtraEditors.XtraMessageBox.Show(
+                                    "Veuillez renseigner le PU dans toutes les lignes et faire un Update par ligne pour que le calcul de frais se fera dans la logique",
+                                    "Erreur",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                                toutesLesLignesValides = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (toutesLesLignesValides)
+                {
+                    frmEditInfos frm = new frmEditInfos(dopiece, totalTVA, this);
+                    frm.ShowDialog();
+                }
             }
             catch (System.Exception ex)
             {

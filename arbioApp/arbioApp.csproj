@@ -220,6 +220,18 @@
     <Compile Include="Migrations\202510131145338_F_DOCFRAISIMPORT.Designer.cs">
       <DependentUpon>202510131145338_F_DOCFRAISIMPORT.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202510150730181_f_fret.cs" />
+    <Compile Include="Migrations\202510150730181_f_fret.Designer.cs">
+      <DependentUpon>202510150730181_f_fret.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202510150758469_f_devise.cs" />
+    <Compile Include="Migrations\202510150758469_f_devise.Designer.cs">
+      <DependentUpon>202510150758469_f_devise.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202510150807059_f_devises.cs" />
+    <Compile Include="Migrations\202510150807059_f_devises.Designer.cs">
+      <DependentUpon>202510150807059_f_devises.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Modules\Helpers\ExcelToDatable.cs" />
     <Compile Include="Modules\Principal\Dashboard\RECOUVREMENT\ucRecouvrement.cs">
@@ -399,6 +411,7 @@
     <Compile Include="Modules\Principal\DI\frmMenuAchat.Designer.cs">
       <DependentUpon>frmMenuAchat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Principal\DI\Models\F_FRET.cs" />
     <Compile Include="Modules\Principal\DI\Models\F_COORDINATES.cs" />
     <Compile Include="Modules\Principal\DI\Models\F_DEVISE.cs" />
     <Compile Include="Modules\Principal\DI\Models\F_DOCCOUTREVIENT.cs" />
@@ -610,6 +623,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202510131145338_F_DOCFRAISIMPORT.resx">
       <DependentUpon>202510131145338_F_DOCFRAISIMPORT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202510150730181_f_fret.resx">
+      <DependentUpon>202510150730181_f_fret.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202510150758469_f_devise.resx">
+      <DependentUpon>202510150758469_f_devise.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202510150807059_f_devises.resx">
+      <DependentUpon>202510150807059_f_devises.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\Account\FrmChangePassword.resx">
       <DependentUpon>FrmChangePassword.cs</DependentUpon>
