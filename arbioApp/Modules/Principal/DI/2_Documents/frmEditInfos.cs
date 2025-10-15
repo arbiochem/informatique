@@ -425,7 +425,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void calcul_fret(TextEdit t1,TextEdit t2,TextEdit t3)
         {
-            if(t1.Text != "" && t2.Text != "")
+            gridViewFrais.SetRowCellValue(0, "FI_RepartitionId", 1);
+            if (t1.Text != "" && t2.Text != "")
             {
                 t3.Text = (Math.Round(double.Parse(t1.Text.ToString().Replace('.',','))  * double.Parse(t2.Text.ToString().Replace('.', ',')),2)).ToString() ;
             }
