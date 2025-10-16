@@ -18,7 +18,7 @@ using DevExpress.XtraTreeList.Nodes;
 using DevExpress.XtraGrid.Views.Grid;
 using System.Globalization;
 using DevExpress.XtraEditors.Controls;
-using Objets100cLib;
+//using Objets100cLib;
 using arbioApp.DTO;
 using arbioApp.Services;
 using arbioApp.Repositories.ModelsRepository;
@@ -170,6 +170,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 .Where(doc => doc.DO_Piece == DoPiece)
                 .Select(doc => doc.DO_Statut)
                 .FirstOrDefault();
+
         }
 
        
@@ -256,6 +257,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 //comboBoxAffaire.DataSource = _listePlanAnalitique.Where(p => p.N_Analytique == 1).Select(p => p.CA_Num + " - " + p.CA_Intitule).ToList();
                 //comboBoxAffaire.SelectedIndex = -1;
                 LoadDocLie(DoPiece);
+                
             }
             catch (System.Exception ex)
             {
@@ -1793,6 +1795,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 _ucDocuments.RafraichirDonnees();
                 gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
                 StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                MessageBox.Show("Modification statut terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             catch (System.Exception ex)

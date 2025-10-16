@@ -24,7 +24,7 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraTreeList;
 //using Microsoft.Office.Interop.Outlook;
 using arbioApp.Models;
-using Objets100cLib;
+//using Objets100cLib;
 using arbioApp.Repositories.ModelsRepository;
 using DevExpress.ChartRangeControlClient.Core;
 using BindingSource = System.Windows.Forms.BindingSource;
