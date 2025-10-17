@@ -391,16 +391,32 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
             if (FrmMdiParent.UserRole.Contains("Administrators"))
             {
-                BarButtonItem autItem = new BarButtonItem();
-                autItem.Caption= "Autorisations";
+                BarSubItem autItem = new BarSubItem();
+                autItem.Caption= "Autorisation";
                 fileMenu.ItemLinks.Add(autItem);
-                autItem.ItemClick += autItem_ItemClick;
+
+                BarButtonItem autGlogale = new BarButtonItem();
+                autGlogale.Caption = "Globale";
+                autGlogale.ItemClick += autGlogale_ItemClick;
+
+                BarButtonItem autAchat = new BarButtonItem();
+                autAchat.Caption = "Achat";
+                autAchat.ItemClick += autAchat_ItemClick;
+
+                autItem.ItemLinks.Add(autGlogale);
+                autItem.ItemLinks.Add(autAchat);
             }
         }
-        private void autItem_ItemClick(object sender, ItemClickEventArgs e)
+        private void autGlogale_ItemClick(object sender, ItemClickEventArgs e)
         {
             frmAutorisation _frmAutorisation = new frmAutorisation();
             _frmAutorisation.ShowDialog();
+        }
+
+        private void autAchat_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            frmAutorisations_achat _frmAutorisation_achat = new frmAutorisations_achat();
+            _frmAutorisation_achat.ShowDialog();
         }
 
         private DataTable GetDatabasesFromF_ACHATFILES()

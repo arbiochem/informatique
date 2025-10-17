@@ -82,6 +82,7 @@
             this.Container.Name = "Container";
             this.Container.Size = new System.Drawing.Size(912, 805);
             this.Container.TabIndex = 3;
+            this.Container.Click += new System.EventHandler(this.Container_Click);
             // 
             // accordionControl1
             // 
@@ -230,7 +231,7 @@
             // 
             // mnuRecouvClient
             // 
-            this.mnuRecouvClient.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement4.ImageOptions.SvgImage")));
+            this.mnuRecouvClient.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuRecouvClient.ImageOptions.SvgImage")));
             this.mnuRecouvClient.Name = "mnuRecouvClient";
             this.mnuRecouvClient.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             this.mnuRecouvClient.Text = "Clients";
