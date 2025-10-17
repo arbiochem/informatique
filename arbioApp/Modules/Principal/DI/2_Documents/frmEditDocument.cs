@@ -2818,12 +2818,156 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         private int nbchecked = 0;
         private void chkActif_CheckedChanged(object sender, EventArgs e)
         {
-            MettreAJourFiltre();
+            if (dopiecetxt.Text.ToString().StartsWith("AFA"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
+
+                if (autorise)
+                {
+                    MettreAJourFiltre();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour une facture !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("APA"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "UPDATE");
+
+                if (autorise)
+                {
+                    MettreAJourFiltre();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un projet d'achat !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("ABC"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "UPDATE");
+
+                if (autorise)
+                {
+                    MettreAJourFiltre();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un bon de commande !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("ABR"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "UPDATE");
+
+                if (autorise)
+                {
+                    MettreAJourFiltre();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un Bon de réception !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
         }
 
         private void chkSommeil_CheckedChanged(object sender, EventArgs e)
         {
-            MettreAJourFiltre();
+            if (dopiecetxt.Text.ToString().StartsWith("AFA"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
+
+                if (autorise)
+                {
+                    MettreAJourFiltre();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour une facture !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("APA"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "UPDATE");
+
+                if (autorise)
+                {
+                    MettreAJourFiltre();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un projet d'achat !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("ABC"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "UPDATE");
+
+                if (autorise)
+                {
+                    MettreAJourFiltre();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un bon de commande !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("ABR"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "UPDATE");
+
+                if (autorise)
+                {
+                    MettreAJourFiltre();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un Bon de réception !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
         }
         public System.Windows.Forms.BindingSource BindingFrns = new System.Windows.Forms.BindingSource();
         public System.Windows.Forms.BindingSource BindingArt = new System.Windows.Forms.BindingSource();
@@ -3126,6 +3270,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
 
                     }
+
+
                     MettreAJourTotauxDepuisBD(dopiecetxt.Text);
                     conn.Close();
                     string _currentDocPieceNo = dopiecetxt.Text;
@@ -3587,12 +3733,156 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void chkArActif_CheckedChanged(object sender, EventArgs e)
         {
-            FiltrerArticles();
+            if (dopiecetxt.Text.ToString().StartsWith("AFA"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
+
+                if (autorise)
+                {
+                    FiltrerArticles();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour une facture !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("APA"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "UPDATE");
+
+                if (autorise)
+                {
+                    FiltrerArticles();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un projet d'achat !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("ABC"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "UPDATE");
+
+                if (autorise)
+                {
+                    FiltrerArticles();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un bon de commande !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("ABR"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "UPDATE");
+
+                if (autorise)
+                {
+                    FiltrerArticles();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un Bon de réception !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
         }
 
         private void chkArSommeil_CheckedChanged(object sender, EventArgs e)
         {
-            FiltrerArticles();
+            if (dopiecetxt.Text.ToString().StartsWith("AFA"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
+
+                if (autorise)
+                {
+                    FiltrerArticles();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour une facture !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("APA"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "UPDATE");
+
+                if (autorise)
+                {
+                    FiltrerArticles();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un projet d'achat !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("ABC"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "UPDATE");
+
+                if (autorise)
+                {
+                    FiltrerArticles();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un bon de commande !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("ABR"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "UPDATE");
+
+                if (autorise)
+                {
+                    FiltrerArticles();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de mettre à jour un Bon de réception !",
+                        "Modification bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
         }
 
         private void hyperlinkLabelControl8_Click(object sender, EventArgs e)
