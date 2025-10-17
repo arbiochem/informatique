@@ -208,7 +208,7 @@
             this.Controls.Add(this.dataLayoutControl1);
             this.Name = "frmAutorisations_achat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Autorisations achat";
+            this.Text = "Autorisations type de documents";
             this.Activated += new System.EventHandler(this.frmAutorisations_achat_Activated);
             this.Load += new System.EventHandler(this.frmAutorisations_achat_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();

@@ -1776,6 +1776,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void btnValider_Click(object sender, EventArgs e)
         {
+           
             try
             {
                 if (!ValiderChampsObligatoires())
@@ -1785,17 +1786,104 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 string _currentDocPieceNo = dopiecetxt.Text;
                 if (doc != null)
                 {
-                    UpdateFDOCENTETE();
+                    if (dopiecetxt.Text.ToString().StartsWith("AFA"))
+                    {
+                        bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
+
+                        if (autorise)
+                        {
+                            UpdateFDOCENTETE();
+                            _ucDocuments.RafraichirDonnees();
+                            gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                            StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                            MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                "Vous n'avez pas l'autorisation de mettre à jour une facture !",
+                                "Modification bloquée",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
+                            
+                        }
+                    }
+                    else if(dopiecetxt.Text.ToString().StartsWith("APA"))
+                    {
+                        bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "UPDATE");
+
+                        if (autorise)
+                        {
+                            UpdateFDOCENTETE();
+                            _ucDocuments.RafraichirDonnees();
+                            gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                            StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                            MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                "Vous n'avez pas l'autorisation de mettre à jour un projet d'achat !",
+                                "Modification bloquée",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
+                        }
+                    }
+                    else if (dopiecetxt.Text.ToString().StartsWith("ABC"))
+                    {
+                        bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "UPDATE");
+
+                        if (autorise)
+                        {
+                            UpdateFDOCENTETE();
+                            _ucDocuments.RafraichirDonnees();
+                            gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                            StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                            MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                "Vous n'avez pas l'autorisation de mettre à jour un bon de commande !",
+                                "Modification bloquée",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
+                        }
+                    }
+                    else if (dopiecetxt.Text.ToString().StartsWith("ABR"))
+                    {
+                        bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "UPDATE");
+
+                        if (autorise)
+                        {
+                            UpdateFDOCENTETE();
+                            _ucDocuments.RafraichirDonnees();
+                            gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                            StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                            MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                "Vous n'avez pas l'autorisation de mettre à jour un Bon de réception !",
+                                "Modification bloquée",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
+                        }
+                    }
                 }
                 else
                 {
                     InsertFDOCENTETE();
+                    _ucDocuments.RafraichirDonnees();
+                    gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                    StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                    MessageBox.Show("Insertion terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                _ucDocuments.RafraichirDonnees();
-                gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
-                StatutActuel = Convert.ToInt32(lkStatut.EditValue);
-                MessageBox.Show("Modification statut terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             catch (System.Exception ex)
@@ -2597,16 +2685,116 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 MessageBox.Show("Le statut actuel ne permet pas de transformer le document.", "Information");
                 return;
             }
-            var dlg = new frmTransform(_typeDocument);
-            dlg.ParentFormInstance = this;
 
-            if (dlg.ShowDialog() == DialogResult.OK)
+            if (dopiecetxt.Text.ToString().StartsWith("APA"))
             {
-                this.TransformFDOCENTETE(dlg.doctype);
+                bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "TRANSFORM");
+
+                if (autorise)
+                {
+                    var dlg = new frmTransform(_typeDocument);
+                    dlg.ParentFormInstance = this;
+
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        this.TransformFDOCENTETE(dlg.doctype);
+                    }
+
+                    // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
+                    _ucDocuments.ChargerDonneesDepuisBDD();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de transformer un projet d'achat !",
+                        "Transformation bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if(dopiecetxt.Text.ToString().StartsWith("ABR"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "TRANSFORM");
+
+                if (autorise)
+                {
+                    var dlg = new frmTransform(_typeDocument);
+                    dlg.ParentFormInstance = this;
+
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        this.TransformFDOCENTETE(dlg.doctype);
+                    }
+
+                    // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
+                    _ucDocuments.ChargerDonneesDepuisBDD();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de transformer un bon de réception !",
+                        "Transformation bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("AFA"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Facture", "TRANSFORM");
+
+                if (autorise)
+                {
+                    var dlg = new frmTransform(_typeDocument);
+                    dlg.ParentFormInstance = this;
+
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        this.TransformFDOCENTETE(dlg.doctype);
+                    }
+
+                    // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
+                    _ucDocuments.ChargerDonneesDepuisBDD();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de transformer une facture !",
+                        "Transformation bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (dopiecetxt.Text.ToString().StartsWith("ABC"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "TRANSFORM");
+
+                if (autorise)
+                {
+                    var dlg = new frmTransform(_typeDocument);
+                    dlg.ParentFormInstance = this;
+
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        this.TransformFDOCENTETE(dlg.doctype);
+                    }
+
+                    // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
+                    _ucDocuments.ChargerDonneesDepuisBDD();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de transformer un bon de commande!",
+                        "Transformation bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
             }
 
-            // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
-            _ucDocuments.ChargerDonneesDepuisBDD();
         }
 
 
@@ -3055,30 +3243,174 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         // 4. Définir le dossier réseau de destination
                         string destinationFolder = @"\\Srv-arb\documents_achats$";
                         string nodoc = dopiece.Substring(3, 8);
-                        try
+
+                        if (dopiecetxt.Text.ToString().StartsWith("ABC"))
                         {
-                            string destinationFolderdoc = $@"\\Srv-arb\documents_achats$\{nodoc}";
-                            if (!Directory.Exists(destinationFolderdoc))
+                            bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "UPDATE");
+
+                            if (autorise)
                             {
-                                Directory.CreateDirectory(destinationFolderdoc);
-                            }
+                                try
+                                {
+                                    string destinationFolderdoc = $@"\\Srv-arb\documents_achats$\{nodoc}";
+                                    if (!Directory.Exists(destinationFolderdoc))
+                                    {
+                                        Directory.CreateDirectory(destinationFolderdoc);
+                                    }
 
-                            // 5. Copier chaque fichier
-                            foreach (string file in selectedFiles)
+                                    // 5. Copier chaque fichier
+                                    foreach (string file in selectedFiles)
+                                    {
+                                        string fileName = Path.GetFileName(file);
+                                        string destFile = Path.Combine(destinationFolderdoc, fileName);
+
+                                        File.Copy(file, destFile, true); // true = overwrite si existe déjà
+                                    }
+
+                                    XtraMessageBox.Show("✅ Transfert terminé avec succès !", "Succès",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                catch (Exception ex)
+                                {
+                                    MethodBase m = MethodBase.GetCurrentMethod();
+                                    MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            else
                             {
-                                string fileName = Path.GetFileName(file);
-                                string destFile = Path.Combine(destinationFolderdoc, fileName);
-
-                                File.Copy(file, destFile, true); // true = overwrite si existe déjà
+                                MessageBox.Show(
+                                    "Vous n'avez pas l'autorisation de modifier un bon de commande!",
+                                    "Modification bloquée",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
                             }
-
-                            XtraMessageBox.Show("✅ Transfert terminé avec succès !", "Succès",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        catch (Exception ex)
+                        else if (dopiecetxt.Text.ToString().StartsWith("ABR"))
                         {
-                            MethodBase m = MethodBase.GetCurrentMethod();
-                            MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "UPDATE");
+
+                            if (autorise)
+                            {
+                                try
+                                {
+                                    string destinationFolderdoc = $@"\\Srv-arb\documents_achats$\{nodoc}";
+                                    if (!Directory.Exists(destinationFolderdoc))
+                                    {
+                                        Directory.CreateDirectory(destinationFolderdoc);
+                                    }
+
+                                    // 5. Copier chaque fichier
+                                    foreach (string file in selectedFiles)
+                                    {
+                                        string fileName = Path.GetFileName(file);
+                                        string destFile = Path.Combine(destinationFolderdoc, fileName);
+
+                                        File.Copy(file, destFile, true); // true = overwrite si existe déjà
+                                    }
+
+                                    XtraMessageBox.Show("✅ Transfert terminé avec succès !", "Succès",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                catch (Exception ex)
+                                {
+                                    MethodBase m = MethodBase.GetCurrentMethod();
+                                    MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show(
+                                    "Vous n'avez pas l'autorisation de modifier un bon de réception!",
+                                    "Modification bloquée",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+                            }
+                        }
+                        else if (dopiecetxt.Text.ToString().StartsWith("AFA"))
+                        {
+                            bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
+
+                            if (autorise)
+                            {
+                                try
+                                {
+                                    string destinationFolderdoc = $@"\\Srv-arb\documents_achats$\{nodoc}";
+                                    if (!Directory.Exists(destinationFolderdoc))
+                                    {
+                                        Directory.CreateDirectory(destinationFolderdoc);
+                                    }
+
+                                    // 5. Copier chaque fichier
+                                    foreach (string file in selectedFiles)
+                                    {
+                                        string fileName = Path.GetFileName(file);
+                                        string destFile = Path.Combine(destinationFolderdoc, fileName);
+
+                                        File.Copy(file, destFile, true); // true = overwrite si existe déjà
+                                    }
+
+                                    XtraMessageBox.Show("✅ Transfert terminé avec succès !", "Succès",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                catch (Exception ex)
+                                {
+                                    MethodBase m = MethodBase.GetCurrentMethod();
+                                    MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show(
+                                    "Vous n'avez pas l'autorisation de modifier une facture!",
+                                    "Modification bloquée",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+                            }
+                        }
+                        else if (dopiecetxt.Text.ToString().StartsWith("APA"))
+                        {
+                            bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "UPDATE");
+
+                            if (autorise)
+                            {
+                                try
+                                {
+                                    string destinationFolderdoc = $@"\\Srv-arb\documents_achats$\{nodoc}";
+                                    if (!Directory.Exists(destinationFolderdoc))
+                                    {
+                                        Directory.CreateDirectory(destinationFolderdoc);
+                                    }
+
+                                    // 5. Copier chaque fichier
+                                    foreach (string file in selectedFiles)
+                                    {
+                                        string fileName = Path.GetFileName(file);
+                                        string destFile = Path.Combine(destinationFolderdoc, fileName);
+
+                                        File.Copy(file, destFile, true); // true = overwrite si existe déjà
+                                    }
+
+                                    XtraMessageBox.Show("✅ Transfert terminé avec succès !", "Succès",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                catch (Exception ex)
+                                {
+                                    MethodBase m = MethodBase.GetCurrentMethod();
+                                    MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show(
+                                    "Vous n'avez pas l'autorisation de modifier un Projet d'achat!",
+                                    "Modification bloquée",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+                            }
                         }
                     }
                 }

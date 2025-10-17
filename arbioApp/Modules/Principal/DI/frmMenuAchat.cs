@@ -1,24 +1,29 @@
-﻿using DevExpress.XtraEditors;
+﻿using arbioApp.Modules.Principal.DI._2_Documents;
+using DevExpress.XtraCharts.Designer.Native;
+using DevExpress.XtraEditors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using arbioApp.Modules.Principal.DI._2_Documents;
-using System.Data.SqlClient;
 using BindingSource = System.Windows.Forms.BindingSource;
 
 namespace arbioApp.Modules.Principal.DI
 {
     public partial class frmMenuAchat : DevExpress.XtraEditors.XtraForm
     {
+        private SqlDataAdapter adapter;
+        private DataTable dt;
+        private SqlCommandBuilder builder;
         public static string connectionString;
         private string dbPrincipale = ucDocuments.dbNamePrincipale;
         private string serveripPrincipale = ucDocuments.serverIpPrincipale;
+        private bool DO_CREATE=false;
         public frmMenuAchat()
         {
             InitializeComponent();
@@ -31,18 +36,89 @@ namespace arbioApp.Modules.Principal.DI
         public static int statut = 2; 
         private void simpleButton1_Click(object sender, EventArgs e)
         {
-            if(rbAPA.Checked)
+            if (rbAPA.Checked)
             {
-                ucDocuments monUc = new ucDocuments();
-                statut = 2; // accepté par défaut
-                frmEditDocument editForm = new frmEditDocument(GetNextInvoiceNumber("APA"), monUc, 0);
-                editForm.ShowDialog();
-                dotype = 10;
-                
+                // Vérifie si l'utilisateur a le droit "CREATE" pour le type "APA"
+                bool autorise = verifier_droit(rbAPA.Text, "CREATE");
+
+                if (autorise)
+                {
+                    ucDocuments monUc = new ucDocuments();
+                    statut = 2; // accepté par défaut
+                    frmEditDocument editForm = new frmEditDocument(GetNextInvoiceNumber("APA"), monUc, 0);
+                    editForm.ShowDialog();
+                    dotype = 10;
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de créer un projet d'achat !",
+                        "Création bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
             }
-            
+            else if (rbABC.Checked){
+                // Vérifie si l'utilisateur a le droit "CREATE" pour le type "APA"
+                bool autorise = verifier_droit(rbABC.Text, "CREATE");
+
+                if (autorise)
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de créer un bon de commande !",
+                        "Création bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (rbABL.Checked)
+            {
+                // Vérifie si l'utilisateur a le droit "CREATE" pour le type "APA"
+                bool autorise = verifier_droit(rbABL.Text, "CREATE");
+
+                if (autorise)
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de créer un bon de livraison !",
+                        "Création bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (rbAFC.Checked)
+            {
+                // Vérifie si l'utilisateur a le droit "CREATE" pour le type "APA"
+                bool autorise = verifier_droit(rbAFC.Text, "CREATE");
+
+                if (autorise)
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation de créer une facture !",
+                        "Création bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+
+
         }
-        
+
         public static string GetNextInvoiceNumber(string prefix)
         {
             int year = DateTime.Now.Year;
@@ -69,5 +145,56 @@ namespace arbioApp.Modules.Principal.DI
         {
             this.Close();
         }
+
+        public static bool verifier_droit(string type, string cond)
+        {
+            bool verif = false;
+
+            string connectionString = $"Server=SRV-ARB;" +
+                                      $"Database=arbapp;User ID=Dev;Password=1234;" +
+                                      $"TrustServerCertificate=True;Connection Timeout=120;";
+
+            string query = "SELECT * FROM dbo.AUTORISATIONS_ACHAT WHERE mailUser = @mailUser AND type_document = @type_document";
+
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@mailUser", FrmMdiParent.Username);
+                        cmd.Parameters.AddWithValue("@type_document", type);
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                        adapter.Fill(dt);
+                    }
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        // Ici, on suppose que cond contient le nom de la colonne à vérifier, par exemple "CREATE"
+                        if (row.Table.Columns.Contains(cond) && row[cond] != DBNull.Value)
+                        {
+                            bool droit = Convert.ToBoolean(row[cond]);
+                            if (droit)
+                            {
+                                verif = true;
+                                break; 
+                            }
+                        } 
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors du remplissage : " + ex.Message);
+            }
+
+            return verif;
+        }
+
     }
 }

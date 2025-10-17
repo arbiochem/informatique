@@ -37,7 +37,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             string connectionString = $"Server=SRV-ARB;" +
                                           $"Database=arbapp;User ID=Dev;Password=1234;" +
                                           $"TrustServerCertificate=True;Connection Timeout=120;";
-            string query = "SELECT Username FROM dbo.T_UserRole WHERE UserGroup like '%Achat%'";
+            //string query = "SELECT Username FROM dbo.T_UserRole WHERE UserGroup like '%Achat%'";
+            string query = "SELECT Username FROM dbo.T_UserRole";
 
             using (var da = new SqlDataAdapter(query, connectionString))
             {

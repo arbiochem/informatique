@@ -178,8 +178,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void Hyperlink_Click(object sender, EventArgs e)
         {
-            string doPiece = gvEntete.GetFocusedRowCellValue("DO_Piece")?.ToString();
-            OuvrirPiece(doPiece);
+            btnOuvrirDoc_Click(sender, e);  
         }
 
         private void gvEntete_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
@@ -340,7 +339,80 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         private void btnOuvrirDoc_Click(object sender, EventArgs e)
         {
             string doPiece = gvEntete.GetFocusedRowCellValue("DO_Piece")?.ToString();
-            OuvrirPiece(doPiece);
+
+            if (doPiece.ToString().StartsWith("AFA"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Facture", "VIEW");
+
+                if (autorise)
+                {
+                    OuvrirPiece(doPiece);
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation d'ouvrir une facture !",
+                        "Ouverture bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+
+                }
+            }
+            else if (doPiece.ToString().StartsWith("APA"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "VIEW");
+
+                if (autorise)
+                {
+                    OuvrirPiece(doPiece);
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation d'ouvrir un projet d'achat !",
+                        "Ouverture bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (doPiece.ToString().StartsWith("ABC"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "VIEW");
+
+                if (autorise)
+                {
+                    OuvrirPiece(doPiece);
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation d'ouvrir un bon de commande !",
+                        "Ouverture bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            else if (doPiece.ToString().StartsWith("ABR"))
+            {
+                bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "VIEW");
+
+                if (autorise)
+                {
+                    OuvrirPiece(doPiece);
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Vous n'avez pas l'autorisation d'ouvrir un Bon de réception !",
+                        "Ouverture bloquée",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
 
         }
         List<DoTypeItem> statutItems = new List<DoTypeItem>
@@ -400,11 +472,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 autGlogale.ItemClick += autGlogale_ItemClick;
 
                 BarButtonItem autAchat = new BarButtonItem();
-                autAchat.Caption = "Achat";
+                autAchat.Caption = "Type de documents";
                 autAchat.ItemClick += autAchat_ItemClick;
 
                 autItem.ItemLinks.Add(autGlogale);
-                autItem.ItemLinks.Add(autAchat);
+                autItem.ItemLinks.Add(autAchat).BeginGroup = true;
             }
         }
         private void autGlogale_ItemClick(object sender, ItemClickEventArgs e)
