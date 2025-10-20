@@ -1,64 +1,67 @@
-﻿using DevExpress.XtraEditors;
+﻿//using Objets100cLib;
+using arbioApp.DTO;
+using arbioApp.Models;
+using arbioApp.Models.Json;
+using arbioApp.Modules.Helpers;
+using arbioApp.Modules.Principal.Dashboard.CIAL;
+using arbioApp.Modules.Principal.DI.Repositories.ModelsRepository;
+using arbioApp.Modules.Principal.DI.Services;
+using arbioApp.Repositories.ModelsRepository;
+using arbioApp.Services;
+using DevExpress.ChartRangeControlClient.Core;
+using DevExpress.CodeParser;
+using DevExpress.DashboardWin.Design;
+using DevExpress.Data;
+using DevExpress.DataAccess.DataFederation;
+using DevExpress.DataAccess.Excel;
+using DevExpress.DataAccess.Sql;
+using DevExpress.DataAccess.UI.Excel;
+using DevExpress.DataProcessing.InMemoryDataProcessor.GraphGenerator;
+using DevExpress.Pdf.Xmp;
+using DevExpress.Spreadsheet;
+using DevExpress.Utils.About;
+using DevExpress.XtraBars.Customization;
+using DevExpress.XtraCharts.Native;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraExport.Helpers;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraPrinting;
+using DevExpress.XtraReports.UI;
+using DevExpress.XtraSplashScreen;
+using DevExpress.XtraSpreadsheet;
+using DevExpress.XtraSpreadsheet.DocumentFormats.Xlsb;
+using DevExpress.XtraSpreadsheet.Import.Xls;
+using DevExpress.XtraTab;
+using DevExpress.XtraTreeList.Nodes;
+using Org.BouncyCastle.Tls;
+using Syncfusion.Windows.Forms.Maps;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using arbioApp.Modules.Principal.Dashboard.CIAL;
-using DevExpress.XtraGrid;
-using arbioApp.Models;
-using System.Reflection;
-using DevExpress.XtraEditors.Repository;
-using DevExpress.XtraTreeList.Nodes;
-using DevExpress.XtraGrid.Views.Grid;
 using System.Globalization;
-using DevExpress.XtraEditors.Controls;
-//using Objets100cLib;
-using arbioApp.DTO;
-using arbioApp.Services;
-using arbioApp.Repositories.ModelsRepository;
-using arbioApp.Models.Json;
-using arbioApp.Modules.Principal.DI.Services;
-using DevExpress.DataAccess.DataFederation;
-using DevExpress.ChartRangeControlClient.Core;
-using arbioApp.Modules.Principal.DI.Repositories.ModelsRepository;
-using DevExpress.XtraBars.Customization;
-using DevExpress.Data;
-using DevExpress.XtraReports.UI;
+using System.IO;
+using System.Linq;
 ////using Microsoft.Office.Interop.Outlook;
 using System.Net;
-using DevExpress.Pdf.Xmp;
-using System.Data.Entity;
-using DevExpress.DataProcessing.InMemoryDataProcessor.GraphGenerator;
-using DevExpress.XtraExport.Helpers;
-using DevExpress.DashboardWin.Design;
-using Exception = System.Exception;
-using DevExpress.XtraGrid.Columns;
-using DevExpress.DataAccess.Excel;
-using System.IO;
-using DevExpress.Spreadsheet;
-using FieldInfo = DevExpress.DataAccess.Excel.FieldInfo;
-using DevExpress.DataAccess.UI.Excel;
-using System.Collections;
-using DevExpress.XtraSplashScreen;
-using System.Threading;
-using DevExpress.DataAccess.Sql;
-using DevExpress.CodeParser;
-using DevExpress.Utils.About;
-using DevExpress.XtraTab;
-using arbioApp.Modules.Helpers;
-using DevExpress.XtraCharts.Native;
-using DevExpress.XtraSpreadsheet;
+using System.Reflection;
 using System.Security.AccessControl;
-using DevExpress.XtraPrinting;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using DevExpress.XtraSpreadsheet.Import.Xls;
-using Syncfusion.Windows.Forms.Maps;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using Exception = System.Exception;
+using FieldInfo = DevExpress.DataAccess.Excel.FieldInfo;
 
 
 namespace arbioApp.Modules.Principal.DI._2_Documents
@@ -1488,78 +1491,78 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         short DL_NoRef = (short)(gvLigneEdit.RowCount + 1);
                         int dlno = GetMaxDLNo() + 1;
 
-                        _f_DOCLIGNEService.AjouterF_DOCLIGNE(
-                            typeDoc,
-                            CT_NumClient,
-                            dopiecetxt.Text,
-                            DO_Date,
-                            numeroLigneDL_Ligne,
-                            docEnCours,
-                            arRef,
-                            arDesign,
-                            DLTaxe1,
-                            qte,
-                            typeDoc.ToString(),
-                            articleChoisi,
-                            qte.ToString(),
-                            remisePourcent.ToString(),
-                            puNet.ToString(),
-                            collab,
-                            DL_NoRef,
-                            puBrut,
-                            DO_DateLivr,
-                            comboBoxAffaire.Text,
-                            montantTTC.ToString(),
-                            montantHT.ToString(),
-                            DateTime.Now,
-                            DE_No,
-                            dlno,
-                            retenu);
+
+                            _f_DOCLIGNEService.AjouterF_DOCLIGNE(
+                                typeDoc,
+                                CT_NumClient,
+                                dopiecetxt.Text,
+                                DO_Date,
+                                numeroLigneDL_Ligne,
+                                docEnCours,
+                                arRef,
+                                arDesign,
+                                DLTaxe1,
+                                qte,
+                                typeDoc.ToString(),
+                                articleChoisi,
+                                qte.ToString(),
+                                remisePourcent.ToString(),
+                                puNet.ToString(),
+                                collab,
+                                DL_NoRef,
+                                puBrut,
+                                DO_DateLivr,
+                                comboBoxAffaire.Text,
+                                montantTTC.ToString(),
+                                montantHT.ToString(),
+                                DateTime.Now,
+                                DE_No,
+                                dlno,
+                                retenu);
 
 
-                        //UPDATE LES PRIX DANS F_DOCENTETE
+                            //UPDATE LES PRIX DANS F_DOCENTETE
 
-                        DataTable dt = (DataTable)gvLigneEdit.GridControl.DataSource;
-                        string doPiece = dopiecetxt.Text;//dt.Rows[row]["DO_Piece"].ToString();
-                        decimal totalHTNet = dt.AsEnumerable()
-                                        .Where(row =>
-                                            row["DL_MontantHT"] != DBNull.Value &&
-                                            row["DO_Piece"] != DBNull.Value &&
-                                            row["Retenu"] != DBNull.Value &&
-                                            Convert.ToInt32(row["Retenu"]) != 0 &&
-                                            row["DO_Piece"].ToString() == doPiece
-                                        )
-                                        .Sum(row => Convert.ToDecimal(row["DL_MontantHT"]));
-                        decimal totalTTCNet = dt.AsEnumerable()
-                                        .Where(row =>
-                                            row["DL_MontantTTC"] != DBNull.Value &&
-                                            row["DO_Piece"] != DBNull.Value &&
-                                            row["Retenu"] != DBNull.Value &&
-                                            Convert.ToInt32(row["Retenu"]) != 0 &&
-                                            row["DO_Piece"].ToString() == doPiece
-                                        )
-                                        .Sum(row => Convert.ToDecimal(row["DL_MontantTTC"]));
-                        _f_DOCENTETEService.UpdateDO_Totaux_HT_Net_TTC(dopiecetxt.Text, puNet, 0, totalHTNet, totalTTCNet);
+                            DataTable dt = (DataTable)gvLigneEdit.GridControl.DataSource;
+                            string doPiece = dopiecetxt.Text;//dt.Rows[row]["DO_Piece"].ToString();
+                            decimal totalHTNet = dt.AsEnumerable()
+                                            .Where(row =>
+                                                row["DL_MontantHT"] != DBNull.Value &&
+                                                row["DO_Piece"] != DBNull.Value &&
+                                                row["Retenu"] != DBNull.Value &&
+                                                Convert.ToInt32(row["Retenu"]) != 0 &&
+                                                row["DO_Piece"].ToString() == doPiece
+                                            )
+                                            .Sum(row => Convert.ToDecimal(row["DL_MontantHT"]));
+                            decimal totalTTCNet = dt.AsEnumerable()
+                                            .Where(row =>
+                                                row["DL_MontantTTC"] != DBNull.Value &&
+                                                row["DO_Piece"] != DBNull.Value &&
+                                                row["Retenu"] != DBNull.Value &&
+                                                Convert.ToInt32(row["Retenu"]) != 0 &&
+                                                row["DO_Piece"].ToString() == doPiece
+                                            )
+                                            .Sum(row => Convert.ToDecimal(row["DL_MontantTTC"]));
+                            _f_DOCENTETEService.UpdateDO_Totaux_HT_Net_TTC(dopiecetxt.Text, puNet, 0, totalHTNet, totalTTCNet);
 
-                        // Mise à jour F_ARTSTOCK
-                        object rawValue = gvLigneEdit.GetRowCellValue(row, "DL_Qte");
+                            // Mise à jour F_ARTSTOCK
+                            object rawValue = gvLigneEdit.GetRowCellValue(row, "DL_Qte");
 
-                        decimal quantiteEcriteStock = 0;
+                            decimal quantiteEcriteStock = 0;
 
-                        if (rawValue != null && !string.IsNullOrWhiteSpace(rawValue.ToString()))
-                        {
-                            decimal.TryParse(rawValue.ToString(), out quantiteEcriteStock);
-                        }
-                        else
-                        {
-                            quantiteEcriteStock = 0; // ou une valeur par défaut, ou lever une alerte si c'est anormal
-                        }
-                        //decimal quantiteEcriteStock = int.Parse(gvLigneEdit.GetRowCellValue(row, "DL_Qte").ToString());
-                        _f_ARTSTOCKService.UpdateMontantEtQuantiteStock(_typeDocument, arRef, quantiteEcriteStock, previousQuantite, DE_No);
+                            if (rawValue != null && !string.IsNullOrWhiteSpace(rawValue.ToString()))
+                            {
+                                decimal.TryParse(rawValue.ToString(), out quantiteEcriteStock);
+                            }
+                            else
+                            {
+                                quantiteEcriteStock = 0; // ou une valeur par défaut, ou lever une alerte si c'est anormal
+                            }
+                            //decimal quantiteEcriteStock = int.Parse(gvLigneEdit.GetRowCellValue(row, "DL_Qte").ToString());
+                            _f_ARTSTOCKService.UpdateMontantEtQuantiteStock(_typeDocument, arRef, quantiteEcriteStock, previousQuantite, DE_No);
 
-                        // Mise à jour F_ARTSTOCKEMPL
-                        //_f_ARTSTOCKEMPLService.UpdateArtstockEmpl(_typeDocument, CT_NumClient, numeroLigneDL_Ligne, arRef, previousQuantite, quantiteEcriteStock, DE_No);
-
+                            // Mise à jour F_ARTSTOCKEMPL
+                            //_f_ARTSTOCKEMPLService.UpdateArtstockEmpl(_typeDocument, CT_NumClient, numeroLigneDL_Ligne, arRef, previousQuantite, quantiteEcriteStock, DE_No);
                     }
                 }
 
@@ -1572,6 +1575,41 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 MethodBase m = MethodBase.GetCurrentMethod();
                 MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private bool not_existence_ref(string cond)
+        {
+
+            bool exist = true;
+            using (SqlConnection connection = new SqlConnection(
+                $"Data Source=SRV-ARB;Initial Catalog=ARBIOCHEM;User ID=Dev;Password=1234;TrustServerCertificate=True"))
+                {
+                    try
+                    {
+                        connection.Open();
+
+                        // Vérifier si l'utilisateur a changé son mot de passe
+                        string query = "SELECT AR_Ref FROM dbo.F_ARTICLE WHERE AR_Ref = @ar_ref";
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@ar_ref", cond);
+
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    exist = false;
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MethodBase m = MethodBase.GetCurrentMethod();
+                        MessageBox.Show($"Une erreur est survenue :{m}  : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            return exist;
         }
         private void Hyperlink_Click_AddLigne(object sender, EventArgs e)
         {
@@ -3123,45 +3161,46 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         ExcelDataSource excelDataSource;
         private void hyperlinkLabelControl5_Click(object sender, EventArgs e)
         {
-            try
-            {
-                xtraOpenFileDialog1.Filter = "Microsoft Excel Files (*.xlsx)|*.xlsx";
-                if (xtraOpenFileDialog1.ShowDialog() != DialogResult.OK) return;
-
-                string filePath = xtraOpenFileDialog1.FileName;
-
-                // Charger les données depuis Excel
-                Workbook workbook = new Workbook();
-                workbook.LoadDocument(filePath);
-                string sheetName = workbook.Worksheets[0].Name;
-
-                ExcelDataSource excelDataSource = new ExcelDataSource
+                try
                 {
-                    FileName = filePath,
-                    SourceOptions = new ExcelSourceOptions(new ExcelWorksheetSettings(sheetName, "A:E"))
-                };
+                    xtraOpenFileDialog1.Filter = "Microsoft Excel Files (*.xlsx)|*.xlsx";
+                    if (xtraOpenFileDialog1.ShowDialog() != DialogResult.OK) return;
 
-                excelDataSource.Schema.AddRange(new FieldInfo[]
-                {
-            new FieldInfo { Name = "CT_Num", Type = typeof(string) },
-            new FieldInfo { Name = "AR_Ref", Type = typeof(string) },
-            new FieldInfo { Name = "DL_Design", Type = typeof(string) },
-            new FieldInfo { Name = "DL_PrixUnitaire", Type = typeof(decimal) },
-            new FieldInfo { Name = "DL_Qte", Type = typeof(decimal) }
-                });
+                    string filePath = xtraOpenFileDialog1.FileName;
 
-                excelDataSource.Fill();
-                DataTable dataDocLigneImport = excelDataSource.ToDataTable();
+                    // Charger les données depuis Excel
+                    Workbook workbook = new Workbook();
+                    workbook.LoadDocument(filePath);
+                    string sheetName = workbook.Worksheets[0].Name;
+
+                    ExcelDataSource excelDataSource = new ExcelDataSource
+                    {
+                        FileName = filePath,
+                        SourceOptions = new ExcelSourceOptions(new ExcelWorksheetSettings(sheetName, "A:E"))
+                    };
+
+                    excelDataSource.Schema.AddRange(new FieldInfo[]
+                    {
+                        new FieldInfo { Name = "CT_Num", Type = typeof(string) },
+                        new FieldInfo { Name = "AR_Ref", Type = typeof(string) },
+                        new FieldInfo { Name = "DL_Design", Type = typeof(string) },
+                        new FieldInfo { Name = "DL_PrixUnitaire", Type = typeof(decimal) },
+                        new FieldInfo { Name = "DL_Qte", Type = typeof(decimal) }
+                    });
+
+                    excelDataSource.Fill();
+                    DataTable dataDocLigneImport = excelDataSource.ToDataTable();
 
 
-                if (dataDocLigneImport.Rows.Count == 0)
-                {
-                    XtraMessageBox.Show("Aucune ligne trouvée dans le fichier Excel.");
-                    return;
-                }
+                    if (dataDocLigneImport.Rows.Count == 0)
+                    {
+                        XtraMessageBox.Show("Aucune ligne trouvée dans le fichier Excel.");
+                        return;
+                    }
 
-                SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true, false);
-
+                   
+                string rec_arref = "";
+                bool t_ok = false;
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
@@ -3171,115 +3210,129 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                     foreach (DataRow row in dataDocLigneImport.Rows)
                     {
-                        current++;
-                        SplashScreenManager.Default.SetWaitFormDescription($"{current}/{total}");
-
+                       
 
                         int dotype = 10;
                         string arRef = row["AR_Ref"]?.ToString() ?? "";
                         string ctNum = row["CT_Num"]?.ToString() ?? "";
+                        rec_arref = row["AR_Ref"]?.ToString() ?? "";
 
                         decimal dlQte = row["DL_Qte"] != DBNull.Value ? Convert.ToDecimal(row["DL_Qte"]) : 0;
 
                         decimal DLTaxe1 = 0;
-                        F_ARTICLE articleChoisi = _f_ARTICLERepository.GetF_ARTICLEByAR_Ref(arRef);
-                        int? DE_No = Convert.ToInt32(lkDepot.EditValue);
-                        int? dl_Ligne = 0;
-                        decimal previousQuantite = 0;
-                        decimal remisePourcent = 0;
-                        string arDesign = row["DL_Design"]?.ToString() ?? "";
-                        decimal puBrut = row["DL_PrixUnitaire"] != DBNull.Value ? Convert.ToDecimal(row["DL_PrixUnitaire"]) : 0;
-                        decimal puNet = puBrut * (1 - remisePourcent / 100);
-                        decimal montantHT = dlQte * puNet;
-                        decimal montantTTC = montantHT * (1 + DLTaxe1 / 100);
-                        int retenu = 1;
-                        F_DOCENTETE docEnCours = _f_DOCENTETERepository.GetBy_DO_Piece_And_Type(dopiecetxt.Text);
-                        F_COLLABORATEUR collab = _listeCollaborateurs.Where(c => c.CO_No == (int)lkEdCollaborateur.EditValue).FirstOrDefault();
-                        DateTime DO_Date = dateSaisie.DateTime;
-                        DateTime DO_DateLivr;
-                        if (datelivrprev.EditValue == null || !(datelivrprev.EditValue is DateTime))
+
+                        if (not_existence_ref(arRef.ToString()))
                         {
-                            DO_DateLivr = new DateTime(1753, 01, 01);
+                            MessageBox.Show("La référence : " + arRef.ToString() +" n'existe pas dans la base, veuillez vous rapprocher du service informatique, merci!!!!", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
                         }
                         else
                         {
-                            DO_DateLivr = (DateTime)datelivrprev.EditValue;
-                        }
-                        DateTime dateLivrReal;
-                        if (datelivrprev.EditValue == null || !(datelivrprev.EditValue is DateTime))
-                        {
-                            dateLivrReal = new DateTime(1753, 01, 01);
-                        }
-                        else
-                        {
-                            dateLivrReal = (DateTime)datelivrprev.EditValue;
-                        }
-                        //string doAffaire = caNum;
+                            current++;
+                            SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true, false);
+                            SplashScreenManager.Default.SetWaitFormDescription($"{current}/{total}");
+                            
 
-                        int? maxValueDL_Ligne = 0;
-
-                        for (int i = 0; i < gvLigneEdit.RowCount; i++)
-                        {
-                            object dlligne = gvLigneEdit.GetRowCellValue(i, "DL_Ligne");
-                            if (dlligne != null && int.TryParse(dlligne.ToString(), out int val))
+                            F_ARTICLE articleChoisi = _f_ARTICLERepository.GetF_ARTICLEByAR_Ref(arRef);
+                            int? DE_No = Convert.ToInt32(lkDepot.EditValue);
+                            int? dl_Ligne = 0;
+                            decimal previousQuantite = 0;
+                            decimal remisePourcent = 0;
+                            string arDesign = row["DL_Design"]?.ToString() ?? "";
+                            decimal puBrut = row["DL_PrixUnitaire"] != DBNull.Value ? Convert.ToDecimal(row["DL_PrixUnitaire"]) : 0;
+                            decimal puNet = puBrut * (1 - remisePourcent / 100);
+                            decimal montantHT = dlQte * puNet;
+                            decimal montantTTC = montantHT * (1 + DLTaxe1 / 100);
+                            int retenu = 1;
+                            F_DOCENTETE docEnCours = _f_DOCENTETERepository.GetBy_DO_Piece_And_Type(dopiecetxt.Text);
+                            F_COLLABORATEUR collab = _listeCollaborateurs.Where(c => c.CO_No == (int)lkEdCollaborateur.EditValue).FirstOrDefault();
+                            DateTime DO_Date = dateSaisie.DateTime;
+                            DateTime DO_DateLivr;
+                            if (datelivrprev.EditValue == null || !(datelivrprev.EditValue is DateTime))
                             {
-                                if (val > maxValueDL_Ligne)
+                                DO_DateLivr = new DateTime(1753, 01, 01);
+                            }
+                            else
+                            {
+                                DO_DateLivr = (DateTime)datelivrprev.EditValue;
+                            }
+                            DateTime dateLivrReal;
+                            if (datelivrprev.EditValue == null || !(datelivrprev.EditValue is DateTime))
+                            {
+                                dateLivrReal = new DateTime(1753, 01, 01);
+                            }
+                            else
+                            {
+                                dateLivrReal = (DateTime)datelivrprev.EditValue;
+                            }
+                            //string doAffaire = caNum;
+
+                            int? maxValueDL_Ligne = 0;
+
+                            for (int i = 0; i < gvLigneEdit.RowCount; i++)
+                            {
+                                object dlligne = gvLigneEdit.GetRowCellValue(i, "DL_Ligne");
+                                if (dlligne != null && int.TryParse(dlligne.ToString(), out int val))
                                 {
-                                    maxValueDL_Ligne = val;
+                                    if (val > maxValueDL_Ligne)
+                                    {
+                                        maxValueDL_Ligne = val;
+                                    }
                                 }
                             }
+
+                            int? numeroLigneDL_Ligne = maxValueDL_Ligne + 1000;
+                            string reference = txtDoRef.Text;
+                            short typeDoc = (short)_f_DOCENTETEService.GetDocTypeNo(_prefix);
+                            short DL_NoRef = (short)(gvLigneEdit.RowCount + 1);
+                            int dlno = GetMaxDLNo() + 1;
+
+                            _f_DOCLIGNEService.AjouterF_DOCLIGNE(
+                                typeDoc,
+                                ctNum,
+                                dopiecetxt.Text,
+                                DO_Date,
+                                numeroLigneDL_Ligne,
+                                docEnCours,
+                                arRef,
+                                arDesign,
+                                DLTaxe1,
+                                dlQte,
+                                typeDoc.ToString(),
+                                articleChoisi,
+                                Convert.ToString(dlQte),
+                                remisePourcent.ToString(),
+                                puNet.ToString(),
+                                collab,
+                                DL_NoRef,
+                                puBrut,
+                                DO_DateLivr,
+                                comboBoxAffaire.Text,
+                                montantTTC.ToString(),
+                                montantHT.ToString(),
+                                DateTime.Now,
+                                DE_No,
+                                dlno,
+                                retenu);
+
+
+                            //UPDATE LES PRIX DANS F_DOCENTETE
+
+
+                            MettreAJourTotauxDepuisBD(dopiecetxt.Text);
+                            conn.Close();
+                            string _currentDocPieceNo = dopiecetxt.Text;
+                            InitializeGrid(gcLigneEdit, _currentDocPieceNo);
+                            SplashScreenManager.CloseForm();
+                            t_ok = true;
                         }
-
-                        int? numeroLigneDL_Ligne = maxValueDL_Ligne + 1000;
-                        string reference = txtDoRef.Text;
-                        short typeDoc = (short)_f_DOCENTETEService.GetDocTypeNo(_prefix);
-                        short DL_NoRef = (short)(gvLigneEdit.RowCount + 1);
-                        int dlno = GetMaxDLNo() + 1;
-
-                        _f_DOCLIGNEService.AjouterF_DOCLIGNE(
-                            typeDoc,
-                            ctNum,
-                            dopiecetxt.Text,
-                            DO_Date,
-                            numeroLigneDL_Ligne,
-                            docEnCours,
-                            arRef,
-                            arDesign,
-                            DLTaxe1,
-                            dlQte,
-                            typeDoc.ToString(),
-                            articleChoisi,
-                            Convert.ToString(dlQte),
-                            remisePourcent.ToString(),
-                            puNet.ToString(),
-                            collab,
-                            DL_NoRef,
-                            puBrut,
-                            DO_DateLivr,
-                            comboBoxAffaire.Text,
-                            montantTTC.ToString(),
-                            montantHT.ToString(),
-                            DateTime.Now,
-                            DE_No,
-                            dlno,
-                            retenu);
-
-
-                        //UPDATE LES PRIX DANS F_DOCENTETE
-
-
-
                     }
 
-
-                    MettreAJourTotauxDepuisBD(dopiecetxt.Text);
-                    conn.Close();
-                    string _currentDocPieceNo = dopiecetxt.Text;
-                    InitializeGrid(gcLigneEdit, _currentDocPieceNo);
+                    if (t_ok)
+                    {
+                        XtraMessageBox.Show("Importation terminée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-
-                SplashScreenManager.CloseForm();
-                XtraMessageBox.Show("Importation terminée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
