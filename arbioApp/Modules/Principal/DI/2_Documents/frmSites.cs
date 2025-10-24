@@ -145,11 +145,9 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         
         private void simpleButton1_Click(object sender, EventArgs e)
         {
-            
-                parentEditDocument.ExecuteStockAlert();
-                parentEditDocument.ChargerArtFrns();
-                this.Close();
-            
+            parentEditDocument.ExecuteStockAlert();
+            parentEditDocument.ChargerArtFrns();
+            this.Close();
         }
         
     }

@@ -77,6 +77,7 @@ namespace arbioApp.Repositories.ModelsRepository
                     .FirstOrDefault(doc => doc.DO_Piece == DO_Piece);
             }
         }
+
         public F_DOCENTETE GetBy_CbMarq(int cbMarqSource)
         {
             using (AppDbContext context = new AppDbContext())

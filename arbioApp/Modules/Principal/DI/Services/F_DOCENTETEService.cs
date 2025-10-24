@@ -496,6 +496,16 @@ namespace arbioApp.Services
             f_DOCENTETE.DO_Statut = Do_Statut;
             _f_DOCENTETERepository.UpdateProprietesF_DOCENTETE(f_DOCENTETE);
         }
+
+        public void Cloturer_F_DOCENTETE(string currentDocPieceNo)
+        {
+            F_DOCENTETE f_DOCENTETE = _f_DOCENTETERepository.GetBy_DO_Piece_And_Type(currentDocPieceNo);
+            if (f_DOCENTETE == null)
+                throw new Exception("Document non trouvé pour mise à jour.");
+
+            f_DOCENTETE.DO_Cloture= 1;
+            _context.SaveChanges();
+        }
         public void TransformF_DOCENTETE(int cbMarqSource, short newDoType, string currentDocPieceNo, string newDocPieceNo, DateTime dateLivrPrevu, DateTime dateLivrReal,
 string reference, string caNum, int representant, short? numExpedit,
 string expeditInt, string entete, int DE_No, decimal Do_Taxe1, short Do_Statut, DateTime newDoDate)

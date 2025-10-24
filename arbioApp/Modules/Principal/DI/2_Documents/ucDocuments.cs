@@ -1,42 +1,47 @@
-﻿using DevExpress.XtraEditors;
+﻿//using Microsoft.Office.Interop.Outlook;
+using arbioApp.Models;
+using arbioApp.Modules.Principal.DI._2_Documents;
+using arbioApp.Modules.Principal.DI.Models;
+//using Objets100cLib;
+using arbioApp.Repositories.ModelsRepository;
+using arbioApp.Services;
+using DevExpress.ChartRangeControlClient.Core;
+using DevExpress.Charts.Native;
+using DevExpress.CodeParser;
+using DevExpress.DashboardCommon.Viewer;
+using DevExpress.Utils;
+using DevExpress.Xpo;
+using DevExpress.XtraBars;
+using DevExpress.XtraCharts.Native;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraExport.Helpers;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraRichEdit.Fields;
+using DevExpress.XtraTreeList;
+using DevExpress.XtraVerticalGrid;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using arbioApp.Modules.Principal.DI._2_Documents;
-using System.Data.SqlClient;
-using DevExpress.XtraEditors.Repository;
-using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraGrid;
-using DevExpress.Charts.Native;
-using System.Net;
-using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraExport.Helpers;
-using DevExpress.DashboardCommon.Viewer;
-using DevExpress.Utils;
-using DevExpress.XtraGrid.Columns;
-using DevExpress.XtraTreeList;
-//using Microsoft.Office.Interop.Outlook;
-using arbioApp.Models;
-//using Objets100cLib;
-using arbioApp.Repositories.ModelsRepository;
-using DevExpress.ChartRangeControlClient.Core;
 using BindingSource = System.Windows.Forms.BindingSource;
-using DevExpress.Xpo;
-using arbioApp.Modules.Principal.DI.Models;
-using DevExpress.XtraBars;
-using System.IO;
-using DevExpress.XtraCharts.Native;
 
 
 namespace arbioApp.Modules.Principal.DI._2_Documents
 {
+
     public partial class ucDocuments : DevExpress.XtraEditors.XtraUserControl
     {
         private static ucDocuments _instance;
@@ -44,6 +49,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         private SqlDataAdapter dataAdapter;
         private SqlConnection connection;
         public static string connectionString;
+        DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit btnCloturer = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+        private readonly F_DOCENTETEService _f_DOCENTETEService;
+        private readonly F_DOCENTETERepository _f_DOCENTETERepository;
+        private string rec_dopiece;
 
         public static ucDocuments Instance
         {
@@ -57,10 +66,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         public ucDocuments()
         {
-            InitializeComponent();           
-            CreateDatabaseMenu();    
-            
-            
+            InitializeComponent();
+            CreateDatabaseMenu();
         }
 
 
@@ -70,7 +77,6 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         }
 
 
-
         private void btnNouveauDoc_Click(object sender, EventArgs e)
         {
             frmMenuAchat _frmMenuAchat = new frmMenuAchat();
@@ -78,6 +84,54 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         }
 
+        private void BtnCloturer_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            GridView view = gcEntetes.FocusedView as GridView;
+            int rowHandle = view.FocusedRowHandle;
+
+            var recup_do_piece = view.GetRowCellValue(rowHandle, "DO_Piece");
+
+            bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "CLOTURE");
+
+            if (autorise)
+            {
+                DialogResult result = XtraMessageBox.Show(
+                    "Voulez-vous vraiment clôturer le document N° " + recup_do_piece + " ?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    using (AppDbContext context = new AppDbContext())
+                    {
+                        var lst = context.F_DOCENTETE.FirstOrDefault(doc => doc.DO_Piece == recup_do_piece);
+
+                        if (lst != null)
+                        {
+                            lst.DO_Cloture = 1;
+                        }
+
+                        context.SaveChanges();
+                        MessageBox.Show("Document N °" + recup_do_piece + " clôturé avec succès!!!!", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Enabled = false;
+                        ChargerDonneesDepuisBDD();
+                        this.Enabled = true;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Vous n'avez pas l'autorisation de clôturer un document !",
+                    "Clôture bloquée",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+
+            }
+        }
 
         private void ucDocuments_Load(object sender, EventArgs e)
         {
@@ -87,11 +141,9 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             btnOuvrirDoc.Enabled = false;
             btnNouveauDoc.Enabled = false;
             btnRefresh.Enabled = false;
-
+            gvEntete.CustomRowCellEdit += gvEntete_CustomRowCellEdit;
+            btnCloturer.ButtonClick += BtnCloturer_ButtonClick;
         }
-
-
-
 
         List<F_DOCENTETE> dotype = new List<F_DOCENTETE>
         {
@@ -155,6 +207,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     gvEntete.Columns["DO_TotalHT"].DisplayFormat.FormatString = "N2";
                     gvEntete.Columns["DO_TotalTTC"].DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
                     gvEntete.Columns["DO_TotalTTC"].DisplayFormat.FormatString = "N2";
+
+                    SetupCloturerColumn();
                 }
             }
             catch (System.Exception ex)
@@ -162,6 +216,114 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 MethodBase m = MethodBase.GetCurrentMethod();
                 MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void gvEntete_CustomRowCellEdit(object sender, DevExpress.XtraGrid.Views.Grid.CustomRowCellEditEventArgs e)
+        {
+            if (e.Column.FieldName == "Cloturer")
+            {
+                string doPieceValue = gvEntete.GetRowCellValue(e.RowHandle, "DO_Piece")?.ToString();
+
+                if (!string.IsNullOrEmpty(doPieceValue) && doPieceValue.Contains("ABR"))
+                {
+                    if (!tester_cloturer(doPieceValue))
+                    {
+                        gvEntete.GridControl.RepositoryItems.Add(btnCloturer);
+                        e.RepositoryItem = btnCloturer;
+                    }
+                    else
+                    {
+                        gvEntete.Columns["Cloturer"].ColumnEdit = null;
+                        gvEntete.GridControl.RepositoryItems.Remove(btnCloturer);
+                    }
+                }
+                else
+                {
+                    gvEntete.Columns["Cloturer"].ColumnEdit = null; 
+                    gvEntete.GridControl.RepositoryItems.Remove(btnCloturer);
+                }
+            }
+        }
+
+        private bool tester_cloturer(string doPiece)
+        {
+            bool test = false;
+            using (AppDbContext context = new AppDbContext())
+            {
+                var lst = context.F_DOCENTETE.FirstOrDefault(doc => doc.DO_Piece == doPiece);
+
+                if (lst.DO_Cloture == 1)
+                {
+                    test = true;
+                }
+            }
+            return test;
+        }
+
+        private void SetupCloturerColumn()
+        {
+            var oldColumn = gvEntete.Columns.ColumnByFieldName("Cloturer");
+            if (oldColumn != null)
+            {
+                gvEntete.Columns.Remove(oldColumn);
+            }
+
+            // Retirer l'ancien RepositoryItem s’il existe déjà dans la collection
+            var oldRepo = gvEntete.GridControl.RepositoryItems
+                .OfType<DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit>()
+                .FirstOrDefault(r => r == btnCloturer);
+
+            if (oldRepo != null)
+            {
+                gvEntete.GridControl.RepositoryItems.Remove(oldRepo);
+            }
+
+            btnCloturer = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            btnCloturer.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
+            btnCloturer.Buttons.Clear();
+
+            var cloturerButton = new DevExpress.XtraEditors.Controls.EditorButton(
+                DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph)
+            {
+                Caption = "Clôturer",
+                Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph
+            };
+
+            btnCloturer.ButtonClick += BtnCloturer_ButtonClick;
+
+            // 🎨 Style du bouton
+            cloturerButton.Appearance.BackColor = System.Drawing.Color.FromArgb(46, 204, 113); // Vert
+            cloturerButton.Appearance.ForeColor = System.Drawing.Color.White;                  // Texte blanc
+            cloturerButton.Appearance.Font = new System.Drawing.Font("Segoe UI", 9, System.Drawing.FontStyle.Bold);
+            cloturerButton.Appearance.Options.UseBackColor = true;
+            cloturerButton.Appearance.Options.UseForeColor = true;
+            cloturerButton.Appearance.Options.UseFont = true;
+            cloturerButton.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+
+            // Appliquer le style au bouton
+            btnCloturer.Buttons.Add(cloturerButton);
+            btnCloturer.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Flat; // bord plat moderne
+            btnCloturer.AutoHeight = false;
+
+            // Ajouter au grid
+            gvEntete.GridControl.RepositoryItems.Add(btnCloturer);
+
+            // Créer la colonne
+            DevExpress.XtraGrid.Columns.GridColumn cloturerColumn = new DevExpress.XtraGrid.Columns.GridColumn();
+            cloturerColumn.Caption = "Action finale";
+            cloturerColumn.FieldName = "Cloturer";
+            cloturerColumn.Visible = true;
+            cloturerColumn.VisibleIndex = gvEntete.Columns.Count;
+            cloturerColumn.ColumnEdit = btnCloturer;
+            cloturerColumn.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+
+            // Centrer le contenu dans la cellule
+            cloturerColumn.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            cloturerColumn.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+
+            // Ajouter la colonne au GridView
+            gvEntete.Columns.Add(cloturerColumn);
+
         }
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -179,11 +341,6 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         private void Hyperlink_Click(object sender, EventArgs e)
         {
             btnOuvrirDoc_Click(sender, e);  
-        }
-
-        private void gvEntete_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
-        {
-
         }
 
         private void gvEntete_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
@@ -427,11 +584,6 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 //new DoTypeItem { Value = 18, Text = "Archive" },
 
             };
-
-        private void barButtonItem1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-
-        }
 
         private void CreateDatabaseMenu()
         {

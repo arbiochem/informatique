@@ -1620,6 +1620,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         {
             string query1 = @"SELECT * FROM dbo.VW_ETAT_STOCK";
 
+
             string connectionStringArbapp = $"Server={FrmMdiParent.DataSourceNameValueParent};" +
                                             $"Database=arbapp;User ID=Dev;Password=1234;" +
                                             $"TrustServerCertificate=True;Connection Timeout=120;";
@@ -1630,6 +1631,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             treeList1.BeginUpdate();
             treeList1.ClearNodes();
             treeList1.Columns.Clear();
+
 
             var parentColumns = new[]
                 { "SITE", "FAMILLE", "REFERENCE", "DESIGNATION", "CT_Num", "CT_Intitule", "PURCHASE", "AF_PrixAch" };
@@ -1812,126 +1814,148 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             return Guid.Empty;
         }
 
+        private bool tester_cloturer(string doPiece)
+        {
+            bool test = false;
+            using (AppDbContext context = new AppDbContext())
+            {
+                var lst = context.F_DOCENTETE.FirstOrDefault(doc => doc.DO_Piece == doPiece);
+
+                if (lst.DO_Cloture == 1)
+                {
+                    test = true;
+                }
+            }
+            return test;
+        }
         private void btnValider_Click(object sender, EventArgs e)
         {
-           
-            try
-            {
-                if (!ValiderChampsObligatoires())
-                    return;
-
-                F_DOCENTETE doc = _f_DOCENTETEService.GetDocByPiece(dopiecetxt.Text, _listeDocs);
-                string _currentDocPieceNo = dopiecetxt.Text;
-                if (doc != null)
+            if (tester_cloturer(dopiecetxt.Text)){
+                MessageBox.Show(
+                    "Ce document est déjà clôturé, vous ne pouvez plus modifier son contenu!!!!",
+                    "Modification bloquée",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+            else {
+                try
                 {
-                    if (dopiecetxt.Text.ToString().StartsWith("AFA"))
-                    {
-                        bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
+                    if (!ValiderChampsObligatoires())
+                        return;
 
-                        if (autorise)
+                    F_DOCENTETE doc = _f_DOCENTETEService.GetDocByPiece(dopiecetxt.Text, _listeDocs);
+                    string _currentDocPieceNo = dopiecetxt.Text;
+                    if (doc != null)
+                    {
+                        if (dopiecetxt.Text.ToString().StartsWith("AFA"))
                         {
-                            UpdateFDOCENTETE();
-                            _ucDocuments.RafraichirDonnees();
-                            gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
-                            StatutActuel = Convert.ToInt32(lkStatut.EditValue);
-                            MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
+
+                            if (autorise)
+                            {
+                                UpdateFDOCENTETE();
+                                _ucDocuments.RafraichirDonnees();
+                                gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                                StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                                MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show(
+                                    "Vous n'avez pas l'autorisation de mettre à jour une facture !",
+                                    "Modification bloquée",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+
+                            }
                         }
-                        else
+                        else if (dopiecetxt.Text.ToString().StartsWith("APA"))
                         {
-                            MessageBox.Show(
-                                "Vous n'avez pas l'autorisation de mettre à jour une facture !",
-                                "Modification bloquée",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-                            
+                            bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "UPDATE");
+
+                            if (autorise)
+                            {
+                                UpdateFDOCENTETE();
+                                _ucDocuments.RafraichirDonnees();
+                                gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                                StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                                MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show(
+                                    "Vous n'avez pas l'autorisation de mettre à jour un projet d'achat !",
+                                    "Modification bloquée",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+                            }
+                        }
+                        else if (dopiecetxt.Text.ToString().StartsWith("ABC"))
+                        {
+                            bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "UPDATE");
+
+                            if (autorise)
+                            {
+                                UpdateFDOCENTETE();
+                                _ucDocuments.RafraichirDonnees();
+                                gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                                StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                                MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show(
+                                    "Vous n'avez pas l'autorisation de mettre à jour un bon de commande !",
+                                    "Modification bloquée",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+                            }
+                        }
+                        else if (dopiecetxt.Text.ToString().StartsWith("ABR"))
+                        {
+                            bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "UPDATE");
+
+                            if (autorise)
+                            {
+                                UpdateFDOCENTETE();
+                                _ucDocuments.RafraichirDonnees();
+                                gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                                StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                                MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show(
+                                    "Vous n'avez pas l'autorisation de mettre à jour un Bon de réception !",
+                                    "Modification bloquée",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+                            }
                         }
                     }
-                    else if(dopiecetxt.Text.ToString().StartsWith("APA"))
+                    else
                     {
-                        bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "UPDATE");
-
-                        if (autorise)
-                        {
-                            UpdateFDOCENTETE();
-                            _ucDocuments.RafraichirDonnees();
-                            gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
-                            StatutActuel = Convert.ToInt32(lkStatut.EditValue);
-                            MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                "Vous n'avez pas l'autorisation de mettre à jour un projet d'achat !",
-                                "Modification bloquée",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-                        }
-                    }
-                    else if (dopiecetxt.Text.ToString().StartsWith("ABC"))
-                    {
-                        bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "UPDATE");
-
-                        if (autorise)
-                        {
-                            UpdateFDOCENTETE();
-                            _ucDocuments.RafraichirDonnees();
-                            gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
-                            StatutActuel = Convert.ToInt32(lkStatut.EditValue);
-                            MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                "Vous n'avez pas l'autorisation de mettre à jour un bon de commande !",
-                                "Modification bloquée",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-                        }
-                    }
-                    else if (dopiecetxt.Text.ToString().StartsWith("ABR"))
-                    {
-                        bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "UPDATE");
-
-                        if (autorise)
-                        {
-                            UpdateFDOCENTETE();
-                            _ucDocuments.RafraichirDonnees();
-                            gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
-                            StatutActuel = Convert.ToInt32(lkStatut.EditValue);
-                            MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                "Vous n'avez pas l'autorisation de mettre à jour un Bon de réception !",
-                                "Modification bloquée",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-                        }
+                        InsertFDOCENTETE();
+                        _ucDocuments.RafraichirDonnees();
+                        gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                        StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                        MessageBox.Show("Insertion terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                else
+
+                catch (System.Exception ex)
                 {
-                    InsertFDOCENTETE();
-                    _ucDocuments.RafraichirDonnees();
-                    gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
-                    StatutActuel = Convert.ToInt32(lkStatut.EditValue);
-                    MessageBox.Show("Insertion terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MethodBase m = MethodBase.GetCurrentMethod();
+                    MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
                 }
+
             }
-
-            catch (System.Exception ex)
-            {
-                MethodBase m = MethodBase.GetCurrentMethod();
-                MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-            }
-
-
         }
         private void LoadCodeTaxe()
         {
@@ -2718,121 +2742,132 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void barButtonItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (StatutActuel < 2)
+            if (tester_cloturer(dopiecetxt.Text))
             {
-                MessageBox.Show("Le statut actuel ne permet pas de transformer le document.", "Information");
-                return;
+                MessageBox.Show(
+                    "Ce document est déjà clôturé, vous ne pouvez plus modifier son contenu!!!!",
+                    "Modification bloquée",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
-
-            if (dopiecetxt.Text.ToString().StartsWith("APA"))
+            else
             {
-                bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "TRANSFORM");
-
-                if (autorise)
+                if (StatutActuel < 2)
                 {
-                    var dlg = new frmTransform(_typeDocument);
-                    dlg.ParentFormInstance = this;
+                    MessageBox.Show("Le statut actuel ne permet pas de transformer le document.", "Information");
+                    return;
+                }
 
-                    if (dlg.ShowDialog() == DialogResult.OK)
+                if (dopiecetxt.Text.ToString().StartsWith("APA"))
+                {
+                    bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "TRANSFORM");
+
+                    if (autorise)
                     {
-                        this.TransformFDOCENTETE(dlg.doctype);
+                        var dlg = new frmTransform(_typeDocument);
+                        dlg.ParentFormInstance = this;
+
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            this.TransformFDOCENTETE(dlg.doctype);
+                        }
+
+                        // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
+                        _ucDocuments.ChargerDonneesDepuisBDD();
                     }
-
-                    // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
-                    _ucDocuments.ChargerDonneesDepuisBDD();
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "Vous n'avez pas l'autorisation de transformer un projet d'achat !",
-                        "Transformation bloquée",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                    );
-                }
-            }
-            else if(dopiecetxt.Text.ToString().StartsWith("ABR"))
-            {
-                bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "TRANSFORM");
-
-                if (autorise)
-                {
-                    var dlg = new frmTransform(_typeDocument);
-                    dlg.ParentFormInstance = this;
-
-                    if (dlg.ShowDialog() == DialogResult.OK)
+                    else
                     {
-                        this.TransformFDOCENTETE(dlg.doctype);
+                        MessageBox.Show(
+                            "Vous n'avez pas l'autorisation de transformer un projet d'achat !",
+                            "Transformation bloquée",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
                     }
-
-                    // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
-                    _ucDocuments.ChargerDonneesDepuisBDD();
                 }
-                else
+                else if (dopiecetxt.Text.ToString().StartsWith("ABR"))
                 {
-                    MessageBox.Show(
-                        "Vous n'avez pas l'autorisation de transformer un bon de réception !",
-                        "Transformation bloquée",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                    );
-                }
-            }
-            else if (dopiecetxt.Text.ToString().StartsWith("AFA"))
-            {
-                bool autorise = frmMenuAchat.verifier_droit("Facture", "TRANSFORM");
+                    bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "TRANSFORM");
 
-                if (autorise)
-                {
-                    var dlg = new frmTransform(_typeDocument);
-                    dlg.ParentFormInstance = this;
-
-                    if (dlg.ShowDialog() == DialogResult.OK)
+                    if (autorise)
                     {
-                        this.TransformFDOCENTETE(dlg.doctype);
+                        var dlg = new frmTransform(_typeDocument);
+                        dlg.ParentFormInstance = this;
+
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            this.TransformFDOCENTETE(dlg.doctype);
+                        }
+
+                        // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
+                        _ucDocuments.ChargerDonneesDepuisBDD();
                     }
-
-                    // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
-                    _ucDocuments.ChargerDonneesDepuisBDD();
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "Vous n'avez pas l'autorisation de transformer une facture !",
-                        "Transformation bloquée",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                    );
-                }
-            }
-            else if (dopiecetxt.Text.ToString().StartsWith("ABC"))
-            {
-                bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "TRANSFORM");
-
-                if (autorise)
-                {
-                    var dlg = new frmTransform(_typeDocument);
-                    dlg.ParentFormInstance = this;
-
-                    if (dlg.ShowDialog() == DialogResult.OK)
+                    else
                     {
-                        this.TransformFDOCENTETE(dlg.doctype);
+                        MessageBox.Show(
+                            "Vous n'avez pas l'autorisation de transformer un bon de réception !",
+                            "Transformation bloquée",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
                     }
-
-                    // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
-                    _ucDocuments.ChargerDonneesDepuisBDD();
                 }
-                else
+                else if (dopiecetxt.Text.ToString().StartsWith("AFA"))
                 {
-                    MessageBox.Show(
-                        "Vous n'avez pas l'autorisation de transformer un bon de commande!",
-                        "Transformation bloquée",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                    );
+                    bool autorise = frmMenuAchat.verifier_droit("Facture", "TRANSFORM");
+
+                    if (autorise)
+                    {
+                        var dlg = new frmTransform(_typeDocument);
+                        dlg.ParentFormInstance = this;
+
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            this.TransformFDOCENTETE(dlg.doctype);
+                        }
+
+                        // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
+                        _ucDocuments.ChargerDonneesDepuisBDD();
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            "Vous n'avez pas l'autorisation de transformer une facture !",
+                            "Transformation bloquée",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+                    }
+                }
+                else if (dopiecetxt.Text.ToString().StartsWith("ABC"))
+                {
+                    bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "TRANSFORM");
+
+                    if (autorise)
+                    {
+                        var dlg = new frmTransform(_typeDocument);
+                        dlg.ParentFormInstance = this;
+
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            this.TransformFDOCENTETE(dlg.doctype);
+                        }
+
+                        // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
+                        _ucDocuments.ChargerDonneesDepuisBDD();
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            "Vous n'avez pas l'autorisation de transformer un bon de commande!",
+                            "Transformation bloquée",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+                    }
                 }
             }
-
         }
 
 
@@ -3449,30 +3484,42 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                             if (autorise)
                             {
-                                try
+                                if (tester_cloturer(dopiecetxt.Text))
                                 {
-                                    string destinationFolderdoc = $@"\\Srv-arb\documents_achats$\{nodoc}";
-                                    if (!Directory.Exists(destinationFolderdoc))
-                                    {
-                                        Directory.CreateDirectory(destinationFolderdoc);
-                                    }
-
-                                    // 5. Copier chaque fichier
-                                    foreach (string file in selectedFiles)
-                                    {
-                                        string fileName = Path.GetFileName(file);
-                                        string destFile = Path.Combine(destinationFolderdoc, fileName);
-
-                                        File.Copy(file, destFile, true); // true = overwrite si existe déjà
-                                    }
-
-                                    XtraMessageBox.Show("✅ Transfert terminé avec succès !", "Succès",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBox.Show(
+                                        "Ce document est déjà clôturé, vous ne pouvez plus modifier son contenu!!!!",
+                                        "Modification bloquée",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error
+                                    );
                                 }
-                                catch (Exception ex)
+                                else
                                 {
-                                    MethodBase m = MethodBase.GetCurrentMethod();
-                                    MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    try
+                                    {
+                                        string destinationFolderdoc = $@"\\Srv-arb\documents_achats$\{nodoc}";
+                                        if (!Directory.Exists(destinationFolderdoc))
+                                        {
+                                            Directory.CreateDirectory(destinationFolderdoc);
+                                        }
+
+                                        // 5. Copier chaque fichier
+                                        foreach (string file in selectedFiles)
+                                        {
+                                            string fileName = Path.GetFileName(file);
+                                            string destFile = Path.Combine(destinationFolderdoc, fileName);
+
+                                            File.Copy(file, destFile, true); // true = overwrite si existe déjà
+                                        }
+
+                                        XtraMessageBox.Show("✅ Transfert terminé avec succès !", "Succès",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MethodBase m = MethodBase.GetCurrentMethod();
+                                        MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
                                 }
                             }
                             else

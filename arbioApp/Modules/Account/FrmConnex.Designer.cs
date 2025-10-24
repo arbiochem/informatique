@@ -133,6 +133,7 @@
             this.checkEdit11.Size = new System.Drawing.Size(236, 24);
             this.checkEdit11.StyleController = this.layoutControl1;
             this.checkEdit11.TabIndex = 6;
+            this.checkEdit11.CheckedChanged += new System.EventHandler(this.checkEdit11_CheckedChanged);
             // 
             // BtnOK
             // 
