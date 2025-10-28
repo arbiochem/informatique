@@ -426,7 +426,7 @@ namespace arbioApp.Modules.Principal.DI.Services
                     case 13:
                         f_DOCLIGNEToUpdate.DO_Piece = "ABL" + DO_Piece; //BON DE LIVRAISON
                         break;
-                    case 14:
+                    case 18:
                         f_DOCLIGNEToUpdate.DO_Piece = "ABR" + DO_Piece; //BON DE RETOUR
                         break;
                     case 16:
