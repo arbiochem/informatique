@@ -3990,5 +3990,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         {
             ChargerArticles();
         }
+
+        private void frmEditDocument_Activated(object sender, EventArgs e)
+        {
+            bindingNavigator1.Visible=false;
+        }
     }
 }
