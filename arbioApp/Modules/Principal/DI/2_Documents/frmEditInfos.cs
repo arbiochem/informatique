@@ -58,7 +58,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             {
                 // Affichage dans les TextBox
                 txt_prix.Text = fret.DO_PRIX.ToString("0.00");
-                txt_montant.Text = fret.DO_MONTANT.ToString("0.00");
+                //txt_montant.Text = fret.DO_MONTANT.ToString("0.00");
                 txt_poids.Text = fret.DO_POIDS.ToString("0.00");
             }
 
@@ -116,7 +116,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 gridViewFrais.OptionsView.RowAutoHeight = true;
 
 
-                if(txt_montant.Text != "")
+                /*if(txt_montant.Text != "")
                 {
                     gridViewFrais.Columns["FI_Montant_AR"].Summary.Clear();
                     gridViewFrais.Columns["FI_Montant_AR"].Summary.Add(
@@ -133,7 +133,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         "FI_Montant_AR",
                         "Total = {0:n2}" // Format exemple : 2 500.00
                     );
-                }
+                }*/
 
                 var totalMontant = _bindingFrais.Sum(f => f.FI_Montant);
                 totalMontantFrais = totalMontant; // Stocke le total pour utilisation ultérieure
@@ -155,7 +155,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 }
                 //-----------------------------------------------------------------------------------------------
 
-                var typeFraisList = _context.P_TYPEFRAIS.ToList();
+                var typeFraisList = _context.P_TYPEFRAIS.Where(x=>x.FR_Intitule != "FRET").ToList();
 
                 // 2. Créer l'éditeur TreeListLookUpEdit
                 var treeListLookup = new RepositoryItemTreeListLookUpEdit();
@@ -209,6 +209,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 repartitionEditor.Columns["FraisImports"].Visible = false;
                 gridControlFrais.RepositoryItems.Add(repartitionEditor);
                 gridViewFrais.Columns["FI_RepartitionId"].ColumnEdit = repartitionEditor;
+                gridViewFrais.Columns["FI_Montant_AR"].OptionsColumn.AllowEdit = false;
+                gridViewFrais.Columns["FI_Montant_AR"].OptionsColumn.ReadOnly = true;
 
                 var deviseList = _context.P_DEVISE
                                             .Where(d => d.D_Intitule != "" && d.D_Intitule != null)
@@ -266,274 +268,292 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
             else
             {
-                if (_doPiece.ToString().StartsWith("APA"))
+                GridView view = gridViewFrais;
+
+                Boolean pasVide = true;
+                for (int i = 0; i < view.RowCount; i++)
                 {
-                    bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "UPDATE");
+                    var value = view.GetRowCellValue(i, "FI_Piece");
 
-                    if (autorise)
+                    if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
                     {
-                        //Enregistrer Fret
-
-                        // Recherche si le DO_PIECE existe déjà
-                        var existingFret = _context.F_FRETS
-                            .FirstOrDefault(f => f.DO_PIECE == _doPiece);
-
-                        if (existingFret != null)
-                        {
-                            existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
-                            existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
-                            existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
-                        }
-                        else
-                        {
-                            var f_fret = new F_FRET
-                            {
-                                DO_PIECE = _doPiece,
-                                DO_PRIX = decimal.Parse(txt_prix.Text),
-                                DO_MONTANT = decimal.Parse(txt_montant.Text),
-                                DO_POIDS = decimal.Parse(txt_poids.Text)
-                            };
-
-                            _context.F_FRETS.Add(f_fret);
-                        }
-
-                        _context.SaveChanges();
-
-
-                        try
-                        {
-                            gridViewFrais.CloseEditor();
-                            gridViewFrais.UpdateCurrentRow();
-
-                            _context.SaveChanges();
-
-                            // Exécuter la procédure
-                            string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
-                            _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
-
-                            // Rafraîchir la grille du parent
-                            _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
-
-
-                            MessageBox.Show("Frais enregistrés et coût de revient mis à jour avec succès.");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Erreur : " + ex.Message);
-                        }
-
-
-                    }
-                    else
-                    {
-                        MessageBox.Show(
-                            "Vous n'avez pas l'autorisation de modifier un projet d'achat !",
-                            "Modification bloquée",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error
-                        );
+                        MessageBox.Show($"Valeur vide pour FI_Pièce trouvée dans la ligne N° {i + 1}","Message d'erreur",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        pasVide = false;
+                        break;
                     }
                 }
-                else if (_doPiece.ToString().StartsWith("ABR"))
+
+                if (pasVide)
                 {
-                    bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "UPDATE");
-
-                    if (autorise)
+                    if (_doPiece.ToString().StartsWith("APA"))
                     {
-                        //Enregistrer Fret
+                        bool autorise = frmMenuAchat.verifier_droit("Projet d'achat", "UPDATE");
 
-                        // Recherche si le DO_PIECE existe déjà
-                        var existingFret = _context.F_FRETS
-                            .FirstOrDefault(f => f.DO_PIECE == _doPiece);
+                        if (autorise)
+                        {
+                            //Enregistrer Fret
 
-                        if (existingFret != null)
-                        {
-                            existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
-                            existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
-                            existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
-                        }
-                        else
-                        {
-                            var f_fret = new F_FRET
+                            // Recherche si le DO_PIECE existe déjà
+                            var existingFret = _context.F_FRETS
+                                .FirstOrDefault(f => f.DO_PIECE == _doPiece);
+
+                            if (existingFret != null)
                             {
-                                DO_PIECE = _doPiece,
-                                DO_PRIX = decimal.Parse(txt_prix.Text),
-                                DO_MONTANT = decimal.Parse(txt_montant.Text),
-                                DO_POIDS = decimal.Parse(txt_poids.Text)
-                            };
+                                existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
+                                //existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
+                                existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
+                            }
+                            else
+                            {
+                                var f_fret = new F_FRET
+                                {
+                                    DO_PIECE = _doPiece,
+                                    DO_PRIX = decimal.Parse(txt_prix.Text),
+                                    //DO_MONTANT = decimal.Parse(txt_montant.Text),
+                                    DO_POIDS = decimal.Parse(txt_poids.Text)
+                                };
 
-                            _context.F_FRETS.Add(f_fret);
-                        }
-
-                        _context.SaveChanges();
-
-
-                        try
-                        {
-                            gridViewFrais.CloseEditor();
-                            gridViewFrais.UpdateCurrentRow();
+                                _context.F_FRETS.Add(f_fret);
+                            }
 
                             _context.SaveChanges();
 
-                            // Exécuter la procédure
-                            string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
-                            _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
 
-                            // Rafraîchir la grille du parent
-                            _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
+                            try
+                            {
+                                gridViewFrais.CloseEditor();
+                                gridViewFrais.UpdateCurrentRow();
+
+                                _context.SaveChanges();
+
+                                // Exécuter la procédure
+                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
+                                _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
+
+                                // Rafraîchir la grille du parent
+                                _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
 
 
-                            MessageBox.Show("Frais enregistrés et coût de revient mis à jour avec succès.");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Erreur : " + ex.Message);
-                        }
+                                MessageBox.Show("Frais enregistrés et coût de revient mis à jour avec succès.");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Erreur : " + ex.Message);
+                            }
 
 
-                    }
-                    else
-                    {
-                        MessageBox.Show(
-                            "Vous n'avez pas l'autorisation de modifier un bon de réception !",
-                            "Modification bloquée",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error
-                        );
-                    }
-                }
-                else if (_doPiece.ToString().StartsWith("AFA"))
-                {
-                    bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
-
-                    if (autorise)
-                    {
-                        //Enregistrer Fret
-
-                        // Recherche si le DO_PIECE existe déjà
-                        var existingFret = _context.F_FRETS
-                            .FirstOrDefault(f => f.DO_PIECE == _doPiece);
-
-                        if (existingFret != null)
-                        {
-                            existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
-                            existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
-                            existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
                         }
                         else
                         {
-                            var f_fret = new F_FRET
-                            {
-                                DO_PIECE = _doPiece,
-                                DO_PRIX = decimal.Parse(txt_prix.Text),
-                                DO_MONTANT = decimal.Parse(txt_montant.Text),
-                                DO_POIDS = decimal.Parse(txt_poids.Text)
-                            };
-
-                            _context.F_FRETS.Add(f_fret);
+                            MessageBox.Show(
+                                "Vous n'avez pas l'autorisation de modifier un projet d'achat !",
+                                "Modification bloquée",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
                         }
+                    }
+                    else if (_doPiece.ToString().StartsWith("ABR"))
+                    {
+                        bool autorise = frmMenuAchat.verifier_droit("Bon de réception", "UPDATE");
 
-                        _context.SaveChanges();
-
-
-                        try
+                        if (autorise)
                         {
-                            gridViewFrais.CloseEditor();
-                            gridViewFrais.UpdateCurrentRow();
+                            //Enregistrer Fret
+
+                            // Recherche si le DO_PIECE existe déjà
+                            var existingFret = _context.F_FRETS
+                                .FirstOrDefault(f => f.DO_PIECE == _doPiece);
+
+                            if (existingFret != null)
+                            {
+                                existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
+                                //existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
+                                existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
+                            }
+                            else
+                            {
+                                var f_fret = new F_FRET
+                                {
+                                    DO_PIECE = _doPiece,
+                                    DO_PRIX = decimal.Parse(txt_prix.Text),
+                                    //DO_MONTANT = decimal.Parse(txt_montant.Text),
+                                    DO_POIDS = decimal.Parse(txt_poids.Text)
+                                };
+
+                                _context.F_FRETS.Add(f_fret);
+                            }
 
                             _context.SaveChanges();
 
-                            // Exécuter la procédure
-                            string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
-                            _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
 
-                            // Rafraîchir la grille du parent
-                            _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
+                            try
+                            {
+                                gridViewFrais.CloseEditor();
+                                gridViewFrais.UpdateCurrentRow();
+
+                                _context.SaveChanges();
+
+                                // Exécuter la procédure
+                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
+                                _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
+
+                                // Rafraîchir la grille du parent
+                                _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
 
 
-                            MessageBox.Show("Frais enregistrés et coût de revient mis à jour avec succès.");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Erreur : " + ex.Message);
-                        }
+                                MessageBox.Show("Frais enregistrés et coût de revient mis à jour avec succès.");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Erreur : " + ex.Message);
+                            }
 
-                    }
-                    else
-                    {
-                        MessageBox.Show(
-                            "Vous n'avez pas l'autorisation de modifier une facture !",
-                            "Modification bloquée",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error
-                        );
-                    }
-                }
-                else if (_doPiece.ToString().StartsWith("ABC"))
-                {
-                    bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "UPDATE");
 
-                    if (autorise)
-                    {
-                        //Enregistrer Fret
-
-                        // Recherche si le DO_PIECE existe déjà
-                        var existingFret = _context.F_FRETS
-                            .FirstOrDefault(f => f.DO_PIECE == _doPiece);
-
-                        if (existingFret != null)
-                        {
-                            existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
-                            existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
-                            existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
                         }
                         else
                         {
-                            var f_fret = new F_FRET
-                            {
-                                DO_PIECE = _doPiece,
-                                DO_PRIX = decimal.Parse(txt_prix.Text),
-                                DO_MONTANT = decimal.Parse(txt_montant.Text),
-                                DO_POIDS = decimal.Parse(txt_poids.Text)
-                            };
-
-                            _context.F_FRETS.Add(f_fret);
+                            MessageBox.Show(
+                                "Vous n'avez pas l'autorisation de modifier un bon de réception !",
+                                "Modification bloquée",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
                         }
+                    }
+                    else if (_doPiece.ToString().StartsWith("AFA"))
+                    {
+                        bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
 
-                        _context.SaveChanges();
-
-
-                        try
+                        if (autorise)
                         {
-                            gridViewFrais.CloseEditor();
-                            gridViewFrais.UpdateCurrentRow();
+                            //Enregistrer Fret
+
+                            // Recherche si le DO_PIECE existe déjà
+                            var existingFret = _context.F_FRETS
+                                .FirstOrDefault(f => f.DO_PIECE == _doPiece);
+
+                            if (existingFret != null)
+                            {
+                                existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
+                                //existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
+                                existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
+                            }
+                            else
+                            {
+                                var f_fret = new F_FRET
+                                {
+                                    DO_PIECE = _doPiece,
+                                    DO_PRIX = decimal.Parse(txt_prix.Text),
+                                    //DO_MONTANT = decimal.Parse(txt_montant.Text),
+                                    DO_POIDS = decimal.Parse(txt_poids.Text)
+                                };
+
+                                _context.F_FRETS.Add(f_fret);
+                            }
 
                             _context.SaveChanges();
 
-                            // Exécuter la procédure
-                            string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
-                            _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
 
-                            // Rafraîchir la grille du parent
-                            _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
+                            try
+                            {
+                                gridViewFrais.CloseEditor();
+                                gridViewFrais.UpdateCurrentRow();
+
+                                _context.SaveChanges();
+
+                                // Exécuter la procédure
+                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
+                                _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
+
+                                // Rafraîchir la grille du parent
+                                _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
 
 
-                            MessageBox.Show("Frais enregistrés et coût de revient mis à jour avec succès.");
+                                MessageBox.Show("Frais enregistrés et coût de revient mis à jour avec succès.");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Erreur : " + ex.Message);
+                            }
+
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            MessageBox.Show("Erreur : " + ex.Message);
+                            MessageBox.Show(
+                                "Vous n'avez pas l'autorisation de modifier une facture !",
+                                "Modification bloquée",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
                         }
-
                     }
-                    else
+                    else if (_doPiece.ToString().StartsWith("ABC"))
                     {
-                        MessageBox.Show(
-                            "Vous n'avez pas l'autorisation de modifier un bon de commande!",
-                            "Modification bloquée",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error
-                        );
+                        bool autorise = frmMenuAchat.verifier_droit("Bon de commande", "UPDATE");
+
+                        if (autorise)
+                        {
+                            //Enregistrer Fret
+
+                            // Recherche si le DO_PIECE existe déjà
+                            var existingFret = _context.F_FRETS
+                                .FirstOrDefault(f => f.DO_PIECE == _doPiece);
+
+                            if (existingFret != null)
+                            {
+                                existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
+                                //existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
+                                existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
+                            }
+                            else
+                            {
+                                var f_fret = new F_FRET
+                                {
+                                    DO_PIECE = _doPiece,
+                                    DO_PRIX = decimal.Parse(txt_prix.Text),
+                                    //DO_MONTANT = decimal.Parse(txt_montant.Text),
+                                    DO_POIDS = decimal.Parse(txt_poids.Text)
+                                };
+
+                                _context.F_FRETS.Add(f_fret);
+                            }
+
+                            _context.SaveChanges();
+
+
+                            try
+                            {
+                                gridViewFrais.CloseEditor();
+                                gridViewFrais.UpdateCurrentRow();
+
+                                _context.SaveChanges();
+
+                                // Exécuter la procédure
+                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
+                                _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
+
+                                // Rafraîchir la grille du parent
+                                _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
+
+
+                                MessageBox.Show("Frais enregistrés et coût de revient mis à jour avec succès.");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Erreur : " + ex.Message);
+                            }
+
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                "Vous n'avez pas l'autorisation de modifier un bon de commande!",
+                                "Modification bloquée",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
+                        }
                     }
                 }
             }
@@ -716,17 +736,17 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         //Calcul FRET
         private void txt_poids_EditValueChanged(object sender, EventArgs e)
         {
-            calcul_fret(txt_prix, txt_poids, txt_montant);
+            //calcul_fret(txt_prix, txt_poids, txt_montant);
         }
 
         private void txt_prix_EditValueChanged(object sender, EventArgs e)
         {
-            calcul_fret(txt_prix,txt_poids,txt_montant);
+            //calcul_fret(txt_prix,txt_poids,txt_montant);
         }
 
         private void calcul_fret(TextEdit t1,TextEdit t2,TextEdit t3)
         {
-            gridViewFrais.SetRowCellValue(0, "FI_RepartitionId", 1);
+            /*gridViewFrais.SetRowCellValue(0, "FI_RepartitionId", 1);
             if (t1.Text != "" && t2.Text != "")
             {
                 t3.Text = (Math.Round(double.Parse(t1.Text.ToString().Replace('.',','))  * double.Parse(t2.Text.ToString().Replace('.', ',')),2)).ToString() ;
@@ -763,7 +783,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
             // Rafraîchit le pied de page après la boucle
             gridViewFrais.RefreshData();
-            gridViewFrais.InvalidateFooter();
+            gridViewFrais.InvalidateFooter();*/
 
         }
 
@@ -805,9 +825,9 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void frmEditInfos_Activated(object sender, EventArgs e)
         {
-            txt_montant.Enabled=false;
+            //txt_montant.Enabled=false;
             gridViewFrais.CellValueChanged += GridViewFrais_CellValueChanged;
-            gridViewFrais.Columns["FLAG1"].Visible=false;
+            gridViewFrais.Columns["FLAG1"].Visible = false;
             gridViewFrais.Columns["FLAG2"].Visible = false;
             gridViewFrais.Columns["FLAG3"].Visible = false;
             gridViewFrais.OptionsView.ShowFooter = true;
@@ -827,7 +847,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                 // Récupérer la valeur du TextBox
                 decimal txtMontant = 0;
-                decimal.TryParse(txt_montant.Text, out txtMontant);
+                //decimal.TryParse(txt_montant.Text, out txtMontant);
                 tot = 0;
                 tot = total + txtMontant;
 
@@ -910,7 +930,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         {
             double val = 0;
 
-            string connectionString = $"Data Source=26.53.123.231;Initial Catalog=ARBIOCHEM;User ID=Dev;Password=1234;TrustServerCertificate=True";
+            string connectionString = $"Data Source=26.53.123.231;Initial Catalog=ARBIOCHEM_ACHAT;User ID=Dev;Password=1234;TrustServerCertificate=True";
 
             string query = "SELECT valeur FROM F_DEVISE WHERE devise=@devise";
 

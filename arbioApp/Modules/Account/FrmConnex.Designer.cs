@@ -1,4 +1,6 @@
-﻿namespace arbioApp
+﻿using DevExpress.XtraEditors;
+
+namespace arbioApp
 {
     partial class FrmConnex
     {
@@ -114,6 +116,8 @@
             this.cboServers.TabIndex = 9;
             this.cboServers.SelectedIndexChanged += new System.EventHandler(this.cboServers_SelectedIndexChanged);
             this.cboServers.EditValueChanged += new System.EventHandler(this.cboServers_EditValueChanged_1);
+            this.cboServers.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+
             // 
             // textPwd
             // 

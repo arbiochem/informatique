@@ -46,11 +46,9 @@
             this.layoutControl3 = new DevExpress.XtraLayout.LayoutControl();
             this.txt_prix = new DevExpress.XtraEditors.TextEdit();
             this.txt_poids = new DevExpress.XtraEditors.TextEdit();
-            this.txt_montant = new DevExpress.XtraEditors.TextEdit();
             this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.simpleLabelItem1 = new DevExpress.XtraLayout.SimpleLabelItem();
             this.gridControlFrais = new DevExpress.XtraGrid.GridControl();
             this.gridViewFrais = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -74,6 +72,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
+            this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
             this.layoutControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl4)).BeginInit();
@@ -88,11 +87,9 @@
             this.layoutControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txt_prix.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txt_poids.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txt_montant.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlFrais)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewFrais)).BeginInit();
@@ -280,7 +277,6 @@
             // 
             this.layoutControl3.Controls.Add(this.txt_prix);
             this.layoutControl3.Controls.Add(this.txt_poids);
-            this.layoutControl3.Controls.Add(this.txt_montant);
             this.layoutControl3.Location = new System.Drawing.Point(12, 12);
             this.layoutControl3.Name = "layoutControl3";
             this.layoutControl3.Root = this.layoutControlGroup2;
@@ -291,9 +287,9 @@
             // txt_prix
             // 
             this.txt_prix.Enabled = false;
-            this.txt_prix.Location = new System.Drawing.Point(127, 36);
+            this.txt_prix.Location = new System.Drawing.Point(137, 62);
             this.txt_prix.Name = "txt_prix";
-            this.txt_prix.Size = new System.Drawing.Size(892, 22);
+            this.txt_prix.Size = new System.Drawing.Size(882, 22);
             this.txt_prix.StyleController = this.layoutControl3;
             this.txt_prix.TabIndex = 6;
             this.txt_prix.EditValueChanged += new System.EventHandler(this.txt_prix_EditValueChanged);
@@ -302,22 +298,13 @@
             // txt_poids
             // 
             this.txt_poids.Enabled = false;
-            this.txt_poids.Location = new System.Drawing.Point(127, 62);
+            this.txt_poids.Location = new System.Drawing.Point(137, 88);
             this.txt_poids.Name = "txt_poids";
-            this.txt_poids.Size = new System.Drawing.Size(892, 22);
+            this.txt_poids.Size = new System.Drawing.Size(882, 22);
             this.txt_poids.StyleController = this.layoutControl3;
             this.txt_poids.TabIndex = 7;
             this.txt_poids.EditValueChanged += new System.EventHandler(this.txt_poids_EditValueChanged);
             this.txt_poids.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_poids_KeyPress);
-            // 
-            // txt_montant
-            // 
-            this.txt_montant.Enabled = false;
-            this.txt_montant.Location = new System.Drawing.Point(127, 88);
-            this.txt_montant.Name = "txt_montant";
-            this.txt_montant.Size = new System.Drawing.Size(892, 22);
-            this.txt_montant.StyleController = this.layoutControl3;
-            this.txt_montant.TabIndex = 8;
             // 
             // layoutControlGroup2
             // 
@@ -326,7 +313,6 @@
             this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem10,
             this.layoutControlItem8,
-            this.layoutControlItem9,
             this.simpleLabelItem1});
             this.layoutControlGroup2.Name = "Root";
             this.layoutControlGroup2.Size = new System.Drawing.Size(1031, 122);
@@ -335,31 +321,21 @@
             // layoutControlItem10
             // 
             this.layoutControlItem10.Control = this.txt_prix;
-            this.layoutControlItem10.Location = new System.Drawing.Point(0, 24);
+            this.layoutControlItem10.Location = new System.Drawing.Point(0, 50);
             this.layoutControlItem10.Name = "layoutControlItem10";
             this.layoutControlItem10.Size = new System.Drawing.Size(1011, 26);
-            this.layoutControlItem10.Text = "Prix Poids/Volume";
-            this.layoutControlItem10.TextSize = new System.Drawing.Size(103, 16);
+            this.layoutControlItem10.Text = "Montant Total FRET";
+            this.layoutControlItem10.TextSize = new System.Drawing.Size(113, 16);
             // 
             // layoutControlItem8
             // 
             this.layoutControlItem8.Control = this.txt_poids;
             this.layoutControlItem8.Enabled = false;
-            this.layoutControlItem8.Location = new System.Drawing.Point(0, 50);
+            this.layoutControlItem8.Location = new System.Drawing.Point(0, 76);
             this.layoutControlItem8.Name = "layoutControlItem8";
             this.layoutControlItem8.Size = new System.Drawing.Size(1011, 26);
-            this.layoutControlItem8.Text = "Poids/Volume";
-            this.layoutControlItem8.TextSize = new System.Drawing.Size(103, 16);
-            // 
-            // layoutControlItem9
-            // 
-            this.layoutControlItem9.Control = this.txt_montant;
-            this.layoutControlItem9.Enabled = false;
-            this.layoutControlItem9.Location = new System.Drawing.Point(0, 76);
-            this.layoutControlItem9.Name = "layoutControlItem9";
-            this.layoutControlItem9.Size = new System.Drawing.Size(1011, 26);
-            this.layoutControlItem9.Text = "Montant FRET";
-            this.layoutControlItem9.TextSize = new System.Drawing.Size(103, 16);
+            this.layoutControlItem8.Text = "Poids/Volume Total";
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(113, 16);
             // 
             // simpleLabelItem1
             // 
@@ -376,7 +352,7 @@
             this.simpleLabelItem1.AutoSizeMode = DevExpress.XtraLayout.SimpleLabelAutoSizeMode.Horizontal;
             this.simpleLabelItem1.Location = new System.Drawing.Point(0, 0);
             this.simpleLabelItem1.Name = "simpleLabelItem1";
-            this.simpleLabelItem1.Size = new System.Drawing.Size(1011, 24);
+            this.simpleLabelItem1.Size = new System.Drawing.Size(1011, 50);
             this.simpleLabelItem1.Text = "FRET";
             this.simpleLabelItem1.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
             this.simpleLabelItem1.TextSize = new System.Drawing.Size(50, 20);
@@ -570,6 +546,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
+            this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
             this.layoutControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl4)).EndInit();
@@ -584,11 +561,9 @@
             this.layoutControl3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.txt_prix.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txt_poids.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txt_montant.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlFrais)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewFrais)).EndInit();
@@ -636,8 +611,6 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
         private DevExpress.XtraEditors.TextEdit txt_poids;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
-        private DevExpress.XtraEditors.TextEdit txt_montant;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
         private DevExpress.XtraLayout.LayoutControl layoutControl4;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup3;
         private DevExpress.XtraLayout.SimpleLabelItem simpleLabelItem1;

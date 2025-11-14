@@ -504,6 +504,7 @@ namespace arbioApp.Services
                 throw new Exception("Document non trouvé pour mise à jour.");
 
             f_DOCENTETE.DO_Cloture= 1;
+            f_DOCENTETE.DO_Type = 18;
             _context.SaveChanges();
         }
         public void TransformF_DOCENTETE(int cbMarqSource, short newDoType, string currentDocPieceNo, string newDocPieceNo, DateTime dateLivrPrevu, DateTime dateLivrReal,

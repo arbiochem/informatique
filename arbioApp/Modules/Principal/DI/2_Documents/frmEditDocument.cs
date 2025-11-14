@@ -24,6 +24,7 @@ using DevExpress.XtraBars.Customization;
 using DevExpress.XtraCharts.Native;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Mask;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraExport.Helpers;
 using DevExpress.XtraGrid;
@@ -36,6 +37,7 @@ using DevExpress.XtraSpreadsheet;
 using DevExpress.XtraSpreadsheet.DocumentFormats.Xlsb;
 using DevExpress.XtraSpreadsheet.Import.Xls;
 using DevExpress.XtraTab;
+using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Nodes;
 using Org.BouncyCastle.Tls;
 using Syncfusion.Windows.Forms.Maps;
@@ -110,6 +112,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         public frmEditDocument(string DoPiece, string typeDocument, ucDocuments parent, System.Windows.Forms.BindingSource source)
         {
             InitializeComponent();
+
             CustomLayout();
             _context = new AppDbContext();
             _listeDocs = _context.F_DOCENTETE
@@ -555,17 +558,65 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         }
         private void ChargerDevise()
         {
-            _listeDevise = Entetes.GetAllDevise();
+            var _listeDevise = _context.P_DEVISE.Where(d => d.D_Cours != 0).ToList();
 
             lkDevise.Properties.DataSource = _listeDevise;
-            lkDevise.Properties.ValueMember = "cbMarq"; // Clé réelle stockée
-            lkDevise.Properties.DisplayMember = "D_Intitule"; // Texte affiché
+            lkDevise.Properties.ValueMember = "cbMarq";
+            lkDevise.Properties.DisplayMember = "D_Intitule";
             lkDevise.Properties.PopulateColumns();
             lkDevise.Properties.Columns.Clear();
+            lkDevise.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("cbMarq", "cbMarq", 50) { Visible = false });
+            lkDevise.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("D_Intitule", "DEVISE"));
+            lkDevise.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("D_Cours", "COURS") { Visible = false });
 
-            lkDevise.Properties.Columns.Add(new LookUpColumnInfo("cbMarq", "cbMarq", 50));
-            lkDevise.Properties.Columns.Add(new LookUpColumnInfo("D_Intitule", "DEVISE"));
+            lkDevise.EditValueChanged += LkDevise_EditValueChanged;
 
+            var deviseMGA = _listeDevise.FirstOrDefault(d => d.D_Intitule == "MGA");
+            if (deviseMGA != null)
+            {
+                lkDevise.EditValue = deviseMGA.cbMarq;
+            }
+
+        }
+
+        private void LkDevise_EditValueChanged(object sender, EventArgs e)
+        {
+            if (lkDevise.EditValue != null)
+            {
+                var deviseSelectionnee = _context.P_DEVISE
+                .FirstOrDefault(d => d.cbMarq == (int)lkDevise.EditValue);
+
+                if (deviseSelectionnee != null)
+                {
+                    txtCours.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+
+                    if (deviseSelectionnee.D_Cours != 1 && deviseSelectionnee.D_Cours > 0)
+                    {
+                        string mask = deviseSelectionnee.D_Format;
+
+                        if (mask.Contains("0"))
+                            mask = mask.Replace("0", "#").Replace(",","");
+
+                        txtCours.Properties.Mask.EditMask = mask;
+                        txtCours.Properties.Mask.UseMaskAsDisplayFormat = true;
+                    }
+                    else
+                    {
+                        txtCours.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+                        txtCours.Properties.Mask.EditMask = "n0";
+                        txtCours.Properties.Mask.UseMaskAsDisplayFormat = true;
+                    }
+                    txtCours.EditValue = Convert.ToDecimal(deviseSelectionnee.D_Cours);
+                }
+                else
+                {
+                    txtCours.EditValue = null;
+                }
+            }
+            else
+            {
+                txtCours.EditValue = null;
+            }
         }
         public List<F_COLLABORATEUR> GetAllAcheteurs()
         {
@@ -887,136 +938,142 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     decimal DL_MontantHT = prixNet * Qte_propice;
                     decimal DL_MontantTTC = DL_MontantHT * (1 + tauxTVA / 100);
 
+                    if (AR_Ref != "")
+                    {
+                        DataTable dt = (DataTable)gcLigneEdit.DataSource;
 
-                    DataTable dt = (DataTable)gcLigneEdit.DataSource;
+                        DataRow newRow = dt.NewRow();
 
-                    DataRow newRow = dt.NewRow();
-
-                    newRow["DO_Domaine"] = 1; //ACHAT = 1
-                    newRow["DO_Type"] = 10; // NOUVEAU DOCUMENT TSY MAINTSY 10
-                    newRow["CT_Num"] = CT_Num;
-                    newRow["DO_Piece"] = DO_Piece;
-                    //newRow["cbDO_Piece"] = CT_Num;
-                    newRow["DL_PieceBC"] = "";
-                    //newRow["cbDL_PieceBC"] = CT_Num;
-                    newRow["DL_PieceBL"] = "";
-                    //newRow["cbDL_PieceBL"] = CT_Num;
-                    newRow["DO_Date"] = DO_Date;
-                    //newRow["DL_DateBC"] = CT_Num;
-                    //newRow["DL_DateBL"] = CT_Num;
-                    //newRow["DL_Ligne"] = CT_Num;
-                    newRow["DO_Ref"] = DO_Ref;
-                    //newRow["cbDO_Ref"] = CT_Num;
-                    newRow["DL_TNomencl"] = 0;
-                    newRow["DL_TRemPied"] = 0;
-                    newRow["DL_TRemExep"] = 0;
-                    newRow["AR_Ref"] = AR_Ref;
-                    //newRow["cbAR_Ref"] = CT_Num;
-                    newRow["DL_Design"] = DL_Design;
-                    newRow["DL_Qte"] = Qte_propice;
-                    newRow["DL_QteBC"] = 0;
-                    newRow["DL_QteBL"] = 0;
-                    //newRow["DL_PoidsNet"] = CT_Num;
-                    newRow["DL_Valorise"] = 0;
-                    newRow["DL_PoidsBrut"] = 0;
-                    newRow["DL_Remise01REM_Valeur"] = 0;
-                    newRow["DL_Remise01REM_Type"] = 0;
-                    newRow["DL_Remise02REM_Valeur"] = 0;
-                    newRow["DL_Remise02REM_Type"] = 0;
-                    newRow["DL_Remise03REM_Valeur"] = 0;
-                    newRow["DL_Remise03REM_Type"] = 0;
-                    newRow["DL_PUBC"] = 0;
-                    newRow["DL_PrixUnitaire"] = pr_achat;
-                    newRow["DL_Taxe1"] = tauxTVA;
-                    newRow["DL_TypeTaux1"] = 0;
-                    newRow["DL_TypeTaxe1"] = 0;
-                    newRow["DL_Taxe2"] = 0;
-                    newRow["DL_TypeTaux2"] = 0;
-                    newRow["DL_TypeTaxe2"] = 0;
-                    newRow["CO_No"] = 0;
-                    //newRow["cbCO_No"] = CT_Num;
-                    newRow["AG_No1"] = 0;
-                    newRow["AG_No2"] = 0;
-                    newRow["DL_PrixRU"] = 0;
-                    newRow["DL_CMUP"] = pr_achat;
-                    newRow["DL_MvtStock"] = 0;
-                    newRow["DT_No"] = 0;
-                    //newRow["cbDT_No"] = CT_Num;
-                    //newRow["cbAF_RefFourniss"] = CT_Num;
-                    newRow["EU_Enumere"] = "";
-                    newRow["EU_Qte"] = 0;
-                    newRow["DL_TTC"] = 0;
-                    newRow["DE_No"] = Convert.ToInt32(lkDepot.EditValue);
-                    newRow["cbDE_No"] = Convert.ToInt32(lkDepot.EditValue);
-                    newRow["DL_NoRef"] = 0;
-                    newRow["DL_TypePL"] = 0;
-                    newRow["DL_PUDevise"] = 0;
-                    newRow["DL_PUTTC"] = pr_achat;
-                    //newRow["DL_No"] = 0;
-                    //newRow["DO_DateLivr"] = CT_Num;
-                    newRow["CA_Num"] = "";
-                    //newRow["cbCA_Num"] = CT_Num;
-                    newRow["DL_Taxe3"] = 0;
-                    newRow["DL_TypeTaux3"] = 0;
-                    newRow["DL_TypeTaxe3"] = 0;
-                    //newRow["cbAR_RefCompose"] = CT_Num;
-                    newRow["AC_RefClient"] = "";
-                    newRow["DL_MontantHT"] = DL_MontantHT;
-                    newRow["DL_MontantTTC"] = DL_MontantTTC;
-                    newRow["DL_FactPoids"] = 0;
-                    newRow["DL_Escompte"] = 0;
-                    newRow["DL_PiecePL"] = "";
-                    //newRow["cbDL_PiecePL"] = CT_Num;
-                    //newRow["DL_DatePL"] = CT_Num;
-                    newRow["DL_QtePL"] = 0;
-                    newRow["DL_NoColis"] = "";
-                    newRow["DL_NoLink"] = 0;
-                    //newRow["cbDL_NoLink"] = CT_Num;
-                    //newRow["RP_Code"] = "";
-                    //newRow["cbRP_Code"] = CT_Num;
-                    newRow["DL_QteRessource"] = 0;
-                    //newRow["DL_DateAvancement"] = CT_Num;
-                    newRow["PF_Num"] = "";
-                    newRow["DL_Frais"] = 0;
-                    //newRow["cbPF_Num"] = CT_Num;
-                    newRow["DL_CodeTaxe1"] = "";
-                    newRow["DL_CodeTaxe2"] = "";
-                    newRow["DL_CodeTaxe3"] = "";
-                    newRow["DL_PieceOFProd"] = 0;
-                    newRow["DL_PieceDE"] = "";
-                    //newRow["cbDL_PieceDE"] = CT_Num;
-                    //newRow["DL_DateDE"] = CT_Num;
-                    newRow["DL_QteDE"] = 0;
-                    newRow["DL_Operation"] = "";
-                    newRow["DL_NoSousTotal"] = 0;
-                    newRow["CA_No"] = 0;
-                    //newRow["cbCA_No"] = CT_Num;
-                    newRow["DO_DocType"] = 10;
-                    //newRow["cbProt"] = CT_Num;
-                    //newRow["cbMarq"] = CT_Num;
-                    //newRow["cbCreateur"] = CT_Num;
-                    //newRow["cbModification"] = CT_Num;
-                    //newRow["cbReplication"] = CT_Num;
-                    //newRow["cbFlag"] = CT_Num;
-                    //newRow["cbCreation"] = CT_Num;
-                    //newRow["cbCreationUser"] = CT_Num;
-                    //newRow["cbHash"] = CT_Num;
-                    //newRow["cbHashVersion"] = CT_Num;
-                    //newRow["cbHashDate"] = CT_Num;
-                    //newRow["cbHashOrder"] = CT_Num;          
-                    newRow["Retenu"] = 1;
-                    newRow["Action"] = "Remove";
-                    newRow["Validation"] = "Update";
-                    //newRow["Insertion"] = "Add";
+                        newRow["DO_Domaine"] = 1; //ACHAT = 1
+                        newRow["DO_Type"] = 10; // NOUVEAU DOCUMENT TSY MAINTSY 10
+                        newRow["CT_Num"] = CT_Num;
+                        newRow["DO_Piece"] = DO_Piece;
+                        //newRow["cbDO_Piece"] = CT_Num;
+                        newRow["DL_PieceBC"] = "";
+                        //newRow["cbDL_PieceBC"] = CT_Num;
+                        newRow["DL_PieceBL"] = "";
+                        //newRow["cbDL_PieceBL"] = CT_Num;
+                        newRow["DO_Date"] = DO_Date;
+                        //newRow["DL_DateBC"] = CT_Num;
+                        //newRow["DL_DateBL"] = CT_Num;
+                        //newRow["DL_Ligne"] = CT_Num;
+                        newRow["DO_Ref"] = DO_Ref;
+                        //newRow["cbDO_Ref"] = CT_Num;
+                        newRow["DL_TNomencl"] = 0;
+                        newRow["DL_TRemPied"] = 0;
+                        newRow["DL_TRemExep"] = 0;
+                        newRow["AR_Ref"] = AR_Ref;
+                        //newRow["cbAR_Ref"] = CT_Num;
+                        newRow["DL_Design"] = DL_Design;
+                        newRow["DL_Qte"] = Qte_propice;
+                        newRow["DL_QteBC"] = 0;
+                        newRow["DL_QteBL"] = 0;
+                        //newRow["DL_PoidsNet"] = CT_Num;
+                        newRow["DL_Valorise"] = 0;
+                        newRow["DL_PoidsBrut"] = 0;
+                        newRow["DL_Remise01REM_Valeur"] = 0;
+                        newRow["DL_Remise01REM_Type"] = 0;
+                        newRow["DL_Remise02REM_Valeur"] = 0;
+                        newRow["DL_Remise02REM_Type"] = 0;
+                        newRow["DL_Remise03REM_Valeur"] = 0;
+                        newRow["DL_Remise03REM_Type"] = 0;
+                        newRow["DL_PUBC"] = 0;
+                        newRow["DL_PrixUnitaire"] = pr_achat;
+                        newRow["DL_Taxe1"] = tauxTVA;
+                        newRow["DL_TypeTaux1"] = 0;
+                        newRow["DL_TypeTaxe1"] = 0;
+                        newRow["DL_Taxe2"] = 0;
+                        newRow["DL_TypeTaux2"] = 0;
+                        newRow["DL_TypeTaxe2"] = 0;
+                        newRow["CO_No"] = 0;
+                        //newRow["cbCO_No"] = CT_Num;
+                        newRow["AG_No1"] = 0;
+                        newRow["AG_No2"] = 0;
+                        newRow["DL_PrixRU"] = 0;
+                        newRow["DL_CMUP"] = pr_achat;
+                        newRow["DL_MvtStock"] = 0;
+                        newRow["DT_No"] = 0;
+                        //newRow["cbDT_No"] = CT_Num;
+                        //newRow["cbAF_RefFourniss"] = CT_Num;
+                        newRow["EU_Enumere"] = "";
+                        newRow["EU_Qte"] = 0;
+                        newRow["DL_TTC"] = 0;
+                        newRow["DE_No"] = Convert.ToInt32(lkDepot.EditValue);
+                        newRow["cbDE_No"] = Convert.ToInt32(lkDepot.EditValue);
+                        newRow["DL_NoRef"] = 0;
+                        newRow["DL_TypePL"] = 0;
+                        newRow["DL_PUDevise"] = 0;
+                        newRow["DL_PUTTC"] = pr_achat;
+                        //newRow["DL_No"] = 0;
+                        //newRow["DO_DateLivr"] = CT_Num;
+                        newRow["CA_Num"] = "";
+                        //newRow["cbCA_Num"] = CT_Num;
+                        newRow["DL_Taxe3"] = 0;
+                        newRow["DL_TypeTaux3"] = 0;
+                        newRow["DL_TypeTaxe3"] = 0;
+                        //newRow["cbAR_RefCompose"] = CT_Num;
+                        newRow["AC_RefClient"] = "";
+                        newRow["DL_MontantHT"] = DL_MontantHT;
+                        newRow["DL_MontantTTC"] = DL_MontantTTC;
+                        newRow["DL_FactPoids"] = 0;
+                        newRow["DL_Escompte"] = 0;
+                        newRow["DL_PiecePL"] = "";
+                        //newRow["cbDL_PiecePL"] = CT_Num;
+                        //newRow["DL_DatePL"] = CT_Num;
+                        newRow["DL_QtePL"] = 0;
+                        newRow["DL_NoColis"] = "";
+                        newRow["DL_NoLink"] = 0;
+                        //newRow["cbDL_NoLink"] = CT_Num;
+                        //newRow["RP_Code"] = "";
+                        //newRow["cbRP_Code"] = CT_Num;
+                        newRow["DL_QteRessource"] = 0;
+                        //newRow["DL_DateAvancement"] = CT_Num;
+                        newRow["PF_Num"] = "";
+                        newRow["DL_Frais"] = 0;
+                        //newRow["cbPF_Num"] = CT_Num;
+                        newRow["DL_CodeTaxe1"] = "";
+                        newRow["DL_CodeTaxe2"] = "";
+                        newRow["DL_CodeTaxe3"] = "";
+                        newRow["DL_PieceOFProd"] = 0;
+                        newRow["DL_PieceDE"] = "";
+                        //newRow["cbDL_PieceDE"] = CT_Num;
+                        //newRow["DL_DateDE"] = CT_Num;
+                        newRow["DL_QteDE"] = 0;
+                        newRow["DL_Operation"] = "";
+                        newRow["DL_NoSousTotal"] = 0;
+                        newRow["CA_No"] = 0;
+                        //newRow["cbCA_No"] = CT_Num;
+                        newRow["DO_DocType"] = 10;
+                        //newRow["cbProt"] = CT_Num;
+                        //newRow["cbMarq"] = CT_Num;
+                        //newRow["cbCreateur"] = CT_Num;
+                        //newRow["cbModification"] = CT_Num;
+                        //newRow["cbReplication"] = CT_Num;
+                        //newRow["cbFlag"] = CT_Num;
+                        //newRow["cbCreation"] = CT_Num;
+                        //newRow["cbCreationUser"] = CT_Num;
+                        //newRow["cbHash"] = CT_Num;
+                        //newRow["cbHashVersion"] = CT_Num;
+                        //newRow["cbHashDate"] = CT_Num;
+                        //newRow["cbHashOrder"] = CT_Num;          
+                        newRow["Retenu"] = 1;
+                        newRow["Action"] = "Remove";
+                        newRow["Validation"] = "Update";
+                        //newRow["Insertion"] = "Add";
 
 
-                    dt.Rows.Add(newRow);
-                    gvLigneEdit.FocusedRowHandle = dt.Rows.IndexOf(newRow);
-                    lkEdFrns.Text = CT_Num;
-                    gvLigneEdit.BestFitColumns();
+                        dt.Rows.Add(newRow);
+                        gvLigneEdit.FocusedRowHandle = dt.Rows.IndexOf(newRow);
+                        lkEdFrns.Text = CT_Num;
+                        gvLigneEdit.BestFitColumns();
 
-                    // MessageBox.Show($"Ligne cliquée:\nREFERENCE: {AR_Ref}\nFRNS: {CT_Num}");
-                    AddLigne();
+                        // MessageBox.Show($"Ligne cliquée:\nREFERENCE: {AR_Ref}\nFRNS: {CT_Num}");
+                        AddLigne();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cet article ne possède pas de référence", "Message d'erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
 
             }
@@ -1619,7 +1676,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         public void ExecuteStockAlert()
         {
-            string query1 = @"SELECT * FROM dbo.VW_ETAT_STOCK";
+            string query1 = @"SELECT * FROM dbo.VW_ETAT_STOCK WHERE CT_INTITULE='"+ lkEdFrns.Text +"'";
 
 
             string connectionStringArbapp = $"Server={FrmMdiParent.DataSourceNameValueParent};" +
@@ -1661,15 +1718,15 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     AF_PrixAch = r["AF_PrixAch"]
                 });
 
-            foreach (var group in groupedData)
+            if (groupedData.Any())
             {
-                // Calcul des sommes des enfants
-                decimal totalStockReel = group.Sum(r => r.Field<decimal>("STOCK REEL"));
-                decimal totalStockMini = group.Sum(r => r.Field<decimal>("STOCK MINI"));
-                decimal totalStockMaxi = group.Sum(r => r.Field<decimal>("STOCK MAXI"));
-
-                TreeListNode parentNode = treeList1.AppendNode(new object[]
+                foreach (var group in groupedData)
                 {
+                    decimal totalStockReel = group.Sum(r => r.Field<decimal?>("STOCK REEL") ?? 0);
+                    decimal totalStockMini = group.Sum(r => r.Field<decimal?>("STOCK MINI") ?? 0);
+                    decimal totalStockMaxi = group.Sum(r => r.Field<decimal?>("STOCK MAXI") ?? 0);
+                    TreeListNode parentNode = treeList1.AppendNode(new object[]
+                    {
                     group.Key.Site,
                     group.Key.Famille,
                     group.Key.Reference,
@@ -1682,12 +1739,12 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     totalStockReel, // STOCK REEL total
                     totalStockMini, // STOCK MINI total
                     totalStockMaxi // STOCK MAXI total
-                }, null);
+                    }, null);
 
-                foreach (DataRow childRow in group)
-                {
-                    treeList1.AppendNode(new object[]
+                    foreach (DataRow childRow in group)
                     {
+                        treeList1.AppendNode(new object[]
+                        {
                         null, // SITE
                         null, // FAMILLE
                         null, // REFERENCE
@@ -1700,7 +1757,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         childRow["STOCK REEL"],
                         childRow["STOCK MINI"],
                         childRow["STOCK MAXI"]
-                    }, parentNode);
+                        }, parentNode);
+                    }
                 }
             }
 
@@ -1716,9 +1774,38 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             treeList1.Columns["STOCK MAXI"].Format.FormatType = DevExpress.Utils.FormatType.Numeric;
             treeList1.Columns["STOCK MAXI"].Format.FormatString = "N2";
 
-
+            treeList1.NodeCellStyle += TreeList1_NodeCellStyle;
 
             treeList1.EndUpdate();
+            
+        }
+
+        private void TreeList1_NodeCellStyle(object sender, GetCustomNodeCellStyleEventArgs e)
+        {
+            if (e.Node.ParentNode == null) // Uniquement pour les nœuds parents
+            {
+                if (e.Column.FieldName == "PURCHASE")
+                    return;
+                // Récupérer les valeurs des colonnes
+                object stockReelObj = e.Node.GetValue("STOCK REEL");
+                object stockMiniObj = e.Node.GetValue("STOCK MINI");
+
+                if (stockReelObj != null && stockMiniObj != null &&
+                    stockReelObj != DBNull.Value && stockMiniObj != DBNull.Value)
+                {
+                    decimal stockReel = Convert.ToDecimal(stockReelObj);
+                    decimal stockMini = Convert.ToDecimal(stockMiniObj);
+
+                    if (stockReel <= stockMini)
+                    {
+                        e.Appearance.ForeColor = Color.Red; 
+                    }
+                    else
+                    {
+                        e.Appearance.ForeColor = Color.Black;
+                    }
+                }
+            }
         }
         private void hyperlinkLabelControl1_Click(object sender, EventArgs e)
         {
@@ -1831,23 +1918,25 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         }
         private void btnValider_Click(object sender, EventArgs e)
         {
-            if (tester_cloturer(dopiecetxt.Text)){
-                MessageBox.Show(
-                    "Ce document est déjà clôturé, vous ne pouvez plus modifier son contenu!!!!",
-                    "Modification bloquée",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
-            }
-            else {
-                try
-                {
-                    if (!ValiderChampsObligatoires())
-                        return;
+            try
+            {
+                if (!ValiderChampsObligatoires())
+                    return;
 
-                    F_DOCENTETE doc = _f_DOCENTETEService.GetDocByPiece(dopiecetxt.Text, _listeDocs);
-                    string _currentDocPieceNo = dopiecetxt.Text;
-                    if (doc != null)
+                F_DOCENTETE doc = _f_DOCENTETEService.GetDocByPiece(dopiecetxt.Text, _listeDocs);
+                string _currentDocPieceNo = dopiecetxt.Text;
+                if (doc != null)
+                {
+                    if (tester_cloturer(dopiecetxt.Text))
+                    {
+                        MessageBox.Show(
+                            "Ce document est déjà clôturé, vous ne pouvez plus modifier son contenu!!!!",
+                            "Modification bloquée",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+                    }
+                    else
                     {
                         if (dopiecetxt.Text.ToString().StartsWith("AFA"))
                         {
@@ -1860,6 +1949,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                                 gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
                                 StatutActuel = Convert.ToInt32(lkStatut.EditValue);
                                 MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                frmSites frmsite = new frmSites(this);
+                                frmsite.ShowDialog();
                             }
                             else
                             {
@@ -1878,11 +1969,25 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                             if (autorise)
                             {
-                                UpdateFDOCENTETE();
-                                _ucDocuments.RafraichirDonnees();
-                                gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
-                                StatutActuel = Convert.ToInt32(lkStatut.EditValue);
-                                MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                if (lkStatut.Text != "Accepté")
+                                {
+                                    UpdateFDOCENTETE();
+                                    _ucDocuments.RafraichirDonnees();
+                                    gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                                    StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+                                    MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    frmSites frmsite = new frmSites(this);
+                                    frmsite.ShowDialog();
+                                }
+                                else
+                                {
+                                    MessageBox.Show(
+                                    "Vous n'avez pas l'autorisation de modifier ce statut, seul DG a le droit !",
+                                    "Modification bloquée",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+                                }
                             }
                             else
                             {
@@ -1905,6 +2010,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                                 gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
                                 StatutActuel = Convert.ToInt32(lkStatut.EditValue);
                                 MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                frmSites frmsite = new frmSites(this);
+                                frmsite.ShowDialog();
                             }
                             else
                             {
@@ -1927,6 +2034,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                                 gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
                                 StatutActuel = Convert.ToInt32(lkStatut.EditValue);
                                 MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                frmSites frmsite = new frmSites(this);
+                                frmsite.ShowDialog();
                             }
                             else
                             {
@@ -1939,23 +2048,38 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                             }
                         }
                     }
-                    else
+                }
+                else
+                {
+                    var test = _context.F_DOCENTETE.FirstOrDefault(d => d.DO_Piece == _currentDocPieceNo);
+
+                    if (test == null)
                     {
                         InsertFDOCENTETE();
                         _ucDocuments.RafraichirDonnees();
                         gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
                         StatutActuel = Convert.ToInt32(lkStatut.EditValue);
                         MessageBox.Show("Insertion terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        frmSites frmsite = new frmSites(this);
+                        frmsite.ShowDialog();
+                    }
+                    else
+                    {
+                        UpdateFDOCENTETE();
+                        _ucDocuments.RafraichirDonnees();
+                        gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                        MessageBox.Show("Modification terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        frmSites frmsite = new frmSites(this);
+                        frmsite.ShowDialog();
                     }
                 }
+            }
 
-                catch (System.Exception ex)
-                {
-                    MethodBase m = MethodBase.GetCurrentMethod();
-                    MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                }
-
+            catch (System.Exception ex)
+            {
+                MethodBase m = MethodBase.GetCurrentMethod();
+                MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
             }
         }
         private void LoadCodeTaxe()
@@ -2619,13 +2743,21 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         public static int intcollaborateur;
         private void frmEditDocument_Load_1(object sender, EventArgs e)
         {
-            gvLigneEdit.ShowingEditor -= gvLigneEdit_ShowingEditor; // Se désabonner au cas où
-            intcollaborateur = cono;
-            ShapeFileLayer shapeLayer = new ShapeFileLayer();
+            if (lkEdFrns.Text != "")
+            {
+                ExecuteStockAlert();
+                ChargerArtFrns();
+            }
+            else
+            {
+                gvLigneEdit.ShowingEditor -= gvLigneEdit_ShowingEditor; // Se désabonner au cas où
+                intcollaborateur = cono;
+                ShapeFileLayer shapeLayer = new ShapeFileLayer();
 
-            shapeLayer.Uri = "world1.shp";
+                shapeLayer.Uri = "world1.shp";
 
-            this.maps1.Layers.Add(shapeLayer);
+                this.maps1.Layers.Add(shapeLayer);
+            }
         }
 
         private void datelivrprev_EditValueChanged(object sender, EventArgs e)
@@ -2766,16 +2898,26 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                     if (autorise)
                     {
-                        var dlg = new frmTransform(_typeDocument);
-                        dlg.ParentFormInstance = this;
+                        if(lkStatut.Text != "Accepté") {
+                            var dlg = new frmTransform(_typeDocument);
+                            dlg.ParentFormInstance = this;
 
-                        if (dlg.ShowDialog() == DialogResult.OK)
-                        {
-                            this.TransformFDOCENTETE(dlg.doctype);
+                            if (dlg.ShowDialog() == DialogResult.OK)
+                            {
+                                this.TransformFDOCENTETE(dlg.doctype);
+                            }
+
+                            // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
+                            _ucDocuments.ChargerDonneesDepuisBDD();
                         }
-
-                        // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
-                        _ucDocuments.ChargerDonneesDepuisBDD();
+                        else
+                        {
+                            MessageBox.Show(
+                                   "Le statut actuel ne vous permet pas de transformer ce document !",
+                                   "Modification bloquée",
+                                   MessageBoxButtons.OK,
+                                   MessageBoxIcon.Error);
+                        }
                     }
                     else
                     {
@@ -3762,13 +3904,16 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void lkStatut_EditValueChanging(object sender, ChangingEventArgs e)
         {
-            if (e.NewValue == null) return;
-            int newValue = Convert.ToInt32(e.NewValue);
-
-            if (newValue < StatutActuel)
+            if (lkStatut.Text != "Accepté")
             {
-                e.Cancel = true;
-                MessageBox.Show("Impossible de revenir à un statut précédent.", "Action non autorisée", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (e.NewValue == null) return;
+                int newValue = Convert.ToInt32(e.NewValue);
+
+                if (newValue < StatutActuel)
+                {
+                    e.Cancel = true;
+                    MessageBox.Show("Impossible de revenir à un statut précédent.", "Action non autorisée", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 

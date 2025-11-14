@@ -111,6 +111,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         if (lst != null)
                         {
                             lst.DO_Cloture = 1;
+                            lst.DO_Type = 18;
                         }
 
                         context.SaveChanges();
