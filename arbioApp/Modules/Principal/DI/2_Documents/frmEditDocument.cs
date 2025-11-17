@@ -40,7 +40,7 @@ using DevExpress.XtraTab;
 using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Nodes;
 using Org.BouncyCastle.Tls;
-using Syncfusion.Windows.Forms.Maps;
+//using Syncfusion.Windows.Forms.Maps;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -560,42 +560,84 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         {
             var _listeDevise = _context.P_DEVISE.Where(d => d.D_Cours != 0).ToList();
 
+            // ✅ Désabonner AVANT de configurer pour éviter le déclenchement prématuré
+            lkDevise.EditValueChanged -= LkDevise_EditValueChanged;
+
             lkDevise.Properties.DataSource = _listeDevise;
             lkDevise.Properties.ValueMember = "cbMarq";
             lkDevise.Properties.DisplayMember = "D_Intitule";
+
+            // Autoriser les valeurs nulles
+            lkDevise.Properties.NullText = "[Sélectionner]";
+            lkDevise.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+
             lkDevise.Properties.PopulateColumns();
             lkDevise.Properties.Columns.Clear();
             lkDevise.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("cbMarq", "cbMarq", 50) { Visible = false });
             lkDevise.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("D_Intitule", "DEVISE"));
             lkDevise.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("D_Cours", "COURS") { Visible = false });
 
-            lkDevise.EditValueChanged += LkDevise_EditValueChanged;
-
             var deviseMGA = _listeDevise.FirstOrDefault(d => d.D_Intitule == "MGA");
             if (deviseMGA != null)
             {
                 lkDevise.EditValue = deviseMGA.cbMarq;
             }
+            else
+            {
+                lkDevise.EditValue = null;
+            }
 
+            // ✅ Réabonner APRÈS avoir défini la valeur
+            lkDevise.EditValueChanged += LkDevise_EditValueChanged;
         }
 
         private void LkDevise_EditValueChanged(object sender, EventArgs e)
         {
-            if (lkDevise.EditValue != null)
+            try
             {
+                // ✅ Vérifier que le contexte est initialisé
+                if (_context == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("⚠️ Context non initialisé");
+                    return;
+                }
+
+                if (lkDevise.EditValue == null || lkDevise.EditValue == DBNull.Value)
+                {
+                    txtCours.EditValue = null;
+                    return;
+                }
+
+                // ✅ Convertir en int de manière sécurisée
+                int cbMarqValue;
+                if (lkDevise.EditValue is int)
+                {
+                    cbMarqValue = (int)lkDevise.EditValue;
+                }
+                else if (int.TryParse(lkDevise.EditValue.ToString(), out cbMarqValue))
+                {
+                    // Conversion réussie
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"⚠️ Type invalide: {lkDevise.EditValue.GetType().Name}");
+                    txtCours.EditValue = null;
+                    return;
+                }
+
                 var deviseSelectionnee = _context.P_DEVISE
-                .FirstOrDefault(d => d.cbMarq == (int)lkDevise.EditValue);
+                    .FirstOrDefault(d => d.cbMarq == cbMarqValue);
 
                 if (deviseSelectionnee != null)
                 {
                     txtCours.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
 
-                    if (deviseSelectionnee.D_Cours != 1 && deviseSelectionnee.D_Cours > 0)
+                    if (deviseSelectionnee.D_Cours > 0)
                     {
                         string mask = deviseSelectionnee.D_Format;
 
-                        if (mask.Contains("0"))
-                            mask = mask.Replace("0", "#").Replace(",","");
+                        if (!string.IsNullOrEmpty(mask) && mask.Contains("0"))
+                            mask = mask.Replace("0", "#").Replace(",", "");
 
                         txtCours.Properties.Mask.EditMask = mask;
                         txtCours.Properties.Mask.UseMaskAsDisplayFormat = true;
@@ -613,8 +655,9 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     txtCours.EditValue = null;
                 }
             }
-            else
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"❌ Erreur LkDevise_EditValueChanged: {ex.Message}");
                 txtCours.EditValue = null;
             }
         }
@@ -1478,8 +1521,6 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     //decimal montantHT = Convert.ToDecimal(gvLigneEdit.GetRowCellValue(row, "DL_MontantHT"));
                     object montantHTvalue = gvLigneEdit.GetRowCellValue(row, "DL_MontantHT");
                     decimal montantHT = 0;
-
-
                     if (montantHT == 0)
                     {
                         montantHT = puNet * qte;
@@ -2541,6 +2582,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         }
 
 
+
         private void gvLigneEdit_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
         {
 
@@ -2628,10 +2670,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     int quantite = Convert.ToInt32(qte);
                     decimal remise = Convert.ToDecimal(remiseObj);
                     decimal tauxTVA = Convert.ToDecimal(tauxTVAObj);
+                    decimal cours = Convert.ToDecimal(txtCours.Text);
 
                     // Appliquer la remise au prix unitaire
                     decimal prixNet = prixUnitaire * (1 - remise / 100);
-                    decimal montantHT = prixNet * quantite;
+                    decimal montantHT = prixNet * quantite * cours;
                     decimal montantTTC = montantHT * (1 + tauxTVA / 100);
 
                     view.SetRowCellValue(e.RowHandle, "DL_MontantHT", montantHT);
@@ -2639,8 +2682,6 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                 }
             }
-
-
         }
         private decimal GetArticlePU(string arRef)
         {
@@ -2750,14 +2791,16 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
             else
             {
-                gvLigneEdit.ShowingEditor -= gvLigneEdit_ShowingEditor; // Se désabonner au cas où
-                intcollaborateur = cono;
-                ShapeFileLayer shapeLayer = new ShapeFileLayer();
+                //gvLigneEdit.ShowingEditor -= gvLigneEdit_ShowingEditor; // Se désabonner au cas où
+                //intcollaborateur = cono;
+                //ShapeFileLayer shapeLayer = new ShapeFileLayer();
 
-                shapeLayer.Uri = "world1.shp";
+                //shapeLayer.Uri = "world1.shp";
 
-                this.maps1.Layers.Add(shapeLayer);
+                //this.maps1.Layers.Add(shapeLayer);
             }
+
+            LkDevise_EditValueChanged(sender, e);
         }
 
         private void datelivrprev_EditValueChanged(object sender, EventArgs e)
@@ -3930,17 +3973,17 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             PointF point = new PointF(e.X, e.Y);
 
             // Fix: Replace the non-existent PointToLatLng method with GetMapCoordinates
-            PointF latLong = this.maps1.GetMapCoordinates(point);
+           // PointF latLong = this.maps1.GetMapCoordinates(point);
 
-            float latitude = latLong.Y;
-            float longitude = latLong.X;
+           // float latitude = latLong.Y;
+           // float longitude = latLong.X;
 
             // Affiche dans la barre de statut ou un Label
-            lblCoord.Text = $"Lat: {latitude:F4}, Lon: {longitude:F4}";
+           // lblCoord.Text = $"Lat: {latitude:F4}, Lon: {longitude:F4}";
 
             // Ou dans un tooltip
             System.Windows.Forms.ToolTip tt = new System.Windows.Forms.ToolTip();
-            tt.SetToolTip(maps1, $"Lat: {latitude:F4}, Lon: {longitude:F4}");
+            //tt.SetToolTip(maps1, $"Lat: {latitude:F4}, Lon: {longitude:F4}");
         }
         private void Hyperlink_ClickArticle(object sender, EventArgs e)
         {
@@ -4140,5 +4183,40 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         {
             bindingNavigator1.Visible=false;
         }
+
+        private void lkDevise_EditValueChanged_1(object sender, EventArgs e)
+        {
+            var view = gvLigneEdit;
+            if (view.RowCount <= 0) return;
+
+            var colQte = view.Columns["DL_QTE"];
+            var colPU = view.Columns["DL_PrixUnitaire"];
+            var colMontantHT = view.Columns["DL_montantHT"];
+
+            if (colQte == null || colPU == null ||  colMontantHT == null) return;
+
+            for (int i = 0; i < view.RowCount; i++)
+            {
+                // Récupération des valeurs
+                decimal qte = Convert.ToDecimal(view.GetRowCellValue(i, colQte));
+                decimal pu = Convert.ToDecimal(view.GetRowCellValue(i, colPU));
+                decimal cours = Convert.ToDecimal(txtCours.Text);
+
+                // Calcul du montant HT
+                decimal montantHT = qte * pu * cours;
+
+                // Mise à jour de la cellule
+                view.SetRowCellValue(i, colMontantHT, montantHT);
+
+                // Déclenchement du handler si nécessaire
+                var args = new DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs(
+                    i,
+                    colMontantHT,
+                    montantHT
+                );
+                gvLigneEdit_CellValueChanged(view, args);
+            }
+        }
+
     }
 }
