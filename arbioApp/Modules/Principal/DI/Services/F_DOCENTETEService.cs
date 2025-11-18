@@ -272,12 +272,12 @@ namespace arbioApp.Services
             DateTime dateLivrRealise, string refer, string DO_Coord01,
             int representant, int DE_No, int N_Devise,
             decimal DO_TxEscompte, string TA_Code, string _prefix,
-            int number, decimal Do_Taxe1)
+            int number, decimal Do_Taxe1,decimal docours)
         {
             try
             {
                 int? DO_Type = GetDocTypeNo(typeDoc);
-                decimal? DO_Cours = _f_COMPTETRepository.GetF_COMPTET_Cours_N_Devise(frns.CT_Num);
+                //decimal? DO_Cours = _f_COMPTETRepository.GetF_COMPTET_Cours_N_Devise(frns.CT_Num);
                 string CG_NumPrinc = _f_COMPTETRepository.GetF_COMPTET_CG_NumPrinc(frns.CT_Num).ToString();
                 (int, int) tupleTransactionRegime = GetTransacEtRegime(typeDoc);
                 DateTime now = DateTime.Now;
@@ -299,7 +299,7 @@ namespace arbioApp.Services
                     cbCO_No = representant,
                     DO_Period = 0,
                     DO_Devise = (short?)N_Devise,
-                    DO_Cours = DO_Cours,
+                    DO_Cours = docours,
                     DE_No = DE_No,
                     cbDE_No = DE_No,
                     CT_NumPayeur = frns.CT_Num,
@@ -470,7 +470,7 @@ namespace arbioApp.Services
 
         public void UpdateProprietesF_DOCENTETE(string currentDocPieceNo, DateTime dateLivrPrevu, DateTime dateLivrReal,
     string reference, string caNum, int representant, short? numExpedit,
-    string expeditInt, string entete, int DE_No, decimal Do_Taxe1, short Do_Statut, string DoTiers)
+    string expeditInt, string entete, int DE_No, decimal Do_Taxe1, short Do_Statut, string DoTiers,decimal docours)
         {
             F_DOCENTETE f_DOCENTETE = _f_DOCENTETERepository.GetBy_DO_Piece_And_Type(currentDocPieceNo);
             if (f_DOCENTETE == null)
@@ -494,6 +494,7 @@ namespace arbioApp.Services
             f_DOCENTETE.DE_No = DE_No;
             f_DOCENTETE.DO_Taxe1 = Do_Taxe1;
             f_DOCENTETE.DO_Statut = Do_Statut;
+            f_DOCENTETE.DO_Cours = docours;
             _f_DOCENTETERepository.UpdateProprietesF_DOCENTETE(f_DOCENTETE);
         }
 

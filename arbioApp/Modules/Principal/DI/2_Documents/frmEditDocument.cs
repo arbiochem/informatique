@@ -561,7 +561,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             var _listeDevise = _context.P_DEVISE.Where(d => d.D_Cours != 0).ToList();
 
             // ✅ Désabonner AVANT de configurer pour éviter le déclenchement prématuré
-            lkDevise.EditValueChanged -= LkDevise_EditValueChanged;
+            /*lkDevise.EditValueChanged -= LkDevise_EditValueChanged;
 
             lkDevise.Properties.DataSource = _listeDevise;
             lkDevise.Properties.ValueMember = "cbMarq";
@@ -588,7 +588,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
 
             // ✅ Réabonner APRÈS avoir défini la valeur
-            lkDevise.EditValueChanged += LkDevise_EditValueChanged;
+            lkDevise.EditValueChanged += LkDevise_EditValueChanged;*/
         }
 
         private void LkDevise_EditValueChanged(object sender, EventArgs e)
@@ -602,7 +602,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     return;
                 }
 
-                if (lkDevise.EditValue == null || lkDevise.EditValue == DBNull.Value)
+                /*if (lkDevise.EditValue == null || lkDevise.EditValue == DBNull.Value)
                 {
                     txtCours.EditValue = null;
                     return;
@@ -653,7 +653,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 else
                 {
                     txtCours.EditValue = null;
-                }
+                }*/
             }
             catch (Exception ex)
             {
@@ -2261,6 +2261,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 string _typeDocument = ucDocuments.a_type;
                 string _currentDocPieceNo = dopiecetxt.Text;
                 int numExpedition = doexpedit;
+                decimal docours = decimal.Parse(txtCours.Text);
 
                 int number = int.Parse(dopiecetxt.Text.Substring(dopiecetxt.Text.Length - 4));
                 decimal DoTaxe1 = string.IsNullOrEmpty(doTaxe1txt.Text)? 0: Convert.ToDecimal(doTaxe1txt.Text);
@@ -2271,7 +2272,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 {
                     _f_DOCENTETEService.UpdateProprietesF_DOCENTETE(_currentDocPieceNo,
     dateLivrPrevu, dateLivrReal, reference, caNum, CO_NO,
-    (short?)numExpedition, expeditIntitule, dO_Coord01, numeroDepot, DoTaxe1, DoStatut, ctnum);
+    (short?)numExpedition, expeditIntitule, dO_Coord01, numeroDepot, DoTaxe1, DoStatut, ctnum, docours);
                 }
 
             }
@@ -2317,6 +2318,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 int number = int.Parse(dopiecetxt.Text.Substring(dopiecetxt.Text.Length - 4));
                 decimal DoTaxe1 = 0m;
                 decimal.TryParse(doTaxe1txt.Text, out DoTaxe1);
+                decimal doCours=decimal.Parse(txtCours.Text);
 
                 if (fDocenteteToModif == null)
                 {
@@ -2326,7 +2328,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         dateLivrReal, reference, dO_Coord01,
                         (int)representant.CO_No, numeroDepot, deviseID,
                         ct_taux2, CodeTaxe, _prefix,
-                        number, DoTaxe1);
+                        number, DoTaxe1, doCours);
                 }
             }
             catch (System.Exception ex)
