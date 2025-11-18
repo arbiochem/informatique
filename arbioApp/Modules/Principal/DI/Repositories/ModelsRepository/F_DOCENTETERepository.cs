@@ -577,6 +577,7 @@ namespace arbioApp.Repositories.ModelsRepository
 					DO_ValFranco = @DO_ValFranco,
 					DO_ValFrais = @DO_ValFrais,
 					DO_Coord01 = @DO_Coord01,
+					DO_Cours=@DO_Cours,
 					--Commentaires = @Commentaires,
 					--Divers = @Divers,
 					DE_No = @DE_No
@@ -609,7 +610,8 @@ namespace arbioApp.Repositories.ModelsRepository
                         new SqlParameter("@DO_ValFrais", f_DOCENTETEToUpdate.DO_ValFrais),
                         new SqlParameter("@DO_Coord01", f_DOCENTETEToUpdate.DO_Coord01),
                         new SqlParameter("@DE_No", f_DOCENTETEToUpdate.DE_No),
-                        new SqlParameter("@DO_Piece", f_DOCENTETEToUpdate.DO_Piece)
+                        new SqlParameter("@DO_Piece", f_DOCENTETEToUpdate.DO_Piece),
+                        new SqlParameter("@DO_Cours", f_DOCENTETEToUpdate.DO_Cours)
                     );
                 }
             }

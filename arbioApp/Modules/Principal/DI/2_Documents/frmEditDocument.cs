@@ -63,6 +63,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using Exception = System.Exception;
 using FieldInfo = DevExpress.DataAccess.Excel.FieldInfo;
 
@@ -357,7 +358,6 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void LierControles(System.Windows.Forms.BindingSource bindingSource)
         {
-
             lkEdFrns.DataBindings.Add("EditValue", bindingSource, "DO_Tiers");
             txtDoRef.DataBindings.Add("Text", bindingSource, "DO_Ref");
             lkStatut.DataBindings.Add("EditValue", bindingSource, "DO_Statut");
@@ -423,6 +423,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             dopiecetxt.Text = DoPiece;
             dateSaisie.Text = ucDocuments.doDate.ToString("dd/MM/yyyy");
             txtDoRef.Text = ucDocuments.doRef;
+            txtCours.Text = ucDocuments.doCours.ToString();
+            txtCours.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            txtCours.Properties.Mask.EditMask = "n2";
+            txtCours.Properties.Mask.UseMaskAsDisplayFormat = true;
             datelivrprev.Text = ucDocuments.doDateLivrPrev.ToString("dd/MM/yyyy"); ;
             txtDoRef.Text = ucDocuments.doRef;
             var statutList = new List<dynamic>
@@ -1421,7 +1425,22 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
             int row = gvLigneEdit.FocusedRowHandle;
             laligneamettreajour = row;
-            UPdateLigne(row);
+            if (txtCours.Text == "" || txtCours.Text == "0,00")
+            {
+                MessageBox.Show($"Le cours de devise est vide", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                UPdateLigne(row);
+                string _currentDocPieceNo = dopiecetxt.Text;
+                var entete = _context.F_DOCENTETE.FirstOrDefault(d => d.DO_Piece == _currentDocPieceNo);
+
+                if (entete != null) {
+                    entete.DO_Cours = Convert.ToDecimal(txtCours.Text.ToString());
+                    _context.SaveChanges();
+                }
+
+            }
         }
         public static void UpdateSequence(string prefix, int currentNumber)
         {
@@ -4220,5 +4239,20 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
         }
 
+        private void txtCours_EditValueChanged(object sender, EventArgs e)
+        {
+            decimal cours = Convert.ToDecimal(txtCours.Text);
+
+            for (int i = 0; i < gvLigneEdit.RowCount; i++)
+            {
+                decimal qte = Convert.ToDecimal(gvLigneEdit.GetRowCellValue(i, "DL_Qte"));
+                decimal pu = Convert.ToDecimal(gvLigneEdit.GetRowCellValue(i, "DL_PrixUnitaire"));
+
+                decimal montant = qte * pu * cours;
+
+                gvLigneEdit.SetRowCellValue(i, "DL_MontantHT", montant);
+            }
+
+        }
     }
 }

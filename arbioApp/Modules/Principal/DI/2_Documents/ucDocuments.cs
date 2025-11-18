@@ -190,12 +190,14 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     if (gvEntete.RowCount < 1) { return; }
                     gvEntete.Columns[0].VisibleIndex = -1;
 
+                    GridColumn col;
                     RepositoryItemHyperLinkEdit hyperlink = new RepositoryItemHyperLinkEdit();
                     hyperlink.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
                     hyperlink.Click += Hyperlink_Click;
                     gcEntetes.RepositoryItems.Add(hyperlink);
                     gvEntete.Columns["DO_Piece"].ColumnEdit = hyperlink;
                     gvEntete.Columns["CO_No"].VisibleIndex = -1;
+                    gvEntete.Columns["DO_Cours"].VisibleIndex = -1;
                     gvEntete.Columns["DO_Taxe1"].VisibleIndex = -1;
                     gvEntete.Columns["DO_CodeTaxe1"].VisibleIndex = -1;
                     gvEntete.Columns["DO_Statut"].VisibleIndex = -1;
@@ -208,6 +210,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     gvEntete.Columns["DO_TotalHT"].DisplayFormat.FormatString = "N2";
                     gvEntete.Columns["DO_TotalTTC"].DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
                     gvEntete.Columns["DO_TotalTTC"].DisplayFormat.FormatString = "N2";
+                    gvEntete.Columns["DO_Cours"].DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+                    gvEntete.Columns["DO_Cours"].DisplayFormat.FormatString = "N2";
 
                     SetupCloturerColumn();
                 }
@@ -368,7 +372,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void Hyperlink_Click(object sender, EventArgs e)
         {
-            btnOuvrirDoc_Click(sender, e);  
+            btnOuvrirDoc_Click(sender, e);
+            btnRefresh_Click(sender, e);
         }
 
         private void gvEntete_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
@@ -430,6 +435,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         public static int doReliquat;
         public static int deno;
         public static string doRef;
+        public static decimal doCours;
         public static int TypeAchat;
         public static int doExpedit;
         public static string doPiece;
@@ -451,10 +457,9 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     //*******************************************************
                     doTiers = gvEntete.GetFocusedRowCellValue("DO_Tiers")?.ToString();
                     doRef = gvEntete.GetFocusedRowCellValue("DO_Ref")?.ToString();
-
                     doStatut = Convert.ToInt16(gvEntete.GetFocusedRowCellValue("DO_Statut"));
-
                     doDate = Convert.ToDateTime(gvEntete.GetFocusedRowCellValue("DO_Date"));
+                    doCours = Convert.ToDecimal(gvEntete.GetFocusedRowCellValue("DO_Cours"));
                     doDateLivrPrev = Convert.ToDateTime(gvEntete.GetFocusedRowCellValue("DO_DateLivr"));
                     int? CO_No = Convert.ToInt16(gvEntete.GetFocusedRowCellValue("CO_No"));
                     CoNo = CO_No;
