@@ -1,14 +1,16 @@
-﻿using arbioApp.Utils.Connection;
-using System.Data.Entity;
-using arbioApp.Models;
+﻿using arbioApp.Models;
 using arbioApp.Modules.Principal.DI.Models;
+using arbioApp.Utils.Connection;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 
 namespace arbioApp.Models
 {
     public partial class AppDbContext : DbContext
     {
         private static string connectionString = "";
-        public AppDbContext(): base(Db.GetConnectionString()) { 
+        public AppDbContext(): base(Db.GetConnectionString()) {
+            Database.SetInitializer<AppDbContext>(null);
         }
         
         //    FANAOVANA UPDATE DATABASE
@@ -100,7 +102,12 @@ namespace arbioApp.Models
             .HasOptional(a => a.artStock)
             .WithRequired(s => s.FArticle);
 
+            modelBuilder.Entity<F_ARTSTOCK>()
+            .HasKey(e => e.cbMarq);
 
+            modelBuilder.Entity<F_ARTSTOCK>()
+                .Property(e => e.cbMarq)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
 
         }

@@ -261,33 +261,6 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 {
                     test = true;
                 }
-
-                //MAJ Qté
-
-                var docLines = context.F_DOCLIGNE
-                    .Where(x => x.DO_Piece == doPiece)
-                    .ToList();
-
-                var articleRefs = docLines
-                    .Select(x => x.AR_Ref)
-                    .Distinct()
-                    .ToList();
-
-                var stocks = context.F_ARTSTOCK
-                    .Where(x => articleRefs.Contains(x.AR_Ref))
-                    .ToList();
-
-                foreach (var line in docLines)
-                {
-                    var matchingStocks = stocks.Where(s => s.AR_Ref == line.AR_Ref);
-                    foreach (var stock in matchingStocks)
-                    {
-                        stock.AS_QteSto += line.DL_Qte;
-                    }
-                }
-
-                context.SaveChanges();
-
             }
             return test;
         }

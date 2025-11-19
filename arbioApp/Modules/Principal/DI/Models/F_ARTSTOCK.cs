@@ -1,4 +1,4 @@
-namespace arbioApp.Models
+﻿namespace arbioApp.Models
 {
     using System;
     using System.Collections.Generic;

@@ -3061,6 +3061,91 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                             this.TransformFDOCENTETE(dlg.doctype);
                         }
 
+                        //MAJ Qte
+                        for (int i = 0; i < gvLigneEdit.RowCount; i++)
+                        {
+                            string reference = gvLigneEdit.GetRowCellValue(i, "AR_Ref")?.ToString();
+                            var qte = gvLigneEdit.GetRowCellValue(i, "DL_Qte");
+
+                            try
+                            {
+                                using (AppDbContext context = new AppDbContext())
+                                {
+                                    // Pour un AJOUT (vérifier que l'enregistrement n'existe pas déjà)
+                                    var existingStock = context.F_ARTSTOCK
+                                        .FirstOrDefault(s => s.AR_Ref == reference && s.DE_No == 1);
+
+                                    if (existingStock == null)
+                                    {
+                                        string sql = @"
+                                        INSERT INTO F_ARTSTOCK (
+                                            AR_Ref,
+                                            DE_No,
+                                            DP_NoPrincipal,
+                                            AS_QteSto,
+                                            AS_QteRes,
+                                            AS_QteCom,
+                                            AS_QtePrepa,
+                                            AS_MontSto,
+                                            AS_QteMini,
+                                            AS_QteMaxi
+                                        )
+                                        VALUES (
+                                            @AR_Ref,
+                                            @DE_No,
+                                            @DP_NoPrincipal,
+                                            @DL_Qte,
+                                            0,0,0,0,0,0
+                                        );";
+
+
+                                        try
+                                        {
+                                            using (var contexts = new AppDbContext())
+                                            {
+                                                contexts.Database.ExecuteSqlCommand(
+                                                    sql,
+                                                    new SqlParameter("@AR_Ref", reference),
+                                                    new SqlParameter("@DE_No", 1),
+                                                    new SqlParameter("@DP_NoPrincipal", 1), // si utilisé dans ta BDD
+                                                    new SqlParameter("@DL_Qte", qte)
+                                                );
+                                            }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show(ex.Message);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // MISE À JOUR si existe déjà
+                                        existingStock.AS_QteSto += Convert.ToDecimal(qte);
+                                        context.SaveChanges();
+                                    }
+                                }
+                            }
+                            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+                            {
+                                // Afficher l'erreur interne
+                                var innerException = ex.InnerException;
+                                while (innerException != null)
+                                {
+                                    Console.WriteLine(innerException.Message);
+                                    MessageBox.Show(innerException.Message, "Erreur détaillée");
+                                    innerException = innerException.InnerException;
+                                }
+
+                                // Log complet
+                                Console.WriteLine(ex.ToString());
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message, "Erreur");
+                            }
+
+                            
+                        }
                         // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
                         _ucDocuments.ChargerDonneesDepuisBDD();
                     }
@@ -4203,6 +4288,15 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         private void frmEditDocument_Activated(object sender, EventArgs e)
         {
             bindingNavigator1.Visible=false;
+            if (dopiecetxt.Text.StartsWith("AFA") || dopiecetxt.Text.StartsWith("ABR"))
+            {
+                gvLigneEdit.OptionsBehavior.Editable = false;
+            }
+            else
+            {
+                gvLigneEdit.OptionsBehavior.Editable = true;
+            }
+
         }
 
         private void lkDevise_EditValueChanged_1(object sender, EventArgs e)
