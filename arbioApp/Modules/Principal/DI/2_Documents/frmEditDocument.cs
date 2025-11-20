@@ -2962,7 +2962,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                     if (autorise)
                     {
-                        if(lkStatut.Text != "Accepté") {
+                        if(lkStatut.Text == "Accepté") {
                             var dlg = new frmTransform(_typeDocument);
                             dlg.ParentFormInstance = this;
 
