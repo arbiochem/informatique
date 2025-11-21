@@ -1,4 +1,6 @@
-﻿namespace arbioApp.Modules.Principal.DI._2_Documents
+﻿using System.Drawing;
+
+namespace arbioApp.Modules.Principal.DI._2_Documents
 {
     partial class frmEditDocument
     {
@@ -2205,7 +2207,7 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem18;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraEditors.HyperlinkLabelControl hlApercuGcLigne;
-        private DevExpress.XtraEditors.LookUpEdit lkDepot;
+        public DevExpress.XtraEditors.LookUpEdit lkDepot;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem20;
         private System.Windows.Forms.TextBox doTaxe1txt;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem24;

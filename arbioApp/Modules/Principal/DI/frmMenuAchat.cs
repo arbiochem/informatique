@@ -1,6 +1,11 @@
-﻿using arbioApp.Modules.Principal.DI._2_Documents;
+﻿using arbioApp.Models;
+using arbioApp.Modules.Principal.DI._2_Documents;
+using DevExpress.Utils.DirectXPaint;
+using DevExpress.Utils.Extensions;
 using DevExpress.XtraCharts.Designer.Native;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +13,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -46,6 +52,7 @@ namespace arbioApp.Modules.Principal.DI
                     ucDocuments monUc = new ucDocuments();
                     statut = 2; // accepté par défaut
                     frmEditDocument editForm = new frmEditDocument(GetNextInvoiceNumber("APA"), monUc, 0);
+                    editForm.lkDepot.EditValue = radioGroup1.EditValue;
                     editForm.ShowDialog();
                     dotype = 10;
                 }
@@ -196,5 +203,47 @@ namespace arbioApp.Modules.Principal.DI
             return verif;
         }
 
+        private void frmMenuAchat_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                using (AppDbContext context = new AppDbContext())
+                {
+                    var depots = context.F_DEPOT.ToList();
+
+                    radioGroup1.Properties.Items.Clear();
+
+                    foreach (var depot in depots)
+                    {
+                        radioGroup1.Properties.Items.Add(
+                            new RadioGroupItem(depot.DE_No, depot.DE_Intitule)   // Value = ID, Label = Nom
+                        );
+                    }
+
+                    // affichage horizontal
+                    radioGroup1.Properties.Columns = depots.Count;
+
+                    // valeur par défaut = premier dépôt
+                    if (depots.Any())
+                        radioGroup1.EditValue = depots.First().DE_No;
+
+                }
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erreur");
+            }
+
+           
+        }
+
+        private void radioGroup1_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

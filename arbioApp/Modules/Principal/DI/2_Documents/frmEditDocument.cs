@@ -561,7 +561,6 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
             lkDepot.Properties.Columns.Add(new LookUpColumnInfo("DE_No", "DE_No", 50));
             lkDepot.Properties.Columns.Add(new LookUpColumnInfo("DE_Intitule", "DEPOT"));
-
         }
         private void ChargerDevise()
         {
@@ -2851,20 +2850,13 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 ExecuteStockAlert();
                 ChargerArtFrns();
                 var list = _context.F_FRETS.FirstOrDefault(p => p.DO_PIECE == dopiecetxt.Text);
-                txt_prix.Text =list.DO_MONTANT.ToString("N2");
-                txt_poids.Text = list.DO_POIDS.ToString("N2");
+                if (txt_prix.Text != "")
+                {
+                    txt_prix.Text = list.DO_MONTANT.ToString("N2");
+                    txt_poids.Text = list.DO_POIDS.ToString("N2");
+                }
             }
-            else
-            {
-                //gvLigneEdit.ShowingEditor -= gvLigneEdit_ShowingEditor; // Se désabonner au cas où
-                //intcollaborateur = cono;
-                //ShapeFileLayer shapeLayer = new ShapeFileLayer();
-
-                //shapeLayer.Uri = "world1.shp";
-
-                //this.maps1.Layers.Add(shapeLayer);
-            }
-
+          
             LkDevise_EditValueChanged(sender, e);
 
             GridColumn col = gvLigneEdit.Columns.AddField("FRET");
