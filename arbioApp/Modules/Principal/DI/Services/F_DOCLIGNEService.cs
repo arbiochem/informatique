@@ -306,7 +306,7 @@ namespace arbioApp.Modules.Principal.DI.Services
         // DEBUT UPDATE ====================================================================================
         public void UpdateF_DOCLIGNE(string DO_Piece, string CT_Num, string AR_Ref, string DL_Designe, decimal puBrut,
             int DL_No, int quantite, string typeDocument, decimal DL_Taxe1, decimal DL_MontantHT, decimal DL_MontantTTC,
-            int? retenu, decimal remise, string DL_PieceFourniss, DateTime DL_DatePieceFourniss, decimal DL_MontantRegle)
+            int? retenu, decimal remise, string DL_PieceFourniss, DateTime DL_DatePieceFourniss, decimal DL_MontantRegle,decimal poids)
         {
             try
             {
@@ -389,7 +389,7 @@ namespace arbioApp.Modules.Principal.DI.Services
 
                 // Mise à jour des propriétés concernant le poids
                 f_DOCLIGNEToUpdate.DL_PoidsBrut = quantite * f_ARTICLE.AR_PoidsBrut;
-                f_DOCLIGNEToUpdate.DL_PoidsNet = quantite * f_ARTICLE.AR_PoidsNet;
+                f_DOCLIGNEToUpdate.DL_PoidsNet = poids;
 
                 // Mise à jour DL_CMUP et DL_PrixRU
                 //decimal? CMUP = QteEtMontantArticle.AS_MontSto / (QteEtMontantArticle.AS_QteSto == 0 ? 1 : QteEtMontantArticle.AS_QteSto);

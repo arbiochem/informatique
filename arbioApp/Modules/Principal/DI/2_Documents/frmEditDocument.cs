@@ -39,6 +39,7 @@ using DevExpress.XtraSpreadsheet.Import.Xls;
 using DevExpress.XtraTab;
 using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Nodes;
+using Microsoft.Office.Interop.Outlook;
 using Org.BouncyCastle.Tls;
 //using Syncfusion.Windows.Forms.Maps;
 using System;
@@ -55,6 +56,7 @@ using System.Linq;
 ////using Microsoft.Office.Interop.Outlook;
 using System.Net;
 using System.Reflection;
+using System.Runtime.Remoting.Contexts;
 using System.Security.AccessControl;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -66,6 +68,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using Exception = System.Exception;
 using FieldInfo = DevExpress.DataAccess.Excel.FieldInfo;
+using TextEdit = DevExpress.XtraEditors.TextEdit;
 
 
 namespace arbioApp.Modules.Principal.DI._2_Documents
@@ -1387,11 +1390,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     }
                     string strDL_No = Convert.ToString(gvLigneEdit.GetRowCellValue(row, "DL_No"));
                     decimal montantRegl = _f_DOCLIGNERepository.GetMontantRegleByPieceArRef(dopiece, arRef, CtNum);
+                    decimal poids = Convert.ToDecimal(gvLigneEdit.GetRowCellValue(row, "DL_PoidsNet"));
 
 
-
-
-                    _f_DOCLIGNEService.UpdateF_DOCLIGNE(dopiecetxt.Text, CtNum, arRef, dl_Designe, puBrut, dlLigne, quantiteEcriteStock, _typeDocument, dlTaxe1, dlMontantHT, dlMontantTTC, retenu, remisePourcent, dlPiecefrns, dlDatePiecefrns, montantRegl);
+                    _f_DOCLIGNEService.UpdateF_DOCLIGNE(dopiecetxt.Text, CtNum, arRef, dl_Designe, puBrut, dlLigne, quantiteEcriteStock, _typeDocument, dlTaxe1, dlMontantHT, dlMontantTTC, retenu, remisePourcent, dlPiecefrns, dlDatePiecefrns, montantRegl,poids);
 
                     //// Mise à jour du stock de l'article dans un emplacement concerné
                     //_f_ARTSTOCKEMPLService.UpdateArtstockEmpl(_typeDocument, ct_Num, dl_Ligne, arRef, previousQuantiteEcriteStock, quantiteEcriteStock, DE_No);
@@ -1402,6 +1404,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 }
                 InitializeGrid(gcLigneEdit, dopiecetxt.Text);
                 gvLigneEdit.UpdateSummary();
+
+                
             }
             catch (System.Exception ex)
             {
@@ -1440,6 +1444,18 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     _context.SaveChanges();
                 }
 
+                simpleButton1_Click(sender, e);
+
+                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece, @prix_total,@poids_total";
+
+                _context.Database.ExecuteSqlCommand(
+                   sql,
+                   new SqlParameter("@DO_Piece", dopiecetxt.Text),
+                   new SqlParameter("@prix_total", Convert.ToDecimal(txt_prix.Text)),
+                   new SqlParameter("@poids_total", Convert.ToDecimal(txt_poids.Text))
+               );
+
+                btnEditLigne_Click(sender, e);
             }
         }
         public static void UpdateSequence(string prefix, int currentNumber)
@@ -2639,7 +2655,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 }
             }
             if (e.Column.FieldName == "DL_Qte" || e.Column.FieldName == "DL_Remise01REM_Valeur" || e.Column.FieldName == "DL_PrixUnitaire"
-                || e.Column.FieldName == "DL_Taxe1" || e.Column.FieldName == "DL_PUDevise")
+                || e.Column.FieldName == "DL_Taxe1" || e.Column.FieldName == "DL_PUDevise" || e.Column.FieldName == "DL_PoidsNet" || e.Column.FieldName == "DL_Frais")
             {
                 GridView view = sender as GridView;
 
@@ -2701,6 +2717,31 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     view.SetRowCellValue(e.RowHandle, "DL_MontantHT", montantHT);
                     view.SetRowCellValue(e.RowHandle, "DL_MontantTTC", montantTTC);
 
+                    gvLigneEdit.CustomUnboundColumnData += (sender, e) =>
+                    {
+                        if (e.IsGetData)
+                        {
+                            if (e.Column.FieldName == "FRET")
+                            {
+                                decimal poidsNet = Convert.ToDecimal(gvLigneEdit.GetListSourceRowCellValue(e.ListSourceRowIndex, "DL_PoidsNet"));
+                                decimal prix = Convert.ToDecimal(txt_prix.Text);
+                                decimal poids = Convert.ToDecimal(txt_poids.Text);
+
+                                decimal fret = (poidsNet * prix) / poids;
+                                if (fret < 0) fret = 0m;
+
+                                e.Value = fret.ToString("N2");
+                            }
+                            else if (e.Column.FieldName == "Total Frais")
+                            {
+                                decimal fret = Convert.ToDecimal(gvLigneEdit.GetListSourceRowCellValue(e.ListSourceRowIndex, "FRET"));
+                                decimal dlFrais = Convert.ToDecimal(gvLigneEdit.GetListSourceRowCellValue(e.ListSourceRowIndex, "DL_Frais"));
+
+                                decimal tot_frais = dlFrais + fret;
+                                e.Value = tot_frais.ToString("N2");
+                            }
+                        }
+                    };
                 }
             }
         }
@@ -2809,6 +2850,9 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             {
                 ExecuteStockAlert();
                 ChargerArtFrns();
+                var list = _context.F_FRETS.FirstOrDefault(p => p.DO_PIECE == dopiecetxt.Text);
+                txt_prix.Text =list.DO_MONTANT.ToString("N2");
+                txt_poids.Text = list.DO_POIDS.ToString("N2");
             }
             else
             {
@@ -2822,9 +2866,82 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
 
             LkDevise_EditValueChanged(sender, e);
+
+            GridColumn col = gvLigneEdit.Columns.AddField("FRET");
+            col.Caption = "FRET";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            col.Visible = true;
+            col.OptionsColumn.AllowEdit = true;
+            col.OptionsColumn.ReadOnly = false;
+
+            GridColumn col1 = gvLigneEdit.Columns.AddField("Total Frais");
+            col1.Caption = "Total Frais";
+            col1.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            col1.Visible = true;
+
+            // 2. Positionnement avant DL_FRAIS
+            int indexFrais = gvLigneEdit.Columns["DL_Frais"].VisibleIndex;
+            col.VisibleIndex = indexFrais;
+            col1.VisibleIndex = indexFrais+2;
+
+            gvLigneEdit.CustomUnboundColumnData += (sender, e) =>
+            {
+                if (e.IsGetData)
+                {
+                    if (e.Column.FieldName == "FRET")
+                    {
+                        decimal poidsNet = Convert.ToDecimal(gvLigneEdit.GetListSourceRowCellValue(e.ListSourceRowIndex, "DL_PoidsNet"));
+                        decimal prix = Convert.ToDecimal(txt_prix.Text);
+                        decimal poids = Convert.ToDecimal(txt_poids.Text);
+
+                        decimal fret = (poidsNet * prix) / poids;
+                        if (fret < 0) fret = 0m;
+
+                        e.Value = fret.ToString("N2");
+                    }
+                    else if (e.Column.FieldName == "Total Frais")
+                    {
+                        decimal fret = Convert.ToDecimal(gvLigneEdit.GetListSourceRowCellValue(e.ListSourceRowIndex, "FRET"));
+                        decimal dlFrais = 0m;
+                        object val = gvLigneEdit.GetListSourceRowCellValue(e.ListSourceRowIndex, "DL_Frais");
+                        if (val != null && val != DBNull.Value)
+                            dlFrais = Convert.ToDecimal(val);
+
+                        decimal tot_frais = dlFrais + fret;
+                        e.Value = tot_frais; // reste un decimal
+
+                    }
+                }
+            };
+
+            GridColumn colFret = gvLigneEdit.Columns["DL_PoidsNet"];
+            RepositoryItemTextEdit textEdit = new RepositoryItemTextEdit();
+            colFret.ColumnEdit = textEdit;
+
+            textEdit.KeyPress += (sender, e) =>
+            {
+                // Remplacer le point par une virgule
+                if (e.KeyChar == '.')
+                {
+                    e.KeyChar = ',';
+                }
+
+                // Autoriser uniquement chiffres, virgule et contrôle (backspace)
+                if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+                {
+                    e.Handled = true;  // bloque la saisie
+                }
+
+                // Autoriser une seule virgule
+                TextEdit editor = sender as TextEdit;
+                if (e.KeyChar == ',' && editor.Text.Contains(","))
+                {
+                    e.Handled = true;
+                }
+            };
         }
 
-        private void datelivrprev_EditValueChanged(object sender, EventArgs e)
+private void datelivrprev_EditValueChanged(object sender, EventArgs e)
         {
             datelivrprev.EditValue = datelivrprev.EditValue;
         }
@@ -3162,8 +3279,6 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
         }
 
-
-
         private void gvLigneEdit_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             if (e.Row != null && gvLigneEdit.IsNewItemRow(e.RowHandle))
@@ -3172,8 +3287,6 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 MettreAJourTotauxDepuisBD(dopiecetxt.Text);
             }
         }
-
-
 
         private void xtraTabControl1_Selected(object sender, DevExpress.XtraTab.TabPageEventArgs e)
         {
@@ -4296,7 +4409,6 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             {
                 gvLigneEdit.OptionsBehavior.Editable = true;
             }
-
         }
 
         private void lkDevise_EditValueChanged_1(object sender, EventArgs e)
@@ -4347,6 +4459,109 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 gvLigneEdit.SetRowCellValue(i, "DL_MontantHT", montant);
             }
 
+        }
+
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (AppDbContext context = new AppDbContext())
+                {
+                    // Pour un AJOUT (vérifier que l'enregistrement n'existe pas déjà)
+                    var existingFRET = context.F_FRETS
+                        .FirstOrDefault(s => s.DO_PIECE == dopiecetxt.Text);
+
+                    if (existingFRET == null)
+                    {
+                        try
+                        {
+                            F_FRET f = new F_FRET();
+                            f.DO_PIECE=dopiecetxt.Text;
+                            f.DO_MONTANT = Convert.ToDecimal(txt_prix.Text);
+                            f.DO_POIDS = Convert.ToDecimal(txt_poids.Text);
+
+                            context.F_FRETS.Add(f);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        existingFRET.DO_MONTANT = Convert.ToDecimal(txt_prix.Text);
+                        existingFRET.DO_POIDS = Convert.ToDecimal(txt_poids.Text);
+                    }
+
+                    context.SaveChanges();
+                    MessageBox.Show("Modification FRET terminée", "Message d'information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erreur");
+            }
+        }
+
+        private void txt_prix_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Autoriser touches de contrôle (Backspace, etc.)
+            if (char.IsControl(e.KeyChar))
+                return;
+
+            // Si l'utilisateur tape un point '.', on le remplace par une virgule ','
+            if (e.KeyChar == '.')
+            {
+                e.KeyChar = ',';      // Remplacement automatique
+            }
+
+            // Autoriser les chiffres
+            if (char.IsDigit(e.KeyChar))
+                return;
+
+            // Autoriser une seule virgule
+            if (e.KeyChar == ',' && !txt_prix.Text.Contains(","))
+                return;
+
+            // Sinon : blocage de la saisie
+            e.Handled = true;
+        }
+
+        private void txt_poids_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Autoriser touches de contrôle (Backspace, etc.)
+            if (char.IsControl(e.KeyChar))
+                return;
+
+            // Si l'utilisateur tape un point '.', on le remplace par une virgule ','
+            if (e.KeyChar == '.')
+            {
+                e.KeyChar = ',';      // Remplacement automatique
+            }
+
+            // Autoriser les chiffres
+            if (char.IsDigit(e.KeyChar))
+                return;
+
+            // Autoriser une seule virgule
+            if (e.KeyChar == ',' && !txt_poids.Text.Contains(","))
+                return;
+
+            // Sinon : blocage de la saisie
+            e.Handled = true;
+        }
+
+        private void txt_poids_EditValueChanged(object sender, EventArgs e)
+        {
+            gvLigneEdit.RefreshData();
+        }
+
+        private void txt_prix_EditValueChanged(object sender, EventArgs e)
+        {
+            gvLigneEdit.RefreshData();
         }
     }
 }

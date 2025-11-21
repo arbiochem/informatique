@@ -57,9 +57,9 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             if (fret != null)
             {
                 // Affichage dans les TextBox
-                txt_prix.Text = fret.DO_PRIX.ToString("0.00");
+                //txt_prix.Text = fret.DO_PRIX.ToString("0.00");
                 //txt_montant.Text = fret.DO_MONTANT.ToString("0.00");
-                txt_poids.Text = fret.DO_POIDS.ToString("0.00");
+                //txt_poids.Text = fret.DO_POIDS.ToString("0.00");
             }
 
             LoadData();
@@ -147,11 +147,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
 
                 if (gridViewFrais.DataRowCount > 0){
-                    txt_poids.Enabled = true;
-                    txt_prix.Enabled = true;
+                    //txt_poids.Enabled = true;
+                    //txt_prix.Enabled = true;
                 }else{
-                    txt_poids.Enabled = false;
-                    txt_prix.Enabled = false;
+                    //txt_poids.Enabled = false;
+                    //txt_prix.Enabled = false;
                 }
                 //-----------------------------------------------------------------------------------------------
 
@@ -299,18 +299,18 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                             if (existingFret != null)
                             {
-                                existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
+                                //existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
                                 //existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
-                                existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
+                                //existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
                             }
                             else
                             {
                                 var f_fret = new F_FRET
                                 {
                                     DO_PIECE = _doPiece,
-                                    DO_PRIX = decimal.Parse(txt_prix.Text),
+                                    //DO_PRIX = decimal.Parse(txt_prix.Text),
                                     //DO_MONTANT = decimal.Parse(txt_montant.Text),
-                                    DO_POIDS = decimal.Parse(txt_poids.Text)
+                                    //DO_POIDS = decimal.Parse(txt_poids.Text)
                                 };
 
                                 _context.F_FRETS.Add(f_fret);
@@ -327,8 +327,15 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                                 _context.SaveChanges();
 
                                 // Exécuter la procédure
-                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
-                                _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
+                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece, @prix_total,@poids_total";
+
+                                _context.Database.ExecuteSqlCommand(
+                                   sql,
+                                   new SqlParameter("@DO_Piece", _doPiece),
+                                   new SqlParameter("@prix_total", Convert.ToDecimal(_parentForm.txt_prix.Text)),
+                                   new SqlParameter("@poids_total", Convert.ToDecimal(_parentForm.txt_poids.Text))
+                               );
+
 
                                 // Rafraîchir la grille du parent
                                 _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
@@ -367,18 +374,18 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                             if (existingFret != null)
                             {
-                                existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
+                                //existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
                                 //existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
-                                existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
+                                //existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
                             }
                             else
                             {
                                 var f_fret = new F_FRET
                                 {
                                     DO_PIECE = _doPiece,
-                                    DO_PRIX = decimal.Parse(txt_prix.Text),
+                                    //DO_PRIX = decimal.Parse(txt_prix.Text),
                                     //DO_MONTANT = decimal.Parse(txt_montant.Text),
-                                    DO_POIDS = decimal.Parse(txt_poids.Text)
+                                    //DO_POIDS = decimal.Parse(txt_poids.Text)
                                 };
 
                                 _context.F_FRETS.Add(f_fret);
@@ -395,8 +402,14 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                                 _context.SaveChanges();
 
                                 // Exécuter la procédure
-                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
-                                _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
+                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece, @prix_total,@poids_total";
+
+                                _context.Database.ExecuteSqlCommand(
+                                   sql,
+                                   new SqlParameter("@DO_Piece", _doPiece),
+                                   new SqlParameter("@prix_total", Convert.ToDecimal(_parentForm.txt_prix.Text)),
+                                   new SqlParameter("@poids_total", Convert.ToDecimal(_parentForm.txt_poids.Text))
+                               );
 
                                 // Rafraîchir la grille du parent
                                 _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
@@ -435,18 +448,18 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                             if (existingFret != null)
                             {
-                                existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
+                                //existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
                                 //existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
-                                existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
+                                //existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
                             }
                             else
                             {
                                 var f_fret = new F_FRET
                                 {
                                     DO_PIECE = _doPiece,
-                                    DO_PRIX = decimal.Parse(txt_prix.Text),
+                                    //DO_PRIX = decimal.Parse(txt_prix.Text),
                                     //DO_MONTANT = decimal.Parse(txt_montant.Text),
-                                    DO_POIDS = decimal.Parse(txt_poids.Text)
+                                    //DO_POIDS = decimal.Parse(txt_poids.Text)
                                 };
 
                                 _context.F_FRETS.Add(f_fret);
@@ -463,8 +476,14 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                                 _context.SaveChanges();
 
                                 // Exécuter la procédure
-                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
-                                _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
+                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece, @prix_total,@poids_total";
+
+                                _context.Database.ExecuteSqlCommand(
+                                   sql,
+                                   new SqlParameter("@DO_Piece", _doPiece),
+                                   new SqlParameter("@prix_total", Convert.ToDecimal(_parentForm.txt_prix.Text)),
+                                   new SqlParameter("@poids_total", Convert.ToDecimal(_parentForm.txt_poids.Text))
+                               );
 
                                 // Rafraîchir la grille du parent
                                 _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
@@ -502,18 +521,18 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                             if (existingFret != null)
                             {
-                                existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
+                                //existingFret.DO_PRIX = decimal.Parse(txt_prix.Text);
                                 //existingFret.DO_MONTANT = decimal.Parse(txt_montant.Text);
-                                existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
+                                //existingFret.DO_POIDS = decimal.Parse(txt_poids.Text);
                             }
                             else
                             {
                                 var f_fret = new F_FRET
                                 {
                                     DO_PIECE = _doPiece,
-                                    DO_PRIX = decimal.Parse(txt_prix.Text),
+                                    //DO_PRIX = decimal.Parse(txt_prix.Text),
                                     //DO_MONTANT = decimal.Parse(txt_montant.Text),
-                                    DO_POIDS = decimal.Parse(txt_poids.Text)
+                                    //DO_POIDS = decimal.Parse(txt_poids.Text)
                                 };
 
                                 _context.F_FRETS.Add(f_fret);
@@ -530,8 +549,14 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                                 _context.SaveChanges();
 
                                 // Exécuter la procédure
-                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
-                                _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
+                                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece, @prix_total,@poids_total";
+
+                                _context.Database.ExecuteSqlCommand(
+                                    sql,
+                                    new SqlParameter("@DO_Piece", _doPiece),
+                                    new SqlParameter("@prix_total", Convert.ToDecimal(_parentForm.txt_prix.Text)),
+                                    new SqlParameter("@poids_total", Convert.ToDecimal(_parentForm.txt_poids.Text))
+                                );
 
                                 // Rafraîchir la grille du parent
                                 _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
@@ -622,8 +647,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                 if (autorise || autorise1 || autorise2 || autorise3)
                 {
-                    txt_poids.Enabled = true;
-                    txt_prix.Enabled = true;
+                    //txt_poids.Enabled = true;
+                    //txt_prix.Enabled = true;
 
                     var newFrais = new F_DOCFRAISIMPORT
                     {

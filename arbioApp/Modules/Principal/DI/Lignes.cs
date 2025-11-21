@@ -218,7 +218,7 @@ namespace arbioApp.Modules.Principal.DI
             //view.Columns["DL_Qte"].VisibleIndex = -1;
             view.Columns["DL_QteBC"].VisibleIndex = -1;
             view.Columns["DL_QteBL"].VisibleIndex = -1;
-            view.Columns["DL_PoidsNet"].VisibleIndex = -1;
+            //view.Columns["DL_PoidsNet"].VisibleIndex = -1;
             view.Columns["DL_Valorise"].VisibleIndex = -1;
             view.Columns["DL_PoidsBrut"].VisibleIndex = -1;
             view.Columns["DL_Remise01REM_Valeur"].VisibleIndex = -1;
