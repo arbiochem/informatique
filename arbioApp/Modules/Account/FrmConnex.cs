@@ -284,10 +284,13 @@ namespace arbioApp
         {
 
         }
+<<<<<<< HEAD
 
         private void checkEdit11_CheckedChanged(object sender, EventArgs e)
         {
 
         }
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     }
 }

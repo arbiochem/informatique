@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿//using Microsoft.Office.Interop.Outlook;
 using arbioApp.Models;
 using arbioApp.Modules.Principal.DI._2_Documents;
@@ -23,25 +24,63 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraRichEdit.Fields;
 using DevExpress.XtraTreeList;
 using DevExpress.XtraVerticalGrid;
+=======
+﻿using DevExpress.XtraEditors;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+<<<<<<< HEAD
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+=======
+using System.Drawing;
+using System.Linq;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+<<<<<<< HEAD
 using BindingSource = System.Windows.Forms.BindingSource;
+=======
+using arbioApp.Modules.Principal.DI._2_Documents;
+using System.Data.SqlClient;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid;
+using DevExpress.Charts.Native;
+using System.Net;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraExport.Helpers;
+using DevExpress.DashboardCommon.Viewer;
+using DevExpress.Utils;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraTreeList;
+//using Microsoft.Office.Interop.Outlook;
+using arbioApp.Models;
+using Objets100cLib;
+using arbioApp.Repositories.ModelsRepository;
+using DevExpress.ChartRangeControlClient.Core;
+using BindingSource = System.Windows.Forms.BindingSource;
+using DevExpress.Xpo;
+using arbioApp.Modules.Principal.DI.Models;
+using DevExpress.XtraBars;
+using System.IO;
+using DevExpress.XtraCharts.Native;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
 
 namespace arbioApp.Modules.Principal.DI._2_Documents
 {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     public partial class ucDocuments : DevExpress.XtraEditors.XtraUserControl
     {
         private static ucDocuments _instance;
@@ -49,10 +88,13 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         private SqlDataAdapter dataAdapter;
         private SqlConnection connection;
         public static string connectionString;
+<<<<<<< HEAD
         DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit btnCloturer = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
         private readonly F_DOCENTETEService _f_DOCENTETEService;
         private readonly F_DOCENTETERepository _f_DOCENTETERepository;
         private string rec_dopiece;
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
         public static ucDocuments Instance
         {
@@ -66,8 +108,15 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         public ucDocuments()
         {
+<<<<<<< HEAD
             InitializeComponent();
             CreateDatabaseMenu();
+=======
+            InitializeComponent();           
+            CreateDatabaseMenu();    
+            
+            
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
 
@@ -77,6 +126,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         private void btnNouveauDoc_Click(object sender, EventArgs e)
         {
             frmMenuAchat _frmMenuAchat = new frmMenuAchat();
@@ -84,6 +137,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         }
 
+<<<<<<< HEAD
         private void BtnCloturer_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
             GridView view = gcEntetes.FocusedView as GridView;
@@ -133,6 +187,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
             }
         }
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
         private void ucDocuments_Load(object sender, EventArgs e)
         {
@@ -142,10 +198,19 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             btnOuvrirDoc.Enabled = false;
             btnNouveauDoc.Enabled = false;
             btnRefresh.Enabled = false;
+<<<<<<< HEAD
             gvEntete.CustomRowCellEdit += gvEntete_CustomRowCellEdit;
             btnCloturer.ButtonClick += BtnCloturer_ButtonClick;
         }
 
+=======
+
+        }
+
+
+
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         List<F_DOCENTETE> dotype = new List<F_DOCENTETE>
         {
             new F_DOCENTETE { DO_Type = 10 },
@@ -190,14 +255,20 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     if (gvEntete.RowCount < 1) { return; }
                     gvEntete.Columns[0].VisibleIndex = -1;
 
+<<<<<<< HEAD
                     GridColumn col;
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                     RepositoryItemHyperLinkEdit hyperlink = new RepositoryItemHyperLinkEdit();
                     hyperlink.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
                     hyperlink.Click += Hyperlink_Click;
                     gcEntetes.RepositoryItems.Add(hyperlink);
                     gvEntete.Columns["DO_Piece"].ColumnEdit = hyperlink;
                     gvEntete.Columns["CO_No"].VisibleIndex = -1;
+<<<<<<< HEAD
                     gvEntete.Columns["DO_Cours"].VisibleIndex = -1;
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                     gvEntete.Columns["DO_Taxe1"].VisibleIndex = -1;
                     gvEntete.Columns["DO_CodeTaxe1"].VisibleIndex = -1;
                     gvEntete.Columns["DO_Statut"].VisibleIndex = -1;
@@ -210,10 +281,13 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     gvEntete.Columns["DO_TotalHT"].DisplayFormat.FormatString = "N2";
                     gvEntete.Columns["DO_TotalTTC"].DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
                     gvEntete.Columns["DO_TotalTTC"].DisplayFormat.FormatString = "N2";
+<<<<<<< HEAD
                     gvEntete.Columns["DO_Cours"].DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
                     gvEntete.Columns["DO_Cours"].DisplayFormat.FormatString = "N2";
 
                     SetupCloturerColumn();
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                 }
             }
             catch (System.Exception ex)
@@ -222,6 +296,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+<<<<<<< HEAD
 
         private void gvEntete_CustomRowCellEdit(object sender, DevExpress.XtraGrid.Views.Grid.CustomRowCellEditEventArgs e)
         {
@@ -330,6 +405,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             gvEntete.Columns.Add(cloturerColumn);
 
         }
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(dbNamePrincipale == string.Empty)
@@ -345,8 +422,18 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void Hyperlink_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             btnOuvrirDoc_Click(sender, e);
             btnRefresh_Click(sender, e);
+=======
+            string doPiece = gvEntete.GetFocusedRowCellValue("DO_Piece")?.ToString();
+            OuvrirPiece(doPiece);
+        }
+
+        private void gvEntete_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
+        {
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
         private void gvEntete_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
@@ -408,7 +495,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         public static int doReliquat;
         public static int deno;
         public static string doRef;
+<<<<<<< HEAD
         public static decimal doCours;
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         public static int TypeAchat;
         public static int doExpedit;
         public static string doPiece;
@@ -430,9 +520,16 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     //*******************************************************
                     doTiers = gvEntete.GetFocusedRowCellValue("DO_Tiers")?.ToString();
                     doRef = gvEntete.GetFocusedRowCellValue("DO_Ref")?.ToString();
+<<<<<<< HEAD
                     doStatut = Convert.ToInt16(gvEntete.GetFocusedRowCellValue("DO_Statut"));
                     doDate = Convert.ToDateTime(gvEntete.GetFocusedRowCellValue("DO_Date"));
                     doCours = Convert.ToDecimal(gvEntete.GetFocusedRowCellValue("DO_Cours"));
+=======
+
+                    doStatut = Convert.ToInt16(gvEntete.GetFocusedRowCellValue("DO_Statut"));
+
+                    doDate = Convert.ToDateTime(gvEntete.GetFocusedRowCellValue("DO_Date"));
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                     doDateLivrPrev = Convert.ToDateTime(gvEntete.GetFocusedRowCellValue("DO_DateLivr"));
                     int? CO_No = Convert.ToInt16(gvEntete.GetFocusedRowCellValue("CO_No"));
                     CoNo = CO_No;
@@ -502,6 +599,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         private void btnOuvrirDoc_Click(object sender, EventArgs e)
         {
             string doPiece = gvEntete.GetFocusedRowCellValue("DO_Piece")?.ToString();
+<<<<<<< HEAD
 
             if (doPiece.ToString().StartsWith("AFA"))
             {
@@ -576,6 +674,9 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     );
                 }
             }
+=======
+            OuvrirPiece(doPiece);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
         }
         List<DoTypeItem> statutItems = new List<DoTypeItem>
@@ -591,6 +692,14 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
             };
 
+<<<<<<< HEAD
+=======
+        private void barButtonItem1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
+        }
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         private void CreateDatabaseMenu()
         {
            DataTable databases = GetDatabasesFromF_ACHATFILES();
@@ -621,6 +730,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
             if (FrmMdiParent.UserRole.Contains("Administrators"))
             {
+<<<<<<< HEAD
                 BarSubItem autItem = new BarSubItem();
                 autItem.Caption= "Autorisation";
                 fileMenu.ItemLinks.Add(autItem);
@@ -638,17 +748,29 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
         }
         private void autGlogale_ItemClick(object sender, ItemClickEventArgs e)
+=======
+                BarButtonItem autItem = new BarButtonItem();
+                autItem.Caption= "Autorisations";
+                fileMenu.ItemLinks.Add(autItem);
+                autItem.ItemClick += autItem_ItemClick;
+            }
+        }
+        private void autItem_ItemClick(object sender, ItemClickEventArgs e)
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         {
             frmAutorisation _frmAutorisation = new frmAutorisation();
             _frmAutorisation.ShowDialog();
         }
 
+<<<<<<< HEAD
         private void autAchat_ItemClick(object sender, ItemClickEventArgs e)
         {
             frmAutorisations_achat _frmAutorisation_achat = new frmAutorisations_achat();
             _frmAutorisation_achat.ShowDialog();
         }
 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         private DataTable GetDatabasesFromF_ACHATFILES()
         {
             

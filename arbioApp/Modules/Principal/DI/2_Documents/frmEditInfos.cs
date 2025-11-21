@@ -2,13 +2,19 @@
 using arbioApp.Modules.Principal.DI.Models;
 using arbioApp.Modules.Principal.DI.Repositories.ModelsRepository;
 using arbioApp.Utils.Connection;
+<<<<<<< HEAD
 using DevExpress.CodeParser;
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 using DevExpress.Xpo.DB.Helpers;
 using DevExpress.XtraCharts.Native;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
+<<<<<<< HEAD
 using DevExpress.XtraGrid;
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraRichEdit.Model;
@@ -23,7 +29,10 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+<<<<<<< HEAD
 using System.Runtime.Remoting.Contexts;
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -49,6 +58,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         public static decimal totalMontantFrais;
         private void frmEditInfos_Load(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             //Load FRET
            
             var fret = _context.F_FRETS
@@ -92,6 +102,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
             }
 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             // TODO: cette ligne de code charge les données dans la table 'aRBIOCHEMDataSet.F_DEVISE'. Vous pouvez la déplacer ou la supprimer selon les besoins.
             this.f_DEVISETableAdapter.Fill(this.aRBIOCHEMDataSet.F_DEVISE);
             try
@@ -116,7 +128,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 gridViewFrais.OptionsView.RowAutoHeight = true;
 
 
+<<<<<<< HEAD
                 /*if(txt_montant.Text != "")
+=======
+                if(txt_montant.Text != "")
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                 {
                     gridViewFrais.Columns["FI_Montant_AR"].Summary.Clear();
                     gridViewFrais.Columns["FI_Montant_AR"].Summary.Add(
@@ -133,7 +149,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         "FI_Montant_AR",
                         "Total = {0:n2}" // Format exemple : 2 500.00
                     );
+<<<<<<< HEAD
                 }*/
+=======
+                }
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
                 var totalMontant = _bindingFrais.Sum(f => f.FI_Montant);
                 totalMontantFrais = totalMontant; // Stocke le total pour utilisation ultérieure
@@ -146,6 +166,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 gridViewFrais.Columns["Repartition"].Visible = false;
 
 
+<<<<<<< HEAD
                 if (gridViewFrais.DataRowCount > 0){
                     //txt_poids.Enabled = true;
                     //txt_prix.Enabled = true;
@@ -156,6 +177,12 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 //-----------------------------------------------------------------------------------------------
 
                 var typeFraisList = _context.P_TYPEFRAIS.Where(x=>x.FR_Intitule != "FRET").ToList();
+=======
+
+                //-----------------------------------------------------------------------------------------------
+
+                var typeFraisList = _context.P_TYPEFRAIS.ToList();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
                 // 2. Créer l'éditeur TreeListLookUpEdit
                 var treeListLookup = new RepositoryItemTreeListLookUpEdit();
@@ -209,8 +236,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 repartitionEditor.Columns["FraisImports"].Visible = false;
                 gridControlFrais.RepositoryItems.Add(repartitionEditor);
                 gridViewFrais.Columns["FI_RepartitionId"].ColumnEdit = repartitionEditor;
+<<<<<<< HEAD
                 gridViewFrais.Columns["FI_Montant_AR"].OptionsColumn.AllowEdit = false;
                 gridViewFrais.Columns["FI_Montant_AR"].OptionsColumn.ReadOnly = true;
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
                 var deviseList = _context.P_DEVISE
                                             .Where(d => d.D_Intitule != "" && d.D_Intitule != null)
@@ -241,6 +271,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
 
         }
+<<<<<<< HEAD
         private bool tester_cloturer(string doPiece)
         {
             bool test = false;
@@ -582,6 +613,33 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     }
                 }
             }
+=======
+
+        private void btnEnregistrer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                gridViewFrais.CloseEditor();
+                gridViewFrais.UpdateCurrentRow();
+
+                _context.SaveChanges();
+              
+                // Exécuter la procédure
+                string sql = "EXEC SP_CalculCoutRevientParValeur @DO_Piece";
+                _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@DO_Piece", _doPiece));
+
+                // Rafraîchir la grille du parent
+                _parentForm?.InitializeGrid(_parentForm.GridLigneEdit, _doPiece);
+
+
+                MessageBox.Show("Frais enregistrés et coût de revient mis à jour avec succès.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur : " + ex.Message);
+            }
+            
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
 
@@ -589,6 +647,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void btnSupprimer_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             if (tester_cloturer(_doPiece))
             {
                 MessageBox.Show(
@@ -624,11 +683,20 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         MessageBoxIcon.Error
                     );
                 }
+=======
+            var selectedRow = gridViewFrais.GetFocusedRow() as F_DOCFRAISIMPORT;
+            if (selectedRow != null)
+            {
+                _context.F_DOCFRAISIMPORT.Remove(selectedRow);
+                _bindingFrais.Remove(selectedRow);
+                _context.SaveChanges();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             }
         }
 
         private void btnAjouter_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             if (tester_cloturer(_doPiece))
             {
                 MessageBox.Show(
@@ -684,12 +752,56 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error
                     );
+=======
+            txt_poids.Enabled = true;
+            txt_prix.Enabled = true;
+
+            var newFrais = new F_DOCFRAISIMPORT
+            {
+                DO_Piece = _doPiece,
+                FI_Montant = 0,
+                FI_Montant_AR = 0,
+                FI_Devise = "MGA",           // ou autre par défaut
+                FI_TypeFraisId = 2,          // Assure-toi que l'ID 1 existe
+                FI_RepartitionId = 0,         // Idem, valeur par défaut valable
+                cbModification = DateTime.Now,
+                Username = FrmMdiParent._id_user,
+            };
+
+            _bindingFrais.Add(newFrais);
+            _context.F_DOCFRAISIMPORT.Add(newFrais);
+
+            // Placer le curseur sur la nouvelle ligne pour édition immédiate
+            var newRowHandle = gridViewFrais.RowCount - 1;
+            gridViewFrais.FocusedRowHandle = newRowHandle;
+            gridViewFrais.FocusedColumn = gridViewFrais.VisibleColumns[0];
+            gridViewFrais.ShowEditor();
+            gridViewFrais.Columns["cbModification"].OptionsColumn.ReadOnly = true;
+            gridViewFrais.Columns["Username"].OptionsColumn.ReadOnly = true;
+            gridViewFrais.Columns["Username"].VisibleIndex = -1;
+            gridViewFrais.RefreshData();    
+            gridViewFrais.BestFitColumns();
+
+            
+            GridView gridView = gridControlDevises.MainView as GridView;
+            if (gridView != null)
+            {
+                gridView.OptionsBehavior.Editable = true;
+                gd_devise.OptionsView.NewItemRowPosition = NewItemRowPosition.Top;
+
+                foreach (GridColumn column in gd_devise.Columns)
+                {
+                    column.OptionsColumn.AllowEdit = true;
+                    column.OptionsColumn.ReadOnly = false;
+                    LoadData();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                 }
             }
         }
 
         private void LoadData()
         {
+<<<<<<< HEAD
             var devises = _context.F_DEVISES.ToList();
 
             if (devises.Any())
@@ -705,6 +817,33 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 gd_devise.Columns[0].Visible = false; // Masquer l'ID si nécessaire
                 gd_devise.OptionsView.NewItemRowPosition = NewItemRowPosition.Top;
                 gd_devise.OptionsBehavior.Editable = true;
+=======
+            string connectionString = $"Data Source=26.53.123.231;Initial Catalog=ARBIOCHEM;User ID=Dev;Password=1234;TrustServerCertificate=True";
+
+            string query = "SELECT * FROM F_DEVISE";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                DataTable dt = new DataTable();
+                dt.Load(reader); 
+
+                if (dt.Rows.Count > 0)
+                {
+                    fDEVISEBindingSource.DataSource = dt;
+                    GridView gd_devise = new GridView(gridControlDevises);
+                    gridControlDevises.MainView = gd_devise;
+                    gridControlDevises.ViewCollection.Add(gd_devise);
+                    gridControlDevises.DataSource = fDEVISEBindingSource;
+                    gd_devise.PopulateColumns();
+                    gd_devise.Columns[0].Visible = false;
+                    gd_devise.OptionsView.NewItemRowPosition = NewItemRowPosition.Top;
+                    gd_devise.OptionsBehavior.Editable = true;
+                }
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             }
         }
 
@@ -761,18 +900,57 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         //Calcul FRET
         private void txt_poids_EditValueChanged(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             //calcul_fret(txt_prix, txt_poids, txt_montant);
+=======
+            calcul_fret(txt_prix, txt_poids, txt_montant);
+
+            
+            int rowHandle = gridViewFrais.FocusedRowHandle;
+
+            if (rowHandle >= 0)
+            {
+                if (txt_montant.Text != "0" && txt_montant.Text != null)
+                {
+                   gridViewFrais.SetRowCellValue(rowHandle, "FI_Montant", txt_montant.Text);
+                }
+            }
+
+            gridViewFrais.InvalidateFooter();
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
         private void txt_prix_EditValueChanged(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             //calcul_fret(txt_prix,txt_poids,txt_montant);
+=======
+            calcul_fret(txt_prix,txt_poids,txt_montant);
+            
+            int rowHandle = gridViewFrais.FocusedRowHandle;
+
+            if (rowHandle >= 0)
+            {
+                if (txt_montant.Text != "0" && txt_montant.Text != null)
+                {
+                    gridViewFrais.SetRowCellValue(rowHandle, "FI_Montant", txt_montant.Text);
+                }
+            }
+
+            gridViewFrais.InvalidateFooter();
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
         private void calcul_fret(TextEdit t1,TextEdit t2,TextEdit t3)
         {
+<<<<<<< HEAD
             /*gridViewFrais.SetRowCellValue(0, "FI_RepartitionId", 1);
             if (t1.Text != "" && t2.Text != "")
+=======
+            if(t1.Text != "" && t2.Text != "")
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             {
                 t3.Text = (Math.Round(double.Parse(t1.Text.ToString().Replace('.',','))  * double.Parse(t2.Text.ToString().Replace('.', ',')),2)).ToString() ;
             }
@@ -780,6 +958,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             {
                 t3.Text = "0";
             }
+<<<<<<< HEAD
 
             for (int i = 0; i < gridViewFrais.RowCount; i++)
             {
@@ -810,6 +989,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             gridViewFrais.RefreshData();
             gridViewFrais.InvalidateFooter();*/
 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
         private void txt_prix_KeyPress(object sender, KeyPressEventArgs e)
@@ -850,12 +1031,21 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void frmEditInfos_Activated(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             //txt_montant.Enabled=false;
             gridViewFrais.CellValueChanged += GridViewFrais_CellValueChanged;
             gridViewFrais.Columns["FLAG1"].Visible = false;
             gridViewFrais.Columns["FLAG2"].Visible = false;
             gridViewFrais.Columns["FLAG3"].Visible = false;
             gridViewFrais.OptionsView.ShowFooter = true;
+=======
+            txt_montant.Enabled=false;
+            gridViewFrais.CellValueChanged += GridViewFrais_CellValueChanged;
+            gridViewFrais.Columns["FLAG1"].Visible=false;
+            gridViewFrais.Columns["FLAG2"].Visible = false;
+            gridViewFrais.Columns["FLAG3"].Visible = false;
+            //gridViewFrais.CustomDrawFooterCell += gridViewFrais_CustomDrawFooterCell;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
         private void gridViewFrais_CustomDrawFooterCell(object sender, DevExpress.XtraGrid.Views.Grid.FooterCellCustomDrawEventArgs e)
@@ -872,7 +1062,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                 // Récupérer la valeur du TextBox
                 decimal txtMontant = 0;
+<<<<<<< HEAD
                 //decimal.TryParse(txt_montant.Text, out txtMontant);
+=======
+                decimal.TryParse(txt_montant.Text, out txtMontant);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                 tot = 0;
                 tot = total + txtMontant;
 
@@ -915,6 +1109,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void simpleButton2_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
 
             GridView view = (GridView)gridControlDevises.MainView;
             
@@ -948,6 +1143,50 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
 
             _context.SaveChanges();
+=======
+            string connectionString = $"Data Source=26.53.123.231;Initial Catalog=ARBIOCHEM;User ID=Dev;Password=1234;TrustServerCertificate=True";
+
+            GridView view = (GridView)gridControlDevises.MainView;
+            for (int i = 0; i < view.RowCount; i++)
+            {
+                string devise = view.GetRowCellValue(i, "devise")?.ToString();
+                string valeur = view.GetRowCellValue(i, "valeur")?.ToString();
+
+                if (tester_existence_devise(devise))
+                {
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+                        string updateQuery = "UPDATE F_DEVISE SET valeur = @valeur WHERE devise = @devise";
+                        using (SqlCommand updateCmd = new SqlCommand(updateQuery, conn))
+                        {
+                            updateCmd.Parameters.AddWithValue("@valeur", valeur);
+                            updateCmd.Parameters.AddWithValue("@devise", devise);
+
+                            updateCmd.ExecuteNonQuery();
+                        }
+                        conn.Close();
+                    }
+                }
+                else
+                {
+                    string insertQuery = "INSERT INTO F_DEVISE (devise, valeur) VALUES (@devise, @valeur)";
+
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+                        using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
+                        {
+                            insertCmd.Parameters.AddWithValue("@devise", devise);
+                            insertCmd.Parameters.AddWithValue("@valeur", valeur);
+
+                            insertCmd.ExecuteNonQuery();
+                        }
+                        conn.Close();
+                    }
+                }  
+            }
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             LoadData();
         }
 
@@ -955,7 +1194,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         {
             double val = 0;
 
+<<<<<<< HEAD
             string connectionString = $"Data Source=26.53.123.231;Initial Catalog=ARBIOCHEM_ACHAT;User ID=Dev;Password=1234;TrustServerCertificate=True";
+=======
+            string connectionString = $"Data Source=26.53.123.231;Initial Catalog=ARBIOCHEM;User ID=Dev;Password=1234;TrustServerCertificate=True";
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
             string query = "SELECT valeur FROM F_DEVISE WHERE devise=@devise";
 

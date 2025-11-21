@@ -31,7 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMenuAchat));
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+<<<<<<< HEAD
             this.radioGroup1 = new DevExpress.XtraEditors.RadioGroup();
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
             this.rbAFC = new System.Windows.Forms.RadioButton();
             this.rbABL = new System.Windows.Forms.RadioButton();
@@ -54,7 +57,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+<<<<<<< HEAD
             ((System.ComponentModel.ISupportInitialize)(this.radioGroup1.Properties)).BeginInit();
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
             this.layoutControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
@@ -80,12 +86,17 @@
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(837, -560, 812, 500);
             this.layoutControl1.Root = this.Root;
+<<<<<<< HEAD
             this.layoutControl1.Size = new System.Drawing.Size(492, 263);
+=======
+            this.layoutControl1.Size = new System.Drawing.Size(492, 272);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControl1.TabIndex = 0;
             this.layoutControl1.Text = "layoutControl1";
             // 
             // groupBox1
             // 
+<<<<<<< HEAD
             this.groupBox1.Controls.Add(this.radioGroup1);
             this.groupBox1.Controls.Add(this.layoutControl2);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
@@ -102,6 +113,15 @@
             this.radioGroup1.TabIndex = 1;
             this.radioGroup1.EditValueChanged += new System.EventHandler(this.radioGroup1_EditValueChanged);
             // 
+=======
+            this.groupBox1.Controls.Add(this.layoutControl2);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(468, 217);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            // 
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             // layoutControl2
             // 
             this.layoutControl2.Controls.Add(this.rbAFC);
@@ -113,7 +133,11 @@
             this.layoutControl2.Location = new System.Drawing.Point(3, 19);
             this.layoutControl2.Name = "layoutControl2";
             this.layoutControl2.Root = this.layoutControlGroup1;
+<<<<<<< HEAD
             this.layoutControl2.Size = new System.Drawing.Size(462, 186);
+=======
+            this.layoutControl2.Size = new System.Drawing.Size(462, 195);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
             // 
@@ -122,7 +146,11 @@
             this.rbAFC.Enabled = false;
             this.rbAFC.Location = new System.Drawing.Point(12, 152);
             this.rbAFC.Name = "rbAFC";
+<<<<<<< HEAD
             this.rbAFC.Size = new System.Drawing.Size(417, 31);
+=======
+            this.rbAFC.Size = new System.Drawing.Size(438, 31);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.rbAFC.TabIndex = 9;
             this.rbAFC.TabStop = true;
             this.rbAFC.Text = "Facture";
@@ -133,7 +161,11 @@
             this.rbABL.Enabled = false;
             this.rbABL.Location = new System.Drawing.Point(12, 117);
             this.rbABL.Name = "rbABL";
+<<<<<<< HEAD
             this.rbABL.Size = new System.Drawing.Size(417, 31);
+=======
+            this.rbABL.Size = new System.Drawing.Size(438, 31);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.rbABL.TabIndex = 7;
             this.rbABL.TabStop = true;
             this.rbABL.Text = "Bon de livraison";
@@ -144,7 +176,11 @@
             this.rbABC.Enabled = false;
             this.rbABC.Location = new System.Drawing.Point(12, 82);
             this.rbABC.Name = "rbABC";
+<<<<<<< HEAD
             this.rbABC.Size = new System.Drawing.Size(417, 31);
+=======
+            this.rbABC.Size = new System.Drawing.Size(438, 31);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.rbABC.TabIndex = 6;
             this.rbABC.TabStop = true;
             this.rbABC.Text = "Bon de commande";
@@ -155,7 +191,11 @@
             this.rbAPC.Enabled = false;
             this.rbAPC.Location = new System.Drawing.Point(12, 47);
             this.rbAPC.Name = "rbAPC";
+<<<<<<< HEAD
             this.rbAPC.Size = new System.Drawing.Size(417, 31);
+=======
+            this.rbAPC.Size = new System.Drawing.Size(438, 31);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.rbAPC.TabIndex = 5;
             this.rbAPC.TabStop = true;
             this.rbAPC.Text = "Préparation de commande";
@@ -165,7 +205,11 @@
             // 
             this.rbAPA.Location = new System.Drawing.Point(12, 12);
             this.rbAPA.Name = "rbAPA";
+<<<<<<< HEAD
             this.rbAPA.Size = new System.Drawing.Size(417, 31);
+=======
+            this.rbAPA.Size = new System.Drawing.Size(438, 31);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.rbAPA.TabIndex = 4;
             this.rbAPA.TabStop = true;
             this.rbAPA.Text = "Projet d\'achat";
@@ -182,7 +226,11 @@
             this.layoutControlItem7,
             this.layoutControlItem9});
             this.layoutControlGroup1.Name = "layoutControlGroup1";
+<<<<<<< HEAD
             this.layoutControlGroup1.Size = new System.Drawing.Size(441, 195);
+=======
+            this.layoutControlGroup1.Size = new System.Drawing.Size(462, 195);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlGroup1.TextVisible = false;
             // 
             // layoutControlItem4
@@ -190,7 +238,11 @@
             this.layoutControlItem4.Control = this.rbAPA;
             this.layoutControlItem4.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem4.Name = "layoutControlItem4";
+<<<<<<< HEAD
             this.layoutControlItem4.Size = new System.Drawing.Size(421, 35);
+=======
+            this.layoutControlItem4.Size = new System.Drawing.Size(442, 35);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem4.TextVisible = false;
             // 
@@ -199,7 +251,11 @@
             this.layoutControlItem5.Control = this.rbAPC;
             this.layoutControlItem5.Location = new System.Drawing.Point(0, 35);
             this.layoutControlItem5.Name = "layoutControlItem5";
+<<<<<<< HEAD
             this.layoutControlItem5.Size = new System.Drawing.Size(421, 35);
+=======
+            this.layoutControlItem5.Size = new System.Drawing.Size(442, 35);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem5.TextVisible = false;
             // 
@@ -208,7 +264,11 @@
             this.layoutControlItem6.Control = this.rbABC;
             this.layoutControlItem6.Location = new System.Drawing.Point(0, 70);
             this.layoutControlItem6.Name = "layoutControlItem6";
+<<<<<<< HEAD
             this.layoutControlItem6.Size = new System.Drawing.Size(421, 35);
+=======
+            this.layoutControlItem6.Size = new System.Drawing.Size(442, 35);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem6.TextVisible = false;
             // 
@@ -217,7 +277,11 @@
             this.layoutControlItem7.Control = this.rbABL;
             this.layoutControlItem7.Location = new System.Drawing.Point(0, 105);
             this.layoutControlItem7.Name = "layoutControlItem7";
+<<<<<<< HEAD
             this.layoutControlItem7.Size = new System.Drawing.Size(421, 35);
+=======
+            this.layoutControlItem7.Size = new System.Drawing.Size(442, 35);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem7.TextVisible = false;
             // 
@@ -226,13 +290,21 @@
             this.layoutControlItem9.Control = this.rbAFC;
             this.layoutControlItem9.Location = new System.Drawing.Point(0, 140);
             this.layoutControlItem9.Name = "layoutControlItem9";
+<<<<<<< HEAD
             this.layoutControlItem9.Size = new System.Drawing.Size(421, 35);
+=======
+            this.layoutControlItem9.Size = new System.Drawing.Size(442, 35);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem9.TextVisible = false;
             // 
             // simpleButton2
             // 
+<<<<<<< HEAD
             this.simpleButton2.Location = new System.Drawing.Point(311, 224);
+=======
+            this.simpleButton2.Location = new System.Drawing.Point(311, 233);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.simpleButton2.Name = "simpleButton2";
             this.simpleButton2.Size = new System.Drawing.Size(169, 27);
             this.simpleButton2.StyleController = this.layoutControl1;
@@ -242,7 +314,11 @@
             // 
             // simpleButton1
             // 
+<<<<<<< HEAD
             this.simpleButton1.Location = new System.Drawing.Point(140, 224);
+=======
+            this.simpleButton1.Location = new System.Drawing.Point(140, 233);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.simpleButton1.Name = "simpleButton1";
             this.simpleButton1.Size = new System.Drawing.Size(167, 27);
             this.simpleButton1.StyleController = this.layoutControl1;
@@ -260,7 +336,11 @@
             this.layoutControlItem3,
             this.emptySpaceItem1});
             this.Root.Name = "Root";
+<<<<<<< HEAD
             this.Root.Size = new System.Drawing.Size(492, 263);
+=======
+            this.Root.Size = new System.Drawing.Size(492, 272);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
@@ -268,14 +348,22 @@
             this.layoutControlItem1.Control = this.groupBox1;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
+<<<<<<< HEAD
             this.layoutControlItem1.Size = new System.Drawing.Size(472, 212);
+=======
+            this.layoutControlItem1.Size = new System.Drawing.Size(472, 221);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
             // layoutControlItem2
             // 
             this.layoutControlItem2.Control = this.simpleButton1;
+<<<<<<< HEAD
             this.layoutControlItem2.Location = new System.Drawing.Point(128, 212);
+=======
+            this.layoutControlItem2.Location = new System.Drawing.Point(128, 221);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem2.Name = "layoutControlItem2";
             this.layoutControlItem2.Size = new System.Drawing.Size(171, 31);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
@@ -284,7 +372,11 @@
             // layoutControlItem3
             // 
             this.layoutControlItem3.Control = this.simpleButton2;
+<<<<<<< HEAD
             this.layoutControlItem3.Location = new System.Drawing.Point(299, 212);
+=======
+            this.layoutControlItem3.Location = new System.Drawing.Point(299, 221);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem3.Name = "layoutControlItem3";
             this.layoutControlItem3.Size = new System.Drawing.Size(173, 31);
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
@@ -293,7 +385,11 @@
             // emptySpaceItem1
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
+<<<<<<< HEAD
             this.emptySpaceItem1.Location = new System.Drawing.Point(0, 212);
+=======
+            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 221);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.emptySpaceItem1.MaxSize = new System.Drawing.Size(128, 0);
             this.emptySpaceItem1.MinSize = new System.Drawing.Size(128, 10);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
@@ -305,18 +401,28 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(492, 263);
+=======
+            this.ClientSize = new System.Drawing.Size(492, 272);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.Controls.Add(this.layoutControl1);
             this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("frmMenuAchat.IconOptions.SvgImage")));
             this.MaximizeBox = false;
             this.Name = "frmMenuAchat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ajouter un document";
+<<<<<<< HEAD
             this.Load += new System.EventHandler(this.frmMenuAchat_Load);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.radioGroup1.Properties)).EndInit();
+=======
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
+            this.layoutControl1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
             this.layoutControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
@@ -357,6 +463,9 @@
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private System.Windows.Forms.RadioButton rbAFC;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
+<<<<<<< HEAD
         public DevExpress.XtraEditors.RadioGroup radioGroup1;
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     }
 }

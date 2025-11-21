@@ -31,7 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucDocuments));
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+<<<<<<< HEAD
             this.hyperlinkLabelControl1 = new DevExpress.XtraEditors.HyperlinkLabelControl();
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.btnRefresh = new DevExpress.XtraEditors.SimpleButton();
             this.btnNouveauDoc = new DevExpress.XtraEditors.SimpleButton();
@@ -47,7 +50,10 @@
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
             this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
+<<<<<<< HEAD
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
@@ -62,6 +68,11 @@
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             this.mnuFile = new DevExpress.XtraBars.BarSubItem();
+<<<<<<< HEAD
+=======
+            this.hyperlinkLabelControl1 = new DevExpress.XtraEditors.HyperlinkLabelControl();
+            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gcEntetes)).BeginInit();
@@ -75,9 +86,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).BeginInit();
+<<<<<<< HEAD
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+=======
+            ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.SuspendLayout();
             // 
             // layoutControl1
@@ -90,6 +107,7 @@
             this.layoutControl1.Controls.Add(this.gcEntetes);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutControl1.Location = new System.Drawing.Point(0, 41);
+<<<<<<< HEAD
             this.layoutControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(0, 316, 812, 500);
@@ -116,15 +134,37 @@
             this.listBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(177, 745);
+=======
+            this.layoutControl1.Name = "layoutControl1";
+            this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(0, 608, 812, 500);
+            this.layoutControl1.Root = this.Root;
+            this.layoutControl1.Size = new System.Drawing.Size(1505, 960);
+            this.layoutControl1.TabIndex = 0;
+            this.layoutControl1.Text = "layoutControl1";
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(12, 12);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(207, 932);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.listBox1.TabIndex = 10;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // btnRefresh
             // 
+<<<<<<< HEAD
             this.btnRefresh.Location = new System.Drawing.Point(1164, 738);
             this.btnRefresh.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(115, 21);
+=======
+            this.btnRefresh.Location = new System.Drawing.Point(1358, 921);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(135, 27);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.btnRefresh.StyleController = this.layoutControl1;
             this.btnRefresh.TabIndex = 9;
             this.btnRefresh.Text = "Refresh";
@@ -132,10 +172,16 @@
             // 
             // btnNouveauDoc
             // 
+<<<<<<< HEAD
             this.btnNouveauDoc.Location = new System.Drawing.Point(1065, 738);
             this.btnNouveauDoc.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnNouveauDoc.Name = "btnNouveauDoc";
             this.btnNouveauDoc.Size = new System.Drawing.Size(95, 21);
+=======
+            this.btnNouveauDoc.Location = new System.Drawing.Point(1242, 921);
+            this.btnNouveauDoc.Name = "btnNouveauDoc";
+            this.btnNouveauDoc.Size = new System.Drawing.Size(112, 27);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.btnNouveauDoc.StyleController = this.layoutControl1;
             this.btnNouveauDoc.TabIndex = 8;
             this.btnNouveauDoc.Text = "Nouveau";
@@ -143,10 +189,16 @@
             // 
             // btnOuvrirDoc
             // 
+<<<<<<< HEAD
             this.btnOuvrirDoc.Location = new System.Drawing.Point(954, 738);
             this.btnOuvrirDoc.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnOuvrirDoc.Name = "btnOuvrirDoc";
             this.btnOuvrirDoc.Size = new System.Drawing.Size(107, 21);
+=======
+            this.btnOuvrirDoc.Location = new System.Drawing.Point(1113, 921);
+            this.btnOuvrirDoc.Name = "btnOuvrirDoc";
+            this.btnOuvrirDoc.Size = new System.Drawing.Size(125, 27);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.btnOuvrirDoc.StyleController = this.layoutControl1;
             this.btnOuvrirDoc.TabIndex = 6;
             this.btnOuvrirDoc.Text = "Ouvrir";
@@ -154,6 +206,7 @@
             // 
             // gcEntetes
             // 
+<<<<<<< HEAD
             this.gcEntetes.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gcEntetes.Location = new System.Drawing.Point(202, 10);
             this.gcEntetes.MainView = this.gvEntete;
@@ -162,6 +215,14 @@
             this.gcEntetes.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemPictureEdit1});
             this.gcEntetes.Size = new System.Drawing.Size(1077, 724);
+=======
+            this.gcEntetes.Location = new System.Drawing.Point(235, 12);
+            this.gcEntetes.MainView = this.gvEntete;
+            this.gcEntetes.Name = "gcEntetes";
+            this.gcEntetes.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemPictureEdit1});
+            this.gcEntetes.Size = new System.Drawing.Size(1258, 905);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.gcEntetes.TabIndex = 4;
             this.gcEntetes.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvEntete});
@@ -174,10 +235,15 @@
             this.gvEntete.Appearance.HotTrackedRow.Options.UseBackColor = true;
             this.gvEntete.Appearance.OddRow.BackColor = System.Drawing.Color.WhiteSmoke;
             this.gvEntete.Appearance.OddRow.Options.UseBackColor = true;
+<<<<<<< HEAD
             this.gvEntete.DetailHeight = 284;
             this.gvEntete.GridControl = this.gcEntetes;
             this.gvEntete.Name = "gvEntete";
             this.gvEntete.OptionsEditForm.PopupEditFormWidth = 686;
+=======
+            this.gvEntete.GridControl = this.gcEntetes;
+            this.gvEntete.Name = "gvEntete";
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.gvEntete.OptionsSelection.EnableAppearanceHotTrackedRow = DevExpress.Utils.DefaultBoolean.True;
             this.gvEntete.OptionsView.ColumnAutoWidth = false;
             this.gvEntete.CustomDrawCell += new DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventHandler(this.gvEntete_CustomDrawCell);
@@ -201,26 +267,44 @@
             this.splitterItem1,
             this.layoutControlItem2});
             this.Root.Name = "Root";
+<<<<<<< HEAD
             this.Root.Size = new System.Drawing.Size(1290, 769);
+=======
+            this.Root.Size = new System.Drawing.Size(1505, 960);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.gcEntetes;
+<<<<<<< HEAD
             this.layoutControlItem1.Location = new System.Drawing.Point(191, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
             this.layoutControlItem1.Size = new System.Drawing.Size(1081, 728);
+=======
+            this.layoutControlItem1.Location = new System.Drawing.Point(223, 0);
+            this.layoutControlItem1.Name = "layoutControlItem1";
+            this.layoutControlItem1.Size = new System.Drawing.Size(1262, 909);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
             // layoutControlItem3
             // 
             this.layoutControlItem3.Control = this.btnOuvrirDoc;
+<<<<<<< HEAD
             this.layoutControlItem3.Location = new System.Drawing.Point(943, 728);
             this.layoutControlItem3.MaxSize = new System.Drawing.Size(111, 25);
             this.layoutControlItem3.MinSize = new System.Drawing.Size(111, 25);
             this.layoutControlItem3.Name = "layoutControlItem3";
             this.layoutControlItem3.Size = new System.Drawing.Size(111, 25);
+=======
+            this.layoutControlItem3.Location = new System.Drawing.Point(1101, 909);
+            this.layoutControlItem3.MaxSize = new System.Drawing.Size(129, 31);
+            this.layoutControlItem3.MinSize = new System.Drawing.Size(129, 31);
+            this.layoutControlItem3.Name = "layoutControlItem3";
+            this.layoutControlItem3.Size = new System.Drawing.Size(129, 31);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem3.TextVisible = false;
@@ -228,11 +312,19 @@
             // layoutControlItem5
             // 
             this.layoutControlItem5.Control = this.btnNouveauDoc;
+<<<<<<< HEAD
             this.layoutControlItem5.Location = new System.Drawing.Point(1054, 728);
             this.layoutControlItem5.MaxSize = new System.Drawing.Size(99, 25);
             this.layoutControlItem5.MinSize = new System.Drawing.Size(99, 25);
             this.layoutControlItem5.Name = "layoutControlItem5";
             this.layoutControlItem5.Size = new System.Drawing.Size(99, 25);
+=======
+            this.layoutControlItem5.Location = new System.Drawing.Point(1230, 909);
+            this.layoutControlItem5.MaxSize = new System.Drawing.Size(116, 31);
+            this.layoutControlItem5.MinSize = new System.Drawing.Size(116, 31);
+            this.layoutControlItem5.Name = "layoutControlItem5";
+            this.layoutControlItem5.Size = new System.Drawing.Size(116, 31);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem5.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem5.TextVisible = false;
@@ -240,11 +332,19 @@
             // layoutControlItem6
             // 
             this.layoutControlItem6.Control = this.btnRefresh;
+<<<<<<< HEAD
             this.layoutControlItem6.Location = new System.Drawing.Point(1153, 728);
             this.layoutControlItem6.MaxSize = new System.Drawing.Size(119, 25);
             this.layoutControlItem6.MinSize = new System.Drawing.Size(119, 25);
             this.layoutControlItem6.Name = "layoutControlItem6";
             this.layoutControlItem6.Size = new System.Drawing.Size(119, 25);
+=======
+            this.layoutControlItem6.Location = new System.Drawing.Point(1346, 909);
+            this.layoutControlItem6.MaxSize = new System.Drawing.Size(139, 31);
+            this.layoutControlItem6.MinSize = new System.Drawing.Size(139, 31);
+            this.layoutControlItem6.Name = "layoutControlItem6";
+            this.layoutControlItem6.Size = new System.Drawing.Size(139, 31);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem6.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem6.TextVisible = false;
@@ -252,18 +352,30 @@
             // emptySpaceItem1
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
+<<<<<<< HEAD
             this.emptySpaceItem1.Location = new System.Drawing.Point(229, 728);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
             this.emptySpaceItem1.Size = new System.Drawing.Size(714, 25);
+=======
+            this.emptySpaceItem1.Location = new System.Drawing.Point(267, 909);
+            this.emptySpaceItem1.Name = "emptySpaceItem1";
+            this.emptySpaceItem1.Size = new System.Drawing.Size(834, 31);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // layoutControlItem7
             // 
             this.layoutControlItem7.Control = this.listBox1;
             this.layoutControlItem7.Location = new System.Drawing.Point(0, 0);
+<<<<<<< HEAD
             this.layoutControlItem7.MinSize = new System.Drawing.Size(25, 24);
             this.layoutControlItem7.Name = "layoutControlItem7";
             this.layoutControlItem7.Size = new System.Drawing.Size(181, 753);
+=======
+            this.layoutControlItem7.MinSize = new System.Drawing.Size(29, 29);
+            this.layoutControlItem7.Name = "layoutControlItem7";
+            this.layoutControlItem7.Size = new System.Drawing.Size(211, 940);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.layoutControlItem7.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem7.TextVisible = false;
@@ -271,6 +383,7 @@
             // splitterItem1
             // 
             this.splitterItem1.AllowHotTrack = true;
+<<<<<<< HEAD
             this.splitterItem1.Location = new System.Drawing.Point(181, 0);
             this.splitterItem1.Name = "splitterItem1";
             this.splitterItem1.Size = new System.Drawing.Size(10, 753);
@@ -283,6 +396,11 @@
             this.layoutControlItem2.Size = new System.Drawing.Size(38, 25);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
+=======
+            this.splitterItem1.Location = new System.Drawing.Point(211, 0);
+            this.splitterItem1.Name = "splitterItem1";
+            this.splitterItem1.Size = new System.Drawing.Size(12, 940);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             // 
             // imageCollection1
             // 
@@ -347,17 +465,27 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
+<<<<<<< HEAD
             this.barDockControlTop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.barDockControlTop.Size = new System.Drawing.Size(1290, 41);
+=======
+            this.barDockControlTop.Size = new System.Drawing.Size(1505, 41);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+<<<<<<< HEAD
             this.barDockControlBottom.Location = new System.Drawing.Point(0, 810);
             this.barDockControlBottom.Manager = this.barManager1;
             this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.barDockControlBottom.Size = new System.Drawing.Size(1290, 20);
+=======
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 1001);
+            this.barDockControlBottom.Manager = this.barManager1;
+            this.barDockControlBottom.Size = new System.Drawing.Size(1505, 20);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             // 
             // barDockControlLeft
             // 
@@ -365,17 +493,27 @@
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 41);
             this.barDockControlLeft.Manager = this.barManager1;
+<<<<<<< HEAD
             this.barDockControlLeft.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.barDockControlLeft.Size = new System.Drawing.Size(0, 769);
+=======
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 960);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+<<<<<<< HEAD
             this.barDockControlRight.Location = new System.Drawing.Point(1290, 41);
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.barDockControlRight.Size = new System.Drawing.Size(0, 769);
+=======
+            this.barDockControlRight.Location = new System.Drawing.Point(1505, 41);
+            this.barDockControlRight.Manager = this.barManager1;
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 960);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             // 
             // barSubItem1
             // 
@@ -390,6 +528,10 @@
             this.barButtonItem1.Caption = "Ouvrir";
             this.barButtonItem1.Id = 1;
             this.barButtonItem1.Name = "barButtonItem1";
+<<<<<<< HEAD
+=======
+            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             // 
             // barButtonItem2
             // 
@@ -409,18 +551,48 @@
             this.mnuFile.Id = 4;
             this.mnuFile.Name = "mnuFile";
             // 
+<<<<<<< HEAD
             // ucDocuments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+=======
+            // hyperlinkLabelControl1
+            // 
+            this.hyperlinkLabelControl1.Location = new System.Drawing.Point(235, 921);
+            this.hyperlinkLabelControl1.Name = "hyperlinkLabelControl1";
+            this.hyperlinkLabelControl1.Size = new System.Drawing.Size(40, 16);
+            this.hyperlinkLabelControl1.StyleController = this.layoutControl1;
+            this.hyperlinkLabelControl1.TabIndex = 11;
+            this.hyperlinkLabelControl1.Text = "Aperçu";
+            this.hyperlinkLabelControl1.Click += new System.EventHandler(this.hyperlinkLabelControl1_Click);
+            // 
+            // layoutControlItem2
+            // 
+            this.layoutControlItem2.Control = this.hyperlinkLabelControl1;
+            this.layoutControlItem2.Location = new System.Drawing.Point(223, 909);
+            this.layoutControlItem2.Name = "layoutControlItem2";
+            this.layoutControlItem2.Size = new System.Drawing.Size(44, 31);
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem2.TextVisible = false;
+            // 
+            // ucDocuments
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.layoutControl1);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
+<<<<<<< HEAD
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "ucDocuments";
             this.Size = new System.Drawing.Size(1290, 830);
+=======
+            this.Name = "ucDocuments";
+            this.Size = new System.Drawing.Size(1505, 1021);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.Load += new System.EventHandler(this.ucDocuments_Load);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
@@ -435,9 +607,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).EndInit();
+<<<<<<< HEAD
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+=======
+            ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.ResumeLayout(false);
             this.PerformLayout();
 

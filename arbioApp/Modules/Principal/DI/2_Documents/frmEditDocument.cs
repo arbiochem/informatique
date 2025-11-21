@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿//using Objets100cLib;
 using arbioApp.DTO;
 using arbioApp.Models;
@@ -69,6 +70,69 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using Exception = System.Exception;
 using FieldInfo = DevExpress.DataAccess.Excel.FieldInfo;
 using TextEdit = DevExpress.XtraEditors.TextEdit;
+=======
+﻿using DevExpress.XtraEditors;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using arbioApp.Modules.Principal.Dashboard.CIAL;
+using DevExpress.XtraGrid;
+using arbioApp.Models;
+using System.Reflection;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraTreeList.Nodes;
+using DevExpress.XtraGrid.Views.Grid;
+using System.Globalization;
+using DevExpress.XtraEditors.Controls;
+using Objets100cLib;
+using arbioApp.DTO;
+using arbioApp.Services;
+using arbioApp.Repositories.ModelsRepository;
+using arbioApp.Models.Json;
+using arbioApp.Modules.Principal.DI.Services;
+using DevExpress.DataAccess.DataFederation;
+using DevExpress.ChartRangeControlClient.Core;
+using arbioApp.Modules.Principal.DI.Repositories.ModelsRepository;
+using DevExpress.XtraBars.Customization;
+using DevExpress.Data;
+using DevExpress.XtraReports.UI;
+////using Microsoft.Office.Interop.Outlook;
+using System.Net;
+using DevExpress.Pdf.Xmp;
+using System.Data.Entity;
+using DevExpress.DataProcessing.InMemoryDataProcessor.GraphGenerator;
+using DevExpress.XtraExport.Helpers;
+using DevExpress.DashboardWin.Design;
+using Exception = System.Exception;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.DataAccess.Excel;
+using System.IO;
+using DevExpress.Spreadsheet;
+using FieldInfo = DevExpress.DataAccess.Excel.FieldInfo;
+using DevExpress.DataAccess.UI.Excel;
+using System.Collections;
+using DevExpress.XtraSplashScreen;
+using System.Threading;
+using DevExpress.DataAccess.Sql;
+using DevExpress.CodeParser;
+using DevExpress.Utils.About;
+using DevExpress.XtraTab;
+using arbioApp.Modules.Helpers;
+using DevExpress.XtraCharts.Native;
+using DevExpress.XtraSpreadsheet;
+using System.Security.AccessControl;
+using DevExpress.XtraPrinting;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using DevExpress.XtraSpreadsheet.Import.Xls;
+using Syncfusion.Windows.Forms.Maps;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
 
 namespace arbioApp.Modules.Principal.DI._2_Documents
@@ -116,7 +180,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         public frmEditDocument(string DoPiece, string typeDocument, ucDocuments parent, System.Windows.Forms.BindingSource source)
         {
             InitializeComponent();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             CustomLayout();
             _context = new AppDbContext();
             _listeDocs = _context.F_DOCENTETE
@@ -181,7 +248,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 .Where(doc => doc.DO_Piece == DoPiece)
                 .Select(doc => doc.DO_Statut)
                 .FirstOrDefault();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
        
@@ -268,7 +338,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 //comboBoxAffaire.DataSource = _listePlanAnalitique.Where(p => p.N_Analytique == 1).Select(p => p.CA_Num + " - " + p.CA_Intitule).ToList();
                 //comboBoxAffaire.SelectedIndex = -1;
                 LoadDocLie(DoPiece);
+<<<<<<< HEAD
                 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             }
             catch (System.Exception ex)
             {
@@ -361,6 +434,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         private void LierControles(System.Windows.Forms.BindingSource bindingSource)
         {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             lkEdFrns.DataBindings.Add("EditValue", bindingSource, "DO_Tiers");
             txtDoRef.DataBindings.Add("Text", bindingSource, "DO_Ref");
             lkStatut.DataBindings.Add("EditValue", bindingSource, "DO_Statut");
@@ -426,10 +503,13 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             dopiecetxt.Text = DoPiece;
             dateSaisie.Text = ucDocuments.doDate.ToString("dd/MM/yyyy");
             txtDoRef.Text = ucDocuments.doRef;
+<<<<<<< HEAD
             txtCours.Text = ucDocuments.doCours.ToString();
             txtCours.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             txtCours.Properties.Mask.EditMask = "n2";
             txtCours.Properties.Mask.UseMaskAsDisplayFormat = true;
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             datelivrprev.Text = ucDocuments.doDateLivrPrev.ToString("dd/MM/yyyy"); ;
             txtDoRef.Text = ucDocuments.doRef;
             var statutList = new List<dynamic>
@@ -561,6 +641,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
             lkDepot.Properties.Columns.Add(new LookUpColumnInfo("DE_No", "DE_No", 50));
             lkDepot.Properties.Columns.Add(new LookUpColumnInfo("DE_Intitule", "DEPOT"));
+<<<<<<< HEAD
         }
         private void ChargerDevise()
         {
@@ -666,6 +747,23 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 System.Diagnostics.Debug.WriteLine($"❌ Erreur LkDevise_EditValueChanged: {ex.Message}");
                 txtCours.EditValue = null;
             }
+=======
+
+        }
+        private void ChargerDevise()
+        {
+            _listeDevise = Entetes.GetAllDevise();
+
+            lkDevise.Properties.DataSource = _listeDevise;
+            lkDevise.Properties.ValueMember = "cbMarq"; // Clé réelle stockée
+            lkDevise.Properties.DisplayMember = "D_Intitule"; // Texte affiché
+            lkDevise.Properties.PopulateColumns();
+            lkDevise.Properties.Columns.Clear();
+
+            lkDevise.Properties.Columns.Add(new LookUpColumnInfo("cbMarq", "cbMarq", 50));
+            lkDevise.Properties.Columns.Add(new LookUpColumnInfo("D_Intitule", "DEVISE"));
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
         public List<F_COLLABORATEUR> GetAllAcheteurs()
         {
@@ -987,6 +1085,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     decimal DL_MontantHT = prixNet * Qte_propice;
                     decimal DL_MontantTTC = DL_MontantHT * (1 + tauxTVA / 100);
 
+<<<<<<< HEAD
                     if (AR_Ref != "")
                     {
                         DataTable dt = (DataTable)gcLigneEdit.DataSource;
@@ -1123,6 +1222,138 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     {
                         MessageBox.Show("Cet article ne possède pas de référence", "Message d'erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+=======
+
+                    DataTable dt = (DataTable)gcLigneEdit.DataSource;
+
+                    DataRow newRow = dt.NewRow();
+
+                    newRow["DO_Domaine"] = 1; //ACHAT = 1
+                    newRow["DO_Type"] = 10; // NOUVEAU DOCUMENT TSY MAINTSY 10
+                    newRow["CT_Num"] = CT_Num;
+                    newRow["DO_Piece"] = DO_Piece;
+                    //newRow["cbDO_Piece"] = CT_Num;
+                    newRow["DL_PieceBC"] = "";
+                    //newRow["cbDL_PieceBC"] = CT_Num;
+                    newRow["DL_PieceBL"] = "";
+                    //newRow["cbDL_PieceBL"] = CT_Num;
+                    newRow["DO_Date"] = DO_Date;
+                    //newRow["DL_DateBC"] = CT_Num;
+                    //newRow["DL_DateBL"] = CT_Num;
+                    //newRow["DL_Ligne"] = CT_Num;
+                    newRow["DO_Ref"] = DO_Ref;
+                    //newRow["cbDO_Ref"] = CT_Num;
+                    newRow["DL_TNomencl"] = 0;
+                    newRow["DL_TRemPied"] = 0;
+                    newRow["DL_TRemExep"] = 0;
+                    newRow["AR_Ref"] = AR_Ref;
+                    //newRow["cbAR_Ref"] = CT_Num;
+                    newRow["DL_Design"] = DL_Design;
+                    newRow["DL_Qte"] = Qte_propice;
+                    newRow["DL_QteBC"] = 0;
+                    newRow["DL_QteBL"] = 0;
+                    //newRow["DL_PoidsNet"] = CT_Num;
+                    newRow["DL_Valorise"] = 0;
+                    newRow["DL_PoidsBrut"] = 0;
+                    newRow["DL_Remise01REM_Valeur"] = 0;
+                    newRow["DL_Remise01REM_Type"] = 0;
+                    newRow["DL_Remise02REM_Valeur"] = 0;
+                    newRow["DL_Remise02REM_Type"] = 0;
+                    newRow["DL_Remise03REM_Valeur"] = 0;
+                    newRow["DL_Remise03REM_Type"] = 0;
+                    newRow["DL_PUBC"] = 0;
+                    newRow["DL_PrixUnitaire"] = pr_achat;
+                    newRow["DL_Taxe1"] = tauxTVA;
+                    newRow["DL_TypeTaux1"] = 0;
+                    newRow["DL_TypeTaxe1"] = 0;
+                    newRow["DL_Taxe2"] = 0;
+                    newRow["DL_TypeTaux2"] = 0;
+                    newRow["DL_TypeTaxe2"] = 0;
+                    newRow["CO_No"] = 0;
+                    //newRow["cbCO_No"] = CT_Num;
+                    newRow["AG_No1"] = 0;
+                    newRow["AG_No2"] = 0;
+                    newRow["DL_PrixRU"] = 0;
+                    newRow["DL_CMUP"] = pr_achat;
+                    newRow["DL_MvtStock"] = 0;
+                    newRow["DT_No"] = 0;
+                    //newRow["cbDT_No"] = CT_Num;
+                    //newRow["cbAF_RefFourniss"] = CT_Num;
+                    newRow["EU_Enumere"] = "";
+                    newRow["EU_Qte"] = 0;
+                    newRow["DL_TTC"] = 0;
+                    newRow["DE_No"] = Convert.ToInt32(lkDepot.EditValue);
+                    newRow["cbDE_No"] = Convert.ToInt32(lkDepot.EditValue);
+                    newRow["DL_NoRef"] = 0;
+                    newRow["DL_TypePL"] = 0;
+                    newRow["DL_PUDevise"] = 0;
+                    newRow["DL_PUTTC"] = pr_achat;
+                    //newRow["DL_No"] = 0;
+                    //newRow["DO_DateLivr"] = CT_Num;
+                    newRow["CA_Num"] = "";
+                    //newRow["cbCA_Num"] = CT_Num;
+                    newRow["DL_Taxe3"] = 0;
+                    newRow["DL_TypeTaux3"] = 0;
+                    newRow["DL_TypeTaxe3"] = 0;
+                    //newRow["cbAR_RefCompose"] = CT_Num;
+                    newRow["AC_RefClient"] = "";
+                    newRow["DL_MontantHT"] = DL_MontantHT;
+                    newRow["DL_MontantTTC"] = DL_MontantTTC;
+                    newRow["DL_FactPoids"] = 0;
+                    newRow["DL_Escompte"] = 0;
+                    newRow["DL_PiecePL"] = "";
+                    //newRow["cbDL_PiecePL"] = CT_Num;
+                    //newRow["DL_DatePL"] = CT_Num;
+                    newRow["DL_QtePL"] = 0;
+                    newRow["DL_NoColis"] = "";
+                    newRow["DL_NoLink"] = 0;
+                    //newRow["cbDL_NoLink"] = CT_Num;
+                    //newRow["RP_Code"] = "";
+                    //newRow["cbRP_Code"] = CT_Num;
+                    newRow["DL_QteRessource"] = 0;
+                    //newRow["DL_DateAvancement"] = CT_Num;
+                    newRow["PF_Num"] = "";
+                    newRow["DL_Frais"] = 0;
+                    //newRow["cbPF_Num"] = CT_Num;
+                    newRow["DL_CodeTaxe1"] = "";
+                    newRow["DL_CodeTaxe2"] = "";
+                    newRow["DL_CodeTaxe3"] = "";
+                    newRow["DL_PieceOFProd"] = 0;
+                    newRow["DL_PieceDE"] = "";
+                    //newRow["cbDL_PieceDE"] = CT_Num;
+                    //newRow["DL_DateDE"] = CT_Num;
+                    newRow["DL_QteDE"] = 0;
+                    newRow["DL_Operation"] = "";
+                    newRow["DL_NoSousTotal"] = 0;
+                    newRow["CA_No"] = 0;
+                    //newRow["cbCA_No"] = CT_Num;
+                    newRow["DO_DocType"] = 10;
+                    //newRow["cbProt"] = CT_Num;
+                    //newRow["cbMarq"] = CT_Num;
+                    //newRow["cbCreateur"] = CT_Num;
+                    //newRow["cbModification"] = CT_Num;
+                    //newRow["cbReplication"] = CT_Num;
+                    //newRow["cbFlag"] = CT_Num;
+                    //newRow["cbCreation"] = CT_Num;
+                    //newRow["cbCreationUser"] = CT_Num;
+                    //newRow["cbHash"] = CT_Num;
+                    //newRow["cbHashVersion"] = CT_Num;
+                    //newRow["cbHashDate"] = CT_Num;
+                    //newRow["cbHashOrder"] = CT_Num;          
+                    newRow["Retenu"] = 1;
+                    newRow["Action"] = "Remove";
+                    newRow["Validation"] = "Update";
+                    //newRow["Insertion"] = "Add";
+
+
+                    dt.Rows.Add(newRow);
+                    gvLigneEdit.FocusedRowHandle = dt.Rows.IndexOf(newRow);
+                    lkEdFrns.Text = CT_Num;
+                    gvLigneEdit.BestFitColumns();
+
+                    // MessageBox.Show($"Ligne cliquée:\nREFERENCE: {AR_Ref}\nFRNS: {CT_Num}");
+                    AddLigne();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                 }
 
             }
@@ -1389,10 +1620,18 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     }
                     string strDL_No = Convert.ToString(gvLigneEdit.GetRowCellValue(row, "DL_No"));
                     decimal montantRegl = _f_DOCLIGNERepository.GetMontantRegleByPieceArRef(dopiece, arRef, CtNum);
+<<<<<<< HEAD
                     decimal poids = Convert.ToDecimal(gvLigneEdit.GetRowCellValue(row, "DL_PoidsNet"));
 
 
                     _f_DOCLIGNEService.UpdateF_DOCLIGNE(dopiecetxt.Text, CtNum, arRef, dl_Designe, puBrut, dlLigne, quantiteEcriteStock, _typeDocument, dlTaxe1, dlMontantHT, dlMontantTTC, retenu, remisePourcent, dlPiecefrns, dlDatePiecefrns, montantRegl,poids);
+=======
+
+
+
+
+                    _f_DOCLIGNEService.UpdateF_DOCLIGNE(dopiecetxt.Text, CtNum, arRef, dl_Designe, puBrut, dlLigne, quantiteEcriteStock, _typeDocument, dlTaxe1, dlMontantHT, dlMontantTTC, retenu, remisePourcent, dlPiecefrns, dlDatePiecefrns, montantRegl);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
                     //// Mise à jour du stock de l'article dans un emplacement concerné
                     //_f_ARTSTOCKEMPLService.UpdateArtstockEmpl(_typeDocument, ct_Num, dl_Ligne, arRef, previousQuantiteEcriteStock, quantiteEcriteStock, DE_No);
@@ -1403,8 +1642,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 }
                 InitializeGrid(gcLigneEdit, dopiecetxt.Text);
                 gvLigneEdit.UpdateSummary();
+<<<<<<< HEAD
 
                 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             }
             catch (System.Exception ex)
             {
@@ -1428,6 +1670,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
             int row = gvLigneEdit.FocusedRowHandle;
             laligneamettreajour = row;
+<<<<<<< HEAD
             if (txtCours.Text == "" || txtCours.Text == "0,00")
             {
                 MessageBox.Show($"Le cours de devise est vide", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1456,6 +1699,9 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                 btnEditLigne_Click(sender, e);
             }
+=======
+            UPdateLigne(row);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
         public static void UpdateSequence(string prefix, int currentNumber)
         {
@@ -1555,6 +1801,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     //decimal montantHT = Convert.ToDecimal(gvLigneEdit.GetRowCellValue(row, "DL_MontantHT"));
                     object montantHTvalue = gvLigneEdit.GetRowCellValue(row, "DL_MontantHT");
                     decimal montantHT = 0;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                     if (montantHT == 0)
                     {
                         montantHT = puNet * qte;
@@ -1624,6 +1875,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         short DL_NoRef = (short)(gvLigneEdit.RowCount + 1);
                         int dlno = GetMaxDLNo() + 1;
 
+<<<<<<< HEAD
 
                             _f_DOCLIGNEService.AjouterF_DOCLIGNE(
                                 typeDoc,
@@ -1696,6 +1948,80 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
                             // Mise à jour F_ARTSTOCKEMPL
                             //_f_ARTSTOCKEMPLService.UpdateArtstockEmpl(_typeDocument, CT_NumClient, numeroLigneDL_Ligne, arRef, previousQuantite, quantiteEcriteStock, DE_No);
+=======
+                        _f_DOCLIGNEService.AjouterF_DOCLIGNE(
+                            typeDoc,
+                            CT_NumClient,
+                            dopiecetxt.Text,
+                            DO_Date,
+                            numeroLigneDL_Ligne,
+                            docEnCours,
+                            arRef,
+                            arDesign,
+                            DLTaxe1,
+                            qte,
+                            typeDoc.ToString(),
+                            articleChoisi,
+                            qte.ToString(),
+                            remisePourcent.ToString(),
+                            puNet.ToString(),
+                            collab,
+                            DL_NoRef,
+                            puBrut,
+                            DO_DateLivr,
+                            comboBoxAffaire.Text,
+                            montantTTC.ToString(),
+                            montantHT.ToString(),
+                            DateTime.Now,
+                            DE_No,
+                            dlno,
+                            retenu);
+
+
+                        //UPDATE LES PRIX DANS F_DOCENTETE
+
+                        DataTable dt = (DataTable)gvLigneEdit.GridControl.DataSource;
+                        string doPiece = dopiecetxt.Text;//dt.Rows[row]["DO_Piece"].ToString();
+                        decimal totalHTNet = dt.AsEnumerable()
+                                        .Where(row =>
+                                            row["DL_MontantHT"] != DBNull.Value &&
+                                            row["DO_Piece"] != DBNull.Value &&
+                                            row["Retenu"] != DBNull.Value &&
+                                            Convert.ToInt32(row["Retenu"]) != 0 &&
+                                            row["DO_Piece"].ToString() == doPiece
+                                        )
+                                        .Sum(row => Convert.ToDecimal(row["DL_MontantHT"]));
+                        decimal totalTTCNet = dt.AsEnumerable()
+                                        .Where(row =>
+                                            row["DL_MontantTTC"] != DBNull.Value &&
+                                            row["DO_Piece"] != DBNull.Value &&
+                                            row["Retenu"] != DBNull.Value &&
+                                            Convert.ToInt32(row["Retenu"]) != 0 &&
+                                            row["DO_Piece"].ToString() == doPiece
+                                        )
+                                        .Sum(row => Convert.ToDecimal(row["DL_MontantTTC"]));
+                        _f_DOCENTETEService.UpdateDO_Totaux_HT_Net_TTC(dopiecetxt.Text, puNet, 0, totalHTNet, totalTTCNet);
+
+                        // Mise à jour F_ARTSTOCK
+                        object rawValue = gvLigneEdit.GetRowCellValue(row, "DL_Qte");
+
+                        decimal quantiteEcriteStock = 0;
+
+                        if (rawValue != null && !string.IsNullOrWhiteSpace(rawValue.ToString()))
+                        {
+                            decimal.TryParse(rawValue.ToString(), out quantiteEcriteStock);
+                        }
+                        else
+                        {
+                            quantiteEcriteStock = 0; // ou une valeur par défaut, ou lever une alerte si c'est anormal
+                        }
+                        //decimal quantiteEcriteStock = int.Parse(gvLigneEdit.GetRowCellValue(row, "DL_Qte").ToString());
+                        _f_ARTSTOCKService.UpdateMontantEtQuantiteStock(_typeDocument, arRef, quantiteEcriteStock, previousQuantite, DE_No);
+
+                        // Mise à jour F_ARTSTOCKEMPL
+                        //_f_ARTSTOCKEMPLService.UpdateArtstockEmpl(_typeDocument, CT_NumClient, numeroLigneDL_Ligne, arRef, previousQuantite, quantiteEcriteStock, DE_No);
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                     }
                 }
 
@@ -1709,6 +2035,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+<<<<<<< HEAD
 
         private bool not_existence_ref(string cond)
         {
@@ -1744,6 +2071,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 }
             return exist;
         }
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         private void Hyperlink_Click_AddLigne(object sender, EventArgs e)
         {
             AddLigne();
@@ -1751,8 +2080,12 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
 
         public void ExecuteStockAlert()
         {
+<<<<<<< HEAD
             string query1 = @"SELECT * FROM dbo.VW_ETAT_STOCK WHERE CT_INTITULE='"+ lkEdFrns.Text +"'";
 
+=======
+            string query1 = @"SELECT * FROM dbo.VW_ETAT_STOCK";
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
             string connectionStringArbapp = $"Server={FrmMdiParent.DataSourceNameValueParent};" +
                                             $"Database=arbapp;User ID=Dev;Password=1234;" +
@@ -1765,7 +2098,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             treeList1.ClearNodes();
             treeList1.Columns.Clear();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             var parentColumns = new[]
                 { "SITE", "FAMILLE", "REFERENCE", "DESIGNATION", "CT_Num", "CT_Intitule", "PURCHASE", "AF_PrixAch" };
             var childColumns = new[] { "DEPOT", "STOCK REEL", "STOCK MINI", "STOCK MAXI" };
@@ -1793,6 +2129,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     AF_PrixAch = r["AF_PrixAch"]
                 });
 
+<<<<<<< HEAD
             if (groupedData.Any())
             {
                 foreach (var group in groupedData)
@@ -1802,6 +2139,17 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     decimal totalStockMaxi = group.Sum(r => r.Field<decimal?>("STOCK MAXI") ?? 0);
                     TreeListNode parentNode = treeList1.AppendNode(new object[]
                     {
+=======
+            foreach (var group in groupedData)
+            {
+                // Calcul des sommes des enfants
+                decimal totalStockReel = group.Sum(r => r.Field<decimal>("STOCK REEL"));
+                decimal totalStockMini = group.Sum(r => r.Field<decimal>("STOCK MINI"));
+                decimal totalStockMaxi = group.Sum(r => r.Field<decimal>("STOCK MAXI"));
+
+                TreeListNode parentNode = treeList1.AppendNode(new object[]
+                {
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                     group.Key.Site,
                     group.Key.Famille,
                     group.Key.Reference,
@@ -1814,12 +2162,21 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     totalStockReel, // STOCK REEL total
                     totalStockMini, // STOCK MINI total
                     totalStockMaxi // STOCK MAXI total
+<<<<<<< HEAD
                     }, null);
 
                     foreach (DataRow childRow in group)
                     {
                         treeList1.AppendNode(new object[]
                         {
+=======
+                }, null);
+
+                foreach (DataRow childRow in group)
+                {
+                    treeList1.AppendNode(new object[]
+                    {
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                         null, // SITE
                         null, // FAMILLE
                         null, // REFERENCE
@@ -1832,8 +2189,12 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         childRow["STOCK REEL"],
                         childRow["STOCK MINI"],
                         childRow["STOCK MAXI"]
+<<<<<<< HEAD
                         }, parentNode);
                     }
+=======
+                    }, parentNode);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                 }
             }
 
@@ -1849,6 +2210,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             treeList1.Columns["STOCK MAXI"].Format.FormatType = DevExpress.Utils.FormatType.Numeric;
             treeList1.Columns["STOCK MAXI"].Format.FormatString = "N2";
 
+<<<<<<< HEAD
             treeList1.NodeCellStyle += TreeList1_NodeCellStyle;
 
             treeList1.EndUpdate();
@@ -1881,6 +2243,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     }
                 }
             }
+=======
+
+
+            treeList1.EndUpdate();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
         private void hyperlinkLabelControl1_Click(object sender, EventArgs e)
         {
@@ -1977,6 +2344,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             return Guid.Empty;
         }
 
+<<<<<<< HEAD
         private bool tester_cloturer(string doPiece)
         {
             bool test = false;
@@ -1991,6 +2359,8 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             }
             return test;
         }
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         private void btnValider_Click(object sender, EventArgs e)
         {
             try
@@ -2002,6 +2372,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 string _currentDocPieceNo = dopiecetxt.Text;
                 if (doc != null)
                 {
+<<<<<<< HEAD
                     if (tester_cloturer(dopiecetxt.Text))
                     {
                         MessageBox.Show(
@@ -2148,6 +2519,18 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         frmsite.ShowDialog();
                     }
                 }
+=======
+                    UpdateFDOCENTETE();
+                }
+                else
+                {
+                    InsertFDOCENTETE();
+                }
+
+                _ucDocuments.RafraichirDonnees();
+                gvLigneEdit.SetFocusedValue(lkEdFrns.EditValue);
+                StatutActuel = Convert.ToInt32(lkStatut.EditValue);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             }
 
             catch (System.Exception ex)
@@ -2156,6 +2539,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
             }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
         private void LoadCodeTaxe()
         {
@@ -2295,7 +2683,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 string _typeDocument = ucDocuments.a_type;
                 string _currentDocPieceNo = dopiecetxt.Text;
                 int numExpedition = doexpedit;
+<<<<<<< HEAD
                 decimal docours = decimal.Parse(txtCours.Text);
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
                 int number = int.Parse(dopiecetxt.Text.Substring(dopiecetxt.Text.Length - 4));
                 decimal DoTaxe1 = string.IsNullOrEmpty(doTaxe1txt.Text)? 0: Convert.ToDecimal(doTaxe1txt.Text);
@@ -2306,7 +2697,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 {
                     _f_DOCENTETEService.UpdateProprietesF_DOCENTETE(_currentDocPieceNo,
     dateLivrPrevu, dateLivrReal, reference, caNum, CO_NO,
+<<<<<<< HEAD
     (short?)numExpedition, expeditIntitule, dO_Coord01, numeroDepot, DoTaxe1, DoStatut, ctnum, docours);
+=======
+    (short?)numExpedition, expeditIntitule, dO_Coord01, numeroDepot, DoTaxe1, DoStatut, ctnum);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                 }
 
             }
@@ -2352,7 +2747,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 int number = int.Parse(dopiecetxt.Text.Substring(dopiecetxt.Text.Length - 4));
                 decimal DoTaxe1 = 0m;
                 decimal.TryParse(doTaxe1txt.Text, out DoTaxe1);
+<<<<<<< HEAD
                 decimal doCours=decimal.Parse(txtCours.Text);
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
                 if (fDocenteteToModif == null)
                 {
@@ -2362,7 +2760,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                         dateLivrReal, reference, dO_Coord01,
                         (int)representant.CO_No, numeroDepot, deviseID,
                         ct_taux2, CodeTaxe, _prefix,
+<<<<<<< HEAD
                         number, DoTaxe1, doCours);
+=======
+                        number, DoTaxe1);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                 }
             }
             catch (System.Exception ex)
@@ -2618,7 +3020,10 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         private void gvLigneEdit_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
         {
 
@@ -2654,7 +3059,11 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                 }
             }
             if (e.Column.FieldName == "DL_Qte" || e.Column.FieldName == "DL_Remise01REM_Valeur" || e.Column.FieldName == "DL_PrixUnitaire"
+<<<<<<< HEAD
                 || e.Column.FieldName == "DL_Taxe1" || e.Column.FieldName == "DL_PUDevise" || e.Column.FieldName == "DL_PoidsNet" || e.Column.FieldName == "DL_Frais")
+=======
+                || e.Column.FieldName == "DL_Taxe1" || e.Column.FieldName == "DL_PUDevise")
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             {
                 GridView view = sender as GridView;
 
@@ -2706,16 +3115,24 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     int quantite = Convert.ToInt32(qte);
                     decimal remise = Convert.ToDecimal(remiseObj);
                     decimal tauxTVA = Convert.ToDecimal(tauxTVAObj);
+<<<<<<< HEAD
                     decimal cours = Convert.ToDecimal(txtCours.Text);
 
                     // Appliquer la remise au prix unitaire
                     decimal prixNet = prixUnitaire * (1 - remise / 100);
                     decimal montantHT = prixNet * quantite * cours;
+=======
+
+                    // Appliquer la remise au prix unitaire
+                    decimal prixNet = prixUnitaire * (1 - remise / 100);
+                    decimal montantHT = prixNet * quantite;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                     decimal montantTTC = montantHT * (1 + tauxTVA / 100);
 
                     view.SetRowCellValue(e.RowHandle, "DL_MontantHT", montantHT);
                     view.SetRowCellValue(e.RowHandle, "DL_MontantTTC", montantTTC);
 
+<<<<<<< HEAD
                     gvLigneEdit.CustomUnboundColumnData += (sender, e) =>
                     {
                         if (e.IsGetData)
@@ -2743,6 +3160,12 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
                     };
                 }
             }
+=======
+                }
+            }
+
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
         private decimal GetArticlePU(string arRef)
         {
@@ -2845,6 +3268,7 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         public static int intcollaborateur;
         private void frmEditDocument_Load_1(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             if (lkEdFrns.Text != "")
             {
                 ExecuteStockAlert();
@@ -2934,6 +3358,18 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         }
 
 private void datelivrprev_EditValueChanged(object sender, EventArgs e)
+=======
+            gvLigneEdit.ShowingEditor -= gvLigneEdit_ShowingEditor; // Se désabonner au cas où
+            intcollaborateur = cono;
+            ShapeFileLayer shapeLayer = new ShapeFileLayer();
+
+            shapeLayer.Uri = "world1.shp";
+
+            this.maps1.Layers.Add(shapeLayer);
+        }
+
+        private void datelivrprev_EditValueChanged(object sender, EventArgs e)
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         {
             datelivrprev.EditValue = datelivrprev.EditValue;
         }
@@ -3048,6 +3484,7 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
 
         private void barButtonItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+<<<<<<< HEAD
             if (tester_cloturer(dopiecetxt.Text))
             {
                 MessageBox.Show(
@@ -3271,6 +3708,27 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
             }
         }
 
+=======
+            if (StatutActuel < 2)
+            {
+                MessageBox.Show("Le statut actuel ne permet pas de transformer le document.", "Information");
+                return;
+            }
+            var dlg = new frmTransform(_typeDocument);
+            dlg.ParentFormInstance = this;
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                this.TransformFDOCENTETE(dlg.doctype);
+            }
+
+            // Fix for CS0120: Use the instance of ucDocuments instead of trying to call it statically
+            _ucDocuments.ChargerDonneesDepuisBDD();
+        }
+
+
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         private void gvLigneEdit_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             if (e.Row != null && gvLigneEdit.IsNewItemRow(e.RowHandle))
@@ -3280,6 +3738,11 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
             }
         }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         private void xtraTabControl1_Selected(object sender, DevExpress.XtraTab.TabPageEventArgs e)
         {
             chkActif.Checked = true;
@@ -3288,6 +3751,7 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
         private int nbchecked = 0;
         private void chkActif_CheckedChanged(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             if (dopiecetxt.Text.ToString().StartsWith("AFA"))
             {
                 bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
@@ -3361,10 +3825,14 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
                     );
                 }
             }
+=======
+            MettreAJourFiltre();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
         private void chkSommeil_CheckedChanged(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             if (dopiecetxt.Text.ToString().StartsWith("AFA"))
             {
                 bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
@@ -3438,6 +3906,9 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
                     );
                 }
             }
+=======
+            MettreAJourFiltre();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
         public System.Windows.Forms.BindingSource BindingFrns = new System.Windows.Forms.BindingSource();
         public System.Windows.Forms.BindingSource BindingArt = new System.Windows.Forms.BindingSource();
@@ -3549,6 +4020,7 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
                 // appliquer 20% de TVA
                 totalTVA = totalHT * 0.20m;
 
+<<<<<<< HEAD
                 bool toutesLesLignesValides = true;
                 for (int i = 0; i < gvLigneEdit.RowCount; i++)
                 {
@@ -3582,6 +4054,11 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
                     frmEditInfos frm = new frmEditInfos(dopiece, totalTVA, this);
                     frm.ShowDialog();
                 }
+=======
+
+                frmEditInfos frm = new frmEditInfos(dopiece, totalTVA, this);
+                frm.ShowDialog();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             }
             catch (System.Exception ex)
             {
@@ -3593,6 +4070,7 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
         ExcelDataSource excelDataSource;
         private void hyperlinkLabelControl5_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
                 try
                 {
                     xtraOpenFileDialog1.Filter = "Microsoft Excel Files (*.xlsx)|*.xlsx";
@@ -3633,6 +4111,47 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
                    
                 string rec_arref = "";
                 bool t_ok = false;
+=======
+            try
+            {
+                xtraOpenFileDialog1.Filter = "Microsoft Excel Files (*.xlsx)|*.xlsx";
+                if (xtraOpenFileDialog1.ShowDialog() != DialogResult.OK) return;
+
+                string filePath = xtraOpenFileDialog1.FileName;
+
+                // Charger les données depuis Excel
+                Workbook workbook = new Workbook();
+                workbook.LoadDocument(filePath);
+                string sheetName = workbook.Worksheets[0].Name;
+
+                ExcelDataSource excelDataSource = new ExcelDataSource
+                {
+                    FileName = filePath,
+                    SourceOptions = new ExcelSourceOptions(new ExcelWorksheetSettings(sheetName, "A:E"))
+                };
+
+                excelDataSource.Schema.AddRange(new FieldInfo[]
+                {
+            new FieldInfo { Name = "CT_Num", Type = typeof(string) },
+            new FieldInfo { Name = "AR_Ref", Type = typeof(string) },
+            new FieldInfo { Name = "DL_Design", Type = typeof(string) },
+            new FieldInfo { Name = "DL_PrixUnitaire", Type = typeof(decimal) },
+            new FieldInfo { Name = "DL_Qte", Type = typeof(decimal) }
+                });
+
+                excelDataSource.Fill();
+                DataTable dataDocLigneImport = excelDataSource.ToDataTable();
+
+
+                if (dataDocLigneImport.Rows.Count == 0)
+                {
+                    XtraMessageBox.Show("Aucune ligne trouvée dans le fichier Excel.");
+                    return;
+                }
+
+                SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true, false);
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
@@ -3642,16 +4161,26 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
 
                     foreach (DataRow row in dataDocLigneImport.Rows)
                     {
+<<<<<<< HEAD
                        
+=======
+                        current++;
+                        SplashScreenManager.Default.SetWaitFormDescription($"{current}/{total}");
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
                         int dotype = 10;
                         string arRef = row["AR_Ref"]?.ToString() ?? "";
                         string ctNum = row["CT_Num"]?.ToString() ?? "";
+<<<<<<< HEAD
                         rec_arref = row["AR_Ref"]?.ToString() ?? "";
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
                         decimal dlQte = row["DL_Qte"] != DBNull.Value ? Convert.ToDecimal(row["DL_Qte"]) : 0;
 
                         decimal DLTaxe1 = 0;
+<<<<<<< HEAD
 
                         if (not_existence_ref(arRef.ToString()))
                         {
@@ -3765,6 +4294,104 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
                         XtraMessageBox.Show("Importation terminée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
+=======
+                        F_ARTICLE articleChoisi = _f_ARTICLERepository.GetF_ARTICLEByAR_Ref(arRef);
+                        int? DE_No = Convert.ToInt32(lkDepot.EditValue);
+                        int? dl_Ligne = 0;
+                        decimal previousQuantite = 0;
+                        decimal remisePourcent = 0;
+                        string arDesign = row["DL_Design"]?.ToString() ?? "";
+                        decimal puBrut = row["DL_PrixUnitaire"] != DBNull.Value ? Convert.ToDecimal(row["DL_PrixUnitaire"]) : 0;
+                        decimal puNet = puBrut * (1 - remisePourcent / 100);
+                        decimal montantHT = dlQte * puNet;
+                        decimal montantTTC = montantHT * (1 + DLTaxe1 / 100);
+                        int retenu = 1;
+                        F_DOCENTETE docEnCours = _f_DOCENTETERepository.GetBy_DO_Piece_And_Type(dopiecetxt.Text);
+                        F_COLLABORATEUR collab = _listeCollaborateurs.Where(c => c.CO_No == (int)lkEdCollaborateur.EditValue).FirstOrDefault();
+                        DateTime DO_Date = dateSaisie.DateTime;
+                        DateTime DO_DateLivr;
+                        if (datelivrprev.EditValue == null || !(datelivrprev.EditValue is DateTime))
+                        {
+                            DO_DateLivr = new DateTime(1753, 01, 01);
+                        }
+                        else
+                        {
+                            DO_DateLivr = (DateTime)datelivrprev.EditValue;
+                        }
+                        DateTime dateLivrReal;
+                        if (datelivrprev.EditValue == null || !(datelivrprev.EditValue is DateTime))
+                        {
+                            dateLivrReal = new DateTime(1753, 01, 01);
+                        }
+                        else
+                        {
+                            dateLivrReal = (DateTime)datelivrprev.EditValue;
+                        }
+                        //string doAffaire = caNum;
+
+                        int? maxValueDL_Ligne = 0;
+
+                        for (int i = 0; i < gvLigneEdit.RowCount; i++)
+                        {
+                            object dlligne = gvLigneEdit.GetRowCellValue(i, "DL_Ligne");
+                            if (dlligne != null && int.TryParse(dlligne.ToString(), out int val))
+                            {
+                                if (val > maxValueDL_Ligne)
+                                {
+                                    maxValueDL_Ligne = val;
+                                }
+                            }
+                        }
+
+                        int? numeroLigneDL_Ligne = maxValueDL_Ligne + 1000;
+                        string reference = txtDoRef.Text;
+                        short typeDoc = (short)_f_DOCENTETEService.GetDocTypeNo(_prefix);
+                        short DL_NoRef = (short)(gvLigneEdit.RowCount + 1);
+                        int dlno = GetMaxDLNo() + 1;
+
+                        _f_DOCLIGNEService.AjouterF_DOCLIGNE(
+                            typeDoc,
+                            ctNum,
+                            dopiecetxt.Text,
+                            DO_Date,
+                            numeroLigneDL_Ligne,
+                            docEnCours,
+                            arRef,
+                            arDesign,
+                            DLTaxe1,
+                            dlQte,
+                            typeDoc.ToString(),
+                            articleChoisi,
+                            Convert.ToString(dlQte),
+                            remisePourcent.ToString(),
+                            puNet.ToString(),
+                            collab,
+                            DL_NoRef,
+                            puBrut,
+                            DO_DateLivr,
+                            comboBoxAffaire.Text,
+                            montantTTC.ToString(),
+                            montantHT.ToString(),
+                            DateTime.Now,
+                            DE_No,
+                            dlno,
+                            retenu);
+
+
+                        //UPDATE LES PRIX DANS F_DOCENTETE
+
+
+
+                    }
+                    MettreAJourTotauxDepuisBD(dopiecetxt.Text);
+                    conn.Close();
+                    string _currentDocPieceNo = dopiecetxt.Text;
+                    InitializeGrid(gcLigneEdit, _currentDocPieceNo);
+                }
+
+                SplashScreenManager.CloseForm();
+                XtraMessageBox.Show("Importation terminée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             }
             catch (Exception ex)
             {
@@ -3874,6 +4501,7 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
                         // 4. Définir le dossier réseau de destination
                         string destinationFolder = @"\\Srv-arb\documents_achats$";
                         string nodoc = dopiece.Substring(3, 8);
+<<<<<<< HEAD
 
                         if (dopiecetxt.Text.ToString().StartsWith("ABC"))
                         {
@@ -4054,6 +4682,32 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
                                     MessageBoxIcon.Error
                                 );
                             }
+=======
+                        try
+                        {
+                            string destinationFolderdoc = $@"\\Srv-arb\documents_achats$\{nodoc}";
+                            if (!Directory.Exists(destinationFolderdoc))
+                            {
+                                Directory.CreateDirectory(destinationFolderdoc);
+                            }
+
+                            // 5. Copier chaque fichier
+                            foreach (string file in selectedFiles)
+                            {
+                                string fileName = Path.GetFileName(file);
+                                string destFile = Path.Combine(destinationFolderdoc, fileName);
+
+                                File.Copy(file, destFile, true); // true = overwrite si existe déjà
+                            }
+
+                            XtraMessageBox.Show("✅ Transfert terminé avec succès !", "Succès",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MethodBase m = MethodBase.GetCurrentMethod();
+                            MessageBox.Show($"Une erreur est survenue : {ex.Message}, {m}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                         }
                     }
                 }
@@ -4158,6 +4812,7 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
 
         private void lkStatut_EditValueChanging(object sender, ChangingEventArgs e)
         {
+<<<<<<< HEAD
             if (lkStatut.Text != "Accepté")
             {
                 if (e.NewValue == null) return;
@@ -4168,6 +4823,15 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
                     e.Cancel = true;
                     MessageBox.Show("Impossible de revenir à un statut précédent.", "Action non autorisée", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+=======
+            if (e.NewValue == null) return;
+            int newValue = Convert.ToInt32(e.NewValue);
+
+            if (newValue < StatutActuel)
+            {
+                e.Cancel = true;
+                MessageBox.Show("Impossible de revenir à un statut précédent.", "Action non autorisée", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             }
         }
 
@@ -4184,6 +4848,7 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
             PointF point = new PointF(e.X, e.Y);
 
             // Fix: Replace the non-existent PointToLatLng method with GetMapCoordinates
+<<<<<<< HEAD
            // PointF latLong = this.maps1.GetMapCoordinates(point);
 
            // float latitude = latLong.Y;
@@ -4195,6 +4860,19 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
             // Ou dans un tooltip
             System.Windows.Forms.ToolTip tt = new System.Windows.Forms.ToolTip();
             //tt.SetToolTip(maps1, $"Lat: {latitude:F4}, Lon: {longitude:F4}");
+=======
+            PointF latLong = this.maps1.GetMapCoordinates(point);
+
+            float latitude = latLong.Y;
+            float longitude = latLong.X;
+
+            // Affiche dans la barre de statut ou un Label
+            lblCoord.Text = $"Lat: {latitude:F4}, Lon: {longitude:F4}";
+
+            // Ou dans un tooltip
+            System.Windows.Forms.ToolTip tt = new System.Windows.Forms.ToolTip();
+            tt.SetToolTip(maps1, $"Lat: {latitude:F4}, Lon: {longitude:F4}");
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
         private void Hyperlink_ClickArticle(object sender, EventArgs e)
         {
@@ -4233,6 +4911,7 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
 
         private void chkArActif_CheckedChanged(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             if (dopiecetxt.Text.ToString().StartsWith("AFA"))
             {
                 bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
@@ -4306,10 +4985,14 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
                     );
                 }
             }
+=======
+            FiltrerArticles();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
         private void chkArSommeil_CheckedChanged(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             if (dopiecetxt.Text.ToString().StartsWith("AFA"))
             {
                 bool autorise = frmMenuAchat.verifier_droit("Facture", "UPDATE");
@@ -4383,12 +5066,16 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
                     );
                 }
             }
+=======
+            FiltrerArticles();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
         private void hyperlinkLabelControl8_Click(object sender, EventArgs e)
         {
             ChargerArticles();
         }
+<<<<<<< HEAD
 
         private void frmEditDocument_Activated(object sender, EventArgs e)
         {
@@ -4555,5 +5242,7 @@ private void datelivrprev_EditValueChanged(object sender, EventArgs e)
         {
             gvLigneEdit.RefreshData();
         }
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     }
 }

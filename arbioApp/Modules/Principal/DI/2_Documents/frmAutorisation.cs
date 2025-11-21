@@ -35,8 +35,13 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
         private void LoadUsers()
         {
             string connectionString = $"Server=SRV-ARB;" +
+<<<<<<< HEAD
                           $"Database=arbapp;User ID=Dev;Password=1234;" +
                           $"TrustServerCertificate=True;Connection Timeout=120;";
+=======
+                                          $"Database=arbapp;User ID=Dev;Password=1234;" +
+                                          $"TrustServerCertificate=True;Connection Timeout=120;";
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             string query = "SELECT Username FROM dbo.T_UserRole";
 
             using (var da = new SqlDataAdapter(query, connectionString))
@@ -86,18 +91,28 @@ namespace arbioApp.Modules.Principal.DI._2_Documents
             repoLookup.NullText = "";              // si pas de valeur
             repoLookup.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
             repoLookup.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
+<<<<<<< HEAD
             
             // Associer à la colonne mailUser
             gvAut.Columns["mailUser"].ColumnEdit = repoLookup;
            
+=======
+
+            // Associer à la colonne mailUser
+            gvAut.Columns["mailUser"].ColumnEdit = repoLookup;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
 
         private void hyperlinkLabelControl1_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             gvAut.CloseEditor();
             gvAut.UpdateCurrentRow();
             adapter.Update(dt);
             MessageBox.Show("Autorisation effectuée pour cet utilisateur", "Affectation de droits", MessageBoxButtons.OK, MessageBoxIcon.Information);
+=======
+            adapter.Update(dt);
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         }
     }
 }

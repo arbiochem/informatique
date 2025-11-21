@@ -77,7 +77,10 @@ namespace arbioApp.Repositories.ModelsRepository
                     .FirstOrDefault(doc => doc.DO_Piece == DO_Piece);
             }
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         public F_DOCENTETE GetBy_CbMarq(int cbMarqSource)
         {
             using (AppDbContext context = new AppDbContext())
@@ -577,7 +580,10 @@ namespace arbioApp.Repositories.ModelsRepository
 					DO_ValFranco = @DO_ValFranco,
 					DO_ValFrais = @DO_ValFrais,
 					DO_Coord01 = @DO_Coord01,
+<<<<<<< HEAD
 					DO_Cours=@DO_Cours,
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 					--Commentaires = @Commentaires,
 					--Divers = @Divers,
 					DE_No = @DE_No
@@ -610,8 +616,12 @@ namespace arbioApp.Repositories.ModelsRepository
                         new SqlParameter("@DO_ValFrais", f_DOCENTETEToUpdate.DO_ValFrais),
                         new SqlParameter("@DO_Coord01", f_DOCENTETEToUpdate.DO_Coord01),
                         new SqlParameter("@DE_No", f_DOCENTETEToUpdate.DE_No),
+<<<<<<< HEAD
                         new SqlParameter("@DO_Piece", f_DOCENTETEToUpdate.DO_Piece),
                         new SqlParameter("@DO_Cours", f_DOCENTETEToUpdate.DO_Cours)
+=======
+                        new SqlParameter("@DO_Piece", f_DOCENTETEToUpdate.DO_Piece)
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                     );
                 }
             }

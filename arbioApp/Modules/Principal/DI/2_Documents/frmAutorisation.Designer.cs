@@ -33,7 +33,11 @@
             this.gcAut = new DevExpress.XtraGrid.GridControl();
             this.gvAut = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colid = new DevExpress.XtraGrid.Columns.GridColumn();
+<<<<<<< HEAD
             this.ColmailUser = new DevExpress.XtraGrid.Columns.GridColumn();
+=======
+            this.colmailUser = new DevExpress.XtraGrid.Columns.GridColumn();
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.colMenu = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colControl = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colVIEW = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -91,7 +95,11 @@
             // 
             this.gvAut.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colid,
+<<<<<<< HEAD
             this.ColmailUser,
+=======
+            this.colmailUser,
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.colMenu,
             this.colControl,
             this.colVIEW,
@@ -111,6 +119,7 @@
             this.colid.VisibleIndex = 0;
             this.colid.Width = 94;
             // 
+<<<<<<< HEAD
             // ColmailUser
             // 
             this.ColmailUser.FieldName = "mailUser";
@@ -119,6 +128,16 @@
             this.ColmailUser.Visible = true;
             this.ColmailUser.VisibleIndex = 1;
             this.ColmailUser.Width = 94;
+=======
+            // colmailUser
+            // 
+            this.colmailUser.FieldName = "mailUser";
+            this.colmailUser.MinWidth = 25;
+            this.colmailUser.Name = "colmailUser";
+            this.colmailUser.Visible = true;
+            this.colmailUser.VisibleIndex = 1;
+            this.colmailUser.Width = 94;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             // 
             // colMenu
             // 
@@ -242,7 +261,11 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         //private arbappDataSetTableAdapters.DI_AUTORISATIONSTableAdapter dI_AUTORISATIONSTableAdapter;
         private DevExpress.XtraGrid.Columns.GridColumn colid;
+<<<<<<< HEAD
         private DevExpress.XtraGrid.Columns.GridColumn ColmailUser;
+=======
+        private DevExpress.XtraGrid.Columns.GridColumn colmailUser;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         private DevExpress.XtraGrid.Columns.GridColumn colMenu;
         private DevExpress.XtraGrid.Columns.GridColumn colVIEW;
         private DevExpress.XtraGrid.Columns.GridColumn colCREATE;

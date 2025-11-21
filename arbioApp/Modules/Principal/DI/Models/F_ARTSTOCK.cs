@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿namespace arbioApp.Models
+=======
+namespace arbioApp.Models
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 {
     using System;
     using System.Collections.Generic;

@@ -306,7 +306,11 @@ namespace arbioApp.Modules.Principal.DI.Services
         // DEBUT UPDATE ====================================================================================
         public void UpdateF_DOCLIGNE(string DO_Piece, string CT_Num, string AR_Ref, string DL_Designe, decimal puBrut,
             int DL_No, int quantite, string typeDocument, decimal DL_Taxe1, decimal DL_MontantHT, decimal DL_MontantTTC,
+<<<<<<< HEAD
             int? retenu, decimal remise, string DL_PieceFourniss, DateTime DL_DatePieceFourniss, decimal DL_MontantRegle,decimal poids)
+=======
+            int? retenu, decimal remise, string DL_PieceFourniss, DateTime DL_DatePieceFourniss, decimal DL_MontantRegle)
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         {
             try
             {
@@ -389,7 +393,11 @@ namespace arbioApp.Modules.Principal.DI.Services
 
                 // Mise à jour des propriétés concernant le poids
                 f_DOCLIGNEToUpdate.DL_PoidsBrut = quantite * f_ARTICLE.AR_PoidsBrut;
+<<<<<<< HEAD
                 f_DOCLIGNEToUpdate.DL_PoidsNet = poids;
+=======
+                f_DOCLIGNEToUpdate.DL_PoidsNet = quantite * f_ARTICLE.AR_PoidsNet;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
                 // Mise à jour DL_CMUP et DL_PrixRU
                 //decimal? CMUP = QteEtMontantArticle.AS_MontSto / (QteEtMontantArticle.AS_QteSto == 0 ? 1 : QteEtMontantArticle.AS_QteSto);
@@ -426,7 +434,11 @@ namespace arbioApp.Modules.Principal.DI.Services
                     case 13:
                         f_DOCLIGNEToUpdate.DO_Piece = "ABL" + DO_Piece; //BON DE LIVRAISON
                         break;
+<<<<<<< HEAD
                     case 18:
+=======
+                    case 14:
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
                         f_DOCLIGNEToUpdate.DO_Piece = "ABR" + DO_Piece; //BON DE RETOUR
                         break;
                     case 16:

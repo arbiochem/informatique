@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 ﻿using DevExpress.XtraEditors;
 
 namespace arbioApp
+=======
+﻿namespace arbioApp
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 {
     partial class FrmConnex
     {
@@ -116,8 +120,11 @@ namespace arbioApp
             this.cboServers.TabIndex = 9;
             this.cboServers.SelectedIndexChanged += new System.EventHandler(this.cboServers_SelectedIndexChanged);
             this.cboServers.EditValueChanged += new System.EventHandler(this.cboServers_EditValueChanged_1);
+<<<<<<< HEAD
             this.cboServers.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             // 
             // textPwd
             // 
@@ -137,7 +144,10 @@ namespace arbioApp
             this.checkEdit11.Size = new System.Drawing.Size(236, 24);
             this.checkEdit11.StyleController = this.layoutControl1;
             this.checkEdit11.TabIndex = 6;
+<<<<<<< HEAD
             this.checkEdit11.CheckedChanged += new System.EventHandler(this.checkEdit11_CheckedChanged);
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             // 
             // BtnOK
             // 

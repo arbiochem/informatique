@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using arbioApp.Models;
 using arbioApp.Modules.Principal.DI._2_Documents;
 using DevExpress.Utils.DirectXPaint;
@@ -6,10 +7,14 @@ using DevExpress.XtraCharts.Designer.Native;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
+=======
+﻿using DevExpress.XtraEditors;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+<<<<<<< HEAD
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
@@ -17,12 +22,22 @@ using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+=======
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using arbioApp.Modules.Principal.DI._2_Documents;
+using System.Data.SqlClient;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 using BindingSource = System.Windows.Forms.BindingSource;
 
 namespace arbioApp.Modules.Principal.DI
 {
     public partial class frmMenuAchat : DevExpress.XtraEditors.XtraForm
     {
+<<<<<<< HEAD
         private SqlDataAdapter adapter;
         private DataTable dt;
         private SqlCommandBuilder builder;
@@ -30,6 +45,11 @@ namespace arbioApp.Modules.Principal.DI
         private string dbPrincipale = ucDocuments.dbNamePrincipale;
         private string serveripPrincipale = ucDocuments.serverIpPrincipale;
         private bool DO_CREATE=false;
+=======
+        public static string connectionString;
+        private string dbPrincipale = ucDocuments.dbNamePrincipale;
+        private string serveripPrincipale = ucDocuments.serverIpPrincipale;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         public frmMenuAchat()
         {
             InitializeComponent();
@@ -42,6 +62,7 @@ namespace arbioApp.Modules.Principal.DI
         public static int statut = 2; 
         private void simpleButton1_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             if (rbAPA.Checked)
             {
                 // Vérifie si l'utilisateur a le droit "CREATE" pour le type "APA"
@@ -126,6 +147,20 @@ namespace arbioApp.Modules.Principal.DI
 
         }
 
+=======
+            if(rbAPA.Checked)
+            {
+                ucDocuments monUc = new ucDocuments();
+                statut = 2; // accepté par défaut
+                frmEditDocument editForm = new frmEditDocument(GetNextInvoiceNumber("APA"), monUc, 0);
+                editForm.ShowDialog();
+                dotype = 10;
+                
+            }
+            
+        }
+        
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         public static string GetNextInvoiceNumber(string prefix)
         {
             int year = DateTime.Now.Year;
@@ -152,6 +187,7 @@ namespace arbioApp.Modules.Principal.DI
         {
             this.Close();
         }
+<<<<<<< HEAD
 
         public static bool verifier_droit(string type, string cond)
         {
@@ -245,5 +281,7 @@ namespace arbioApp.Modules.Principal.DI
         {
 
         }
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     }
 }

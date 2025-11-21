@@ -1,18 +1,33 @@
+<<<<<<< HEAD
 ﻿using arbioApp.Models;
 using arbioApp.Modules.Principal.DI.Models;
 using arbioApp.Utils.Connection;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+=======
+﻿using arbioApp.Utils.Connection;
+using System.Data.Entity;
+using arbioApp.Models;
+using arbioApp.Modules.Principal.DI.Models;
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
 namespace arbioApp.Models
 {
     public partial class AppDbContext : DbContext
     {
         private static string connectionString = "";
+<<<<<<< HEAD
         public AppDbContext(): base(Db.GetConnectionString()) {
             Database.SetInitializer<AppDbContext>(null);
         }
         
+=======
+        public AppDbContext()
+            : base(Db.GetConnectionString())
+        {
+        }
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         //    FANAOVANA UPDATE DATABASE
        /* public AppDbContext()
     :   base("Data Source=SRV-ARB;Initial Catalog=ARBIOCHEM_ACHAT;Persist Security Info=True;User ID=DEV;Password=1234;TrustServerCertificate=True")
@@ -20,8 +35,12 @@ namespace arbioApp.Models
         }*/
 
 
+<<<<<<< HEAD
         public DbSet<F_FRET> F_FRETS { get; set; }
         public DbSet<F_DEVISE> F_DEVISES { get; set; }
+=======
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
         public virtual DbSet<P_PREFERENCES> P_PREFERENCES { get; set; }
         public virtual DbSet<F_DOCREGL> F_DOCREGL { get; set; }
         public virtual DbSet<F_CATALOGUE> F_CATALOGUE { get; set; }
@@ -102,12 +121,16 @@ namespace arbioApp.Models
             .HasOptional(a => a.artStock)
             .WithRequired(s => s.FArticle);
 
+<<<<<<< HEAD
             modelBuilder.Entity<F_ARTSTOCK>()
             .HasKey(e => e.cbMarq);
 
             modelBuilder.Entity<F_ARTSTOCK>()
                 .Property(e => e.cbMarq)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+=======
+
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
 
 
         }

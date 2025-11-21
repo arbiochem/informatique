@@ -312,10 +312,13 @@ namespace arbioApp
             }
             Modules.Principal.RECOUVREMENT.ucClient.Instance.BringToFront();
         }
+<<<<<<< HEAD
 
         private void Container_Click(object sender, EventArgs e)
         {
 
         }
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     }
 }

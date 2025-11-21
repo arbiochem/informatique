@@ -87,18 +87,24 @@
     <Reference Include="DevExpress.Docs.v24.1, Version=24.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="DevExpress.ExpressApp.Objects.v24.1, Version=24.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\DevExpress 24.1\Components\Bin\NetCore\DevExpress.ExpressApp.Objects.v24.1.dll</HintPath>
     </Reference>
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     <Reference Include="DevExpress.Images.v24.1, Version=24.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Map.v24.1.Core, Version=24.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Office.v24.1.Core, Version=24.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Pdf.v24.1.Core, Version=24.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+<<<<<<< HEAD
     <Reference Include="DevExpress.Pdf.v24.1.Drawing, Version=24.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\DevExpress 24.1\Components\Bin\Framework\DevExpress.Pdf.v24.1.Drawing.dll</HintPath>
     </Reference>
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     <Reference Include="DevExpress.PivotGrid.v24.1.Core, Version=24.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.RichEdit.v24.1.Core, Version=24.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.RichEdit.v24.1.Export, Version=24.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -146,7 +152,11 @@
       <HintPath>..\packages\Humanizer.Core.2.14.1\lib\netstandard2.0\Humanizer.dll</HintPath>
     </Reference>
     <Reference Include="Interop.Objets100cLib">
+<<<<<<< HEAD
       <HintPath>..\..\..\Sauve du 14102025\arbioApp_13102025\arbioApp_10102025\arbioApp_130\arbioApp\arbioApp\obj\Debug\Interop.Objets100cLib.dll</HintPath>
+=======
+      <HintPath>obj\Debug\Interop.Objets100cLib.dll</HintPath>
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="MailKit, Version=4.9.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
@@ -228,6 +238,7 @@
     <Compile Include="Migrations\202510131145338_F_DOCFRAISIMPORT.Designer.cs">
       <DependentUpon>202510131145338_F_DOCFRAISIMPORT.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Migrations\202510150730181_f_fret.cs" />
     <Compile Include="Migrations\202510150730181_f_fret.Designer.cs">
       <DependentUpon>202510150730181_f_fret.cs</DependentUpon>
@@ -240,6 +251,8 @@
     <Compile Include="Migrations\202510150807059_f_devises.Designer.cs">
       <DependentUpon>202510150807059_f_devises.cs</DependentUpon>
     </Compile>
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Modules\Helpers\ExcelToDatable.cs" />
     <Compile Include="Modules\Principal\Dashboard\RECOUVREMENT\ucRecouvrement.cs">
@@ -254,12 +267,15 @@
     <Compile Include="Modules\Principal\DI\2_Documents\frmAutorisation.Designer.cs">
       <DependentUpon>frmAutorisation.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Modules\Principal\DI\2_Documents\frmAutorisations_achat.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\Principal\DI\2_Documents\frmAutorisations_achat.Designer.cs">
       <DependentUpon>frmAutorisations_achat.cs</DependentUpon>
     </Compile>
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     <Compile Include="Modules\Principal\DI\2_Documents\frmEditArticles.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -425,7 +441,10 @@
     <Compile Include="Modules\Principal\DI\frmMenuAchat.Designer.cs">
       <DependentUpon>frmMenuAchat.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Modules\Principal\DI\Models\F_FRET.cs" />
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     <Compile Include="Modules\Principal\DI\Models\F_COORDINATES.cs" />
     <Compile Include="Modules\Principal\DI\Models\F_DEVISE.cs" />
     <Compile Include="Modules\Principal\DI\Models\F_DOCCOUTREVIENT.cs" />
@@ -637,6 +656,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202510131145338_F_DOCFRAISIMPORT.resx">
       <DependentUpon>202510131145338_F_DOCFRAISIMPORT.cs</DependentUpon>
+<<<<<<< HEAD
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202510150730181_f_fret.resx">
@@ -647,6 +667,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202510150807059_f_devises.resx">
       <DependentUpon>202510150807059_f_devises.cs</DependentUpon>
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\Account\FrmChangePassword.resx">
       <DependentUpon>FrmChangePassword.cs</DependentUpon>
@@ -680,9 +702,12 @@
     <EmbeddedResource Include="Modules\Principal\DI\2_Documents\frmAutorisation.resx">
       <DependentUpon>frmAutorisation.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="Modules\Principal\DI\2_Documents\frmAutorisations_achat.resx">
       <DependentUpon>frmAutorisations_achat.cs</DependentUpon>
     </EmbeddedResource>
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
     <EmbeddedResource Include="Modules\Principal\DI\2_Documents\frmEditDocument.resx">
       <DependentUpon>frmEditDocument.cs</DependentUpon>
       <SubType>Designer</SubType>

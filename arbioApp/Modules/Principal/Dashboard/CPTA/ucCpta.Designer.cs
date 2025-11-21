@@ -95,7 +95,10 @@
             // 
             // accordionControlElement1
             // 
+<<<<<<< HEAD
             this.accordionControlElement1.Expanded = true;
+=======
+>>>>>>> 9d461ad (Modif 2 Mahefa 20251121 apm)
             this.accordionControlElement1.Name = "accordionControlElement1";
             this.accordionControlElement1.Text = "Budget";
             // 
